@@ -7,8 +7,6 @@
 #include "engine/core/mainframe.hpp"
 
 
-#include "game/test.hpp"
-
 static Engine* engine = nullptr;
 static Mainframe* mainframe = nullptr;
 static RenderEngine* render_engine = nullptr;
@@ -35,12 +33,13 @@ void init(){
 
 
 void processors_init(){
+    
 }
 
 
 int main(){             
     init();
-    scene_manager->introduce_scene("Main",new Scene(),true);
+    //scene_manager->introduce_scene("Main",new Scene(),true); 
     render_engine->set_cluster(&(scene_manager->get_current_scene()->get_redner_cluster())); 
     //display_server->set_display_targer(&display_target);
     

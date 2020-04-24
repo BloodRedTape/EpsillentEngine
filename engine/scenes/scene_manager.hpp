@@ -3,6 +3,7 @@
 
 #include <map>
 #include <string>
+#include "engine/core/typedefs.hpp"
 #include "engine/scenes/scene.hpp"
 
 
@@ -17,7 +18,10 @@ class SceneManager{
     public:
         SceneManager();
         ~SceneManager();
-        SceneManager* get_singleton(){return smp_singleton;}
+
+        _ALWAYS_INLINE_ SceneManager* get_singleton(){
+            return smp_singleton;
+        }
         BaseScene* get_current_scene();
         BaseScene* get_scene(const std::string& );
         void introduce_scene(const std::string&, BaseScene*, bool);

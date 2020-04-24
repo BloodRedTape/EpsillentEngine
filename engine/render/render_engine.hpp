@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <SFML/Graphics.hpp>
+#include "engine/core/typedefs.hpp"
 //#include "engine/core/cluster.hpp"
 #include "engine/servers/display_server.hpp"
 #include "engine/core/processor.hpp"
@@ -32,7 +33,9 @@ class RenderEngine: public Processor{
         //setup a cluster for processing
         void set_cluster(RenderCluster*);
 
-        static RenderEngine* get_singleton(){return smp_singleton;} 
+        _ALWAYS_INLINE_ static RenderEngine* get_singleton(){
+            return smp_singleton;
+        } 
 
 };
 

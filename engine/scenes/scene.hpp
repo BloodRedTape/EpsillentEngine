@@ -19,7 +19,9 @@ class BaseScene{
         BaseScene();
         ~BaseScene();
     public:
-        RenderCluster& get_redner_cluster(){return r;}
+        RenderCluster& get_redner_cluster(){
+            return r;
+        }
     
 
     virtual void init()=0;

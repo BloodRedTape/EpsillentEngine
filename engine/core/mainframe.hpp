@@ -2,6 +2,7 @@
 #define MAINFRAME_H
 
 #include <vector>
+#include "engine/core/typedefs.hpp"
 #include "engine/core/processor.hpp"
 
 
@@ -13,7 +14,10 @@ class Mainframe{
     public:
         Mainframe();
         ~Mainframe();
-        static Mainframe* get_singleton(){return smp_singleton;}
+
+        _ALWAYS_INLINE_ static Mainframe* get_singleton(){
+            return smp_singleton;
+        }
         void add_processor(Processor*);
         void reload();
         void compute();

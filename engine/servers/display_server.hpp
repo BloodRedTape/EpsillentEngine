@@ -2,7 +2,7 @@
 #define DISPLAY_SERVER_H
 
 #include <SFML/Graphics.hpp>
-
+#include "engine/core/typedefs.hpp"
 
 typedef sf::RenderWindow RenderWindow;
 /*
@@ -25,7 +25,9 @@ class DisplayServer{
         DisplayServer& operator=(const DisplayServer&)=delete;
         DisplayServer(const DisplayServer&)=delete;
 
-        static DisplayServer* get_singleton(){return smp_singleton;}
+        _ALWAYS_INLINE_ static DisplayServer* get_singleton(){
+            return smp_singleton;
+        }
         RenderWindow& get_display_target();
         //void set_display_targer(DisplayTarget& p_dt){get_singleton()->display_target=p_dt;}
         RenderWindow& init_window();

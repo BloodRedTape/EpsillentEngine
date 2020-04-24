@@ -1,6 +1,7 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
+#include "engine/core/typedefs.hpp"
 #include "engine/core/os/time.hpp"
 
 class Engine{
@@ -13,10 +14,18 @@ class Engine{
     public:
         Engine();
         ~Engine();
-        Engine* get_singleton(){return smp_singleton;}
-        void off(){get_singleton()->~Engine();}
-        float fps(){return get_singleton()->s_frames_per_second;}
-        float delta_time(){return get_singleton()->s_delta_time;}
+        _ALWAYS_INLINE_ Engine* get_singleton(){
+            return smp_singleton;
+        }
+        _ALWAYS_INLINE_ void off(){
+            get_singleton()->~Engine();
+        }
+        _ALWAYS_INLINE_ float fps(){
+            return get_singleton()->s_frames_per_second;
+        }
+        _ALWAYS_INLINE_ float delta_time(){
+            return get_singleton()->s_delta_time;
+        }
 };
 
 #endif
