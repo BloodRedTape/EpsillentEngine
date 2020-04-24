@@ -31,6 +31,7 @@ class DisplayServer{
         RenderWindow& get_display_target();
         //void set_display_targer(DisplayTarget& p_dt){get_singleton()->display_target=p_dt;}
         RenderWindow& init_window();
+        RenderWindow& new_window(sf::VideoMode mode, const char* p_title);
 
 
 

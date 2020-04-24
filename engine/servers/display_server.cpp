@@ -28,6 +28,12 @@ RenderWindow& DisplayServer::get_display_target(){
 
 RenderWindow& DisplayServer::init_window(){
     Info("DisplayServer: inited window");
-    return *(mp_display_target = new RenderWindow(sf::VideoMode(1280,720),"OpenGl"));
+    return *(mp_display_target = new RenderWindow(sf::VideoMode(1280,720),"Engine"));
 }   
+
+
+RenderWindow& DisplayServer::new_window(sf::VideoMode mode, const char* p_title){
+    Info("DisplayServer: inited window");
+    return *(mp_display_target = new RenderWindow(mode,p_title));
+}  
 

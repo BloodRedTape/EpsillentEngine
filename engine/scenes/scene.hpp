@@ -13,14 +13,13 @@ class BaseScene{
     protected:
         Cluster render;
         Cluster collidable;
-        Cluster triggerable;
-        
-        RenderCluster r;
+        Cluster triggerable; 
+        RenderCluster m_render_cluster;
         BaseScene();
         ~BaseScene();
     public:
         RenderCluster& get_redner_cluster(){
-            return r;
+            return m_render_cluster;
         }
     
 
