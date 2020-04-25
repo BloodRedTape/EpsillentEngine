@@ -1,7 +1,7 @@
-#EpsEngine
-#####Supposed to be a learning sandbox for me during quarantine and ***nothing*** more
+# EpsEngine
+##### Supposed to be a learning sandbox for me during quarantine and ***nothing*** more
 ***
-#####Plan
+##### Plan
 * Application layer
     * Window System
     * Input System
@@ -49,7 +49,7 @@
 
     
 ***
-###Desired code style
+### Desired code style
 
 1. File names are all lowercase with underscores             
 >file_name.cpp
