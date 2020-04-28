@@ -4,8 +4,7 @@
 
 RenderEngine* RenderEngine::smp_singleton = nullptr;
 
-RenderEngine::RenderEngine():
-    Processor(&clust)
+RenderEngine::RenderEngine()
 {
     if(smp_singleton==nullptr){
         smp_singleton=this;
@@ -17,19 +16,10 @@ RenderEngine::RenderEngine():
 RenderEngine::~RenderEngine(){
     Info("RenderEngine: deleted");
 }
-void RenderEngine::set_cluster(RenderCluster* p_drawing_candidate){
-    get_singleton()->mp_cluster=p_drawing_candidate;
-}
 
 
-void RenderEngine::process(){
-    RenderWindow& r_render_window = DisplayServer::get_singleton()->get_display_target();
-    r_render_window.clear();
-    
-    for(RenderCluster::iterator itr = get_singleton()->mp_cluster->begin(); itr!=get_singleton()->mp_cluster->end(); itr++){
-        r_render_window.draw(**itr);
-    }
-    r_render_window.display();
+void RenderEngine::render(Drawable& drawable, const sf::Transform& transfrom){
+    DisplayServer::get_singleton()->get_display_target().draw(drawable,transfrom);
 }
 
 /*

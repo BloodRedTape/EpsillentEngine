@@ -22,7 +22,9 @@ class SceneManager{
         _ALWAYS_INLINE_ SceneManager* get_singleton(){
             return smp_singleton;
         }
-        BaseScene* get_current_scene();
+        _ALWAYS_INLINE_ BaseScene* get_current_scene(){
+            return current_scene;
+        }
         BaseScene* get_scene(const std::string& );
         void introduce_scene(const std::string&, BaseScene*, bool);
         void set_scene(const std::string&);

@@ -25,10 +25,7 @@ void SceneManager::introduce_scene(const std::string& scene_name, BaseScene* p_s
     }
 }
 
-BaseScene* SceneManager::get_current_scene(){
-    Info("scne");
-    return smp_singleton->current_scene;
-}
+
 
 void SceneManager::substract_scene(const std::string& name){
     std::map<std::string, BaseScene*>::iterator map_itr = scenes.find(name);

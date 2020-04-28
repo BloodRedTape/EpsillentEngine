@@ -28,6 +28,7 @@ void Engine::init(){
     Info("first init stage passed!");
 
     display_server->new_window(k_video_mode,k_window_title);
+    display_server->get_display_target().setFramerateLimit(60);
 }
 
 
@@ -36,11 +37,18 @@ void Engine::main_cycle(){
         Error("Engine:Create a scene and apply it via Engine::set_entry_scene(BaseScene* p_scene, const char* name)");
     }
     sf::Clock n;
+    float frameTime;
     Info("enter main loop");
     while(1){
+        display_server->get_display_target().clear();
+        scene_manager->get_current_scene()->engine_update(frameTime);
+        scene_manager->get_current_scene()->update(frameTime);
+        display_server->get_display_target().display();
         mainframe->compute();
-        Info("1");
-        std::cout << std::to_string(n.getElapsedTime().asMicroseconds())<<std::endl;
+        frameTime=n.getElapsedTime().asSeconds();
+        std::cout<<"" << std::to_string(n.getElapsedTime().asMicroseconds());
+        std::cout<<" | " << std::to_string(1/n.getElapsedTime().asSeconds())<<std::endl;
+
         n.restart();
     }
 }

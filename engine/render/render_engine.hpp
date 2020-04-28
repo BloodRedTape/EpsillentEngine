@@ -12,11 +12,9 @@
 typedef sf::Drawable Drawable;
 typedef std::list<Drawable*> RenderCluster;
 
-class RenderEngine: public Processor{
+class RenderEngine{
     private:
         static RenderEngine* smp_singleton;
-        RenderCluster* mp_cluster;
-        Cluster clust;
         
 
     public:
@@ -28,10 +26,8 @@ class RenderEngine: public Processor{
         ~RenderEngine();
 
 
-        void process();
+        void render(Drawable&, const sf::Transform&);
 
-        //setup a cluster for processing
-        void set_cluster(RenderCluster*);
 
         _ALWAYS_INLINE_ static RenderEngine* get_singleton(){
             return smp_singleton;
