@@ -46,9 +46,7 @@ void Engine::main_cycle(){
         display_server->get_display_target().display();
         mainframe->compute();
         frameTime=n.getElapsedTime().asSeconds();
-        std::cout<<"" << std::to_string(n.getElapsedTime().asMicroseconds());
-        std::cout<<" | " << std::to_string(1/n.getElapsedTime().asSeconds())<<std::endl;
-
+        Info(std::to_string(n.getElapsedTime().asMicroseconds())+" | " + std::to_string(1/n.getElapsedTime().asSeconds()));
         n.restart();
     }
 }
