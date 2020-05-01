@@ -19,12 +19,15 @@ class SceneManager{
         SceneManager();
         ~SceneManager();
 
-        _ALWAYS_INLINE_ SceneManager* get_singleton(){
+        static _ALWAYS_INLINE_ SceneManager* get_singleton(){
             return smp_singleton;
         }
         _ALWAYS_INLINE_ BaseScene* get_current_scene(){
             return current_scene;
         }
+        void update_scene(const float dt);
+        void render_scene();
+        void clean_scene_garbage();
         BaseScene* get_scene(const std::string& );
         void introduce_scene(const std::string&, BaseScene*, bool);
         void set_scene(const std::string&);

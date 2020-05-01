@@ -7,11 +7,14 @@ class Sprite: public SceneNode{
 protected:
     sf::RectangleShape m_shape;
 public:
-    virtual void init()override;
-    virtual void update(float dt)override;
-    void engine_update();
-    virtual void start()override;
-    virtual void destroy()override;
+    void update();
+    void render();
+
+    virtual void on_init()override;
+    virtual void on_update(float dt)override;
+   
+    virtual void on_start()override;
+    virtual void on_destroy()override;
 
     _ALWAYS_INLINE_ virtual void set_size(const sf::Vector2f& size){
         m_shape.setSize(size);

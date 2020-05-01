@@ -41,10 +41,14 @@ void Engine::main_cycle(){
     Info("enter main loop");
     while(1){
         display_server->get_display_target().clear();
-        scene_manager->get_current_scene()->engine_update(frameTime);
-        scene_manager->get_current_scene()->update(frameTime);
-        display_server->get_display_target().display();
+        scene_manager->update_scene(frameTime);
         mainframe->compute();
+        scene_manager->render_scene();
+        
+        scene_manager->clean_scene_garbage();
+        display_server->get_display_target().display();
+
+
         frameTime=n.getElapsedTime().asSeconds();
         Info(std::to_string(n.getElapsedTime().asMicroseconds())+" | " + std::to_string(1/n.getElapsedTime().asSeconds()));
         n.restart();

@@ -5,25 +5,31 @@
 #include "scene_node.hpp"
 #include "engine/core/typedefs.hpp"
 
+class RootNode: public SceneNode{
+public:
+    RootNode(BaseScene* scene){
+        mp_parent=nullptr;
+        mp_scene=scene;
+    }
+    void on_init()override{};
+    void on_start()override{};
+    void on_destroy()override{};
+    void on_update(const float)override{};
+    void destroy()override{};
+};
 
 class SceneGraph{
 private:
-    class RootNode: public SceneNode{
-    public:
-        void init()override{};
-        void start()override{};
-        void destroy()override{};
-        void update(const float){};
-    };
-
-
     RootNode m_root;
-    std::queue<SceneNode*> traverse_order;
 public:
-    void update_scene(const float);
+    SceneGraph(BaseScene*);
+
+    void update(const float);
+    void render();
     _ALWAYS_INLINE_ void add_to_root(SceneNode* p_node){
         m_root.add_child(p_node);
     }
+
     
 
 };
