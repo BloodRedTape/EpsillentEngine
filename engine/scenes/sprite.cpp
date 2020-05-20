@@ -2,20 +2,24 @@
 #include "sprite.hpp"
 
 
-void Sprite::engine_update(){
+void Sprite::update(){
     //physics update done here !
+}
+
+void Sprite::render(){
     RenderEngine::get_singleton()->render(m_shape, m_parent_transform*m_transform);
-}
-
-void Sprite::init(){
 
 }
-void Sprite::destroy(){
+
+void Sprite::on_init(){
 
 }
-void Sprite::start(){
+void Sprite::on_destroy(){
 
 }
-void Sprite::update(const float dt){
+void Sprite::on_start(){
+
+}
+void Sprite::on_update(const float dt){
 
 }

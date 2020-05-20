@@ -15,13 +15,31 @@ SceneManager::SceneManager(){
 SceneManager::~SceneManager(){
     Info("SceneManager: deleted");
 }
+
+
+void SceneManager::update_scene(const float dt){
+    //most probably here input will be handled
+    current_scene->on_update(dt);
+    current_scene->update(dt);
+    
+}
+
+void SceneManager::render_scene(){
+    current_scene->render();
+}
+
+void SceneManager::clean_scene_garbage(){
+    current_scene->clear_garbage();
+}
+
+
 //IMPLEMENT TO ASSIGN CLUSTERS TO COMPONENTS INSTEAD OF INF FETCH
 void SceneManager::introduce_scene(const std::string& scene_name, BaseScene* p_scene, bool is_displayable = false){
     scenes.insert(std::pair<std::string, BaseScene*>(scene_name,p_scene)); 
     if(is_displayable){
         current_scene=p_scene;
-        p_scene->init();
-        p_scene->start();
+        p_scene->on_init();
+        p_scene->on_start();
     }
 }
 
@@ -34,7 +52,7 @@ void SceneManager::substract_scene(const std::string& name){
     }else if(map_itr->second==current_scene){
         Error("SceneManager: trying to substract current scene (Possible processor-cluster pipeline corruption)");
     }else{
-        map_itr->second->destroy();
+        map_itr->second->on_destroy();
         scenes.erase(map_itr);
     }
 }
@@ -58,7 +76,7 @@ void SceneManager::set_scene(const std::string& name){
         Warning("SceneManager: trying to set already established scene");
     }else{
         current_scene = map_itr->second;
-        current_scene->start();
+        current_scene->on_start();
     }
 
 }
