@@ -1,4 +1,4 @@
-CC := gcc
+CC := g++
 CFLAGS := -g -Werror -lstdc++ -lsfml-graphics -lsfml-window -lsfml-network -lsfml-system
 
 SOURCES:= $(shell find $(Engine/src/) -name '*.cpp')
