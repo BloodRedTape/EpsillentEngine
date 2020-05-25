@@ -7,8 +7,8 @@ class Sprite: public SceneNode{
 protected:
     sf::RectangleShape m_shape;
 public:
-    void update();
-    void render();
+    void update()override;
+    void render()override;
 
     virtual void on_init()override;
     virtual void on_update(float dt)override;

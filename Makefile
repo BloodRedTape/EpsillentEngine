@@ -1,5 +1,5 @@
-CC := g++
-CFLAGS := -g -Werror -lsfml-graphics -lsfml-window -lsfml-network -lsfml-system
+CC := gcc
+CFLAGS := -g -Werror -lstdc++ -lsfml-graphics -lsfml-window -lsfml-network -lsfml-system
 
 SOURCES:= $(shell find $(Engine/src/) -name '*.cpp')
 INCLUDE := -I./ -IGame

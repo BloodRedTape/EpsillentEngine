@@ -22,7 +22,7 @@ protected:
     sf::Transform m_parent_transform;
 public:
     SceneNode();
-    ~SceneNode();
+    virtual ~SceneNode();
 
 
     //add children in update queue
