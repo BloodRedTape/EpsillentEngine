@@ -1,7 +1,7 @@
 CC_LINUX := g++
 CFLAGS_LINUX := -g -Werror -lstdc++ -lsfml-graphics -lsfml-window -lsfml-network -lsfml-system
-SOURCES_LINUX := $(shell find $(Engine/src/) -name '*.cpp')
-INCLUDE_LIXUX := -I./ -IGame
+SOURCES_LINUX := $(shell find $(shell pwd) -name '*.cpp')
+INCLUDE_LINUX := -I./ -Igame
 
 CC_MACOS :=
 CFLAGS_MACOS :=
@@ -22,7 +22,7 @@ linux:
 	@echo "|        by Epsillent inc.         |"
 	@echo "+----------------------------------+"
 	@tput sgr0
-	@tput setaf 7;echo $(tput setaf 1)Compiling with ${CC} compiler...;tput sgr0
+	@tput setaf 7;echo $(tput setaf 1)Compiling with ${CC_LINUX} compiler...;tput sgr0
 	@$(CC_LINUX) $(SOURCES_LINUX) $(CFLAGS_LINUX) $(INCLUDE_LINUX) -o EPS.out	
 	@tput setaf 10;echo $(tput setaf 1)Done!;tput sgr0
 	@tput setaf 11;echo Executing...;tput sgr0
