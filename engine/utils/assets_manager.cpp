@@ -16,7 +16,7 @@ sf::Texture* AssetsManager::get_texture(const char* filename){
 }
 
 
-sf::Font* AssetsManager::get_font(std::string const& filename){
+sf::Font* AssetsManager::get_font(const char* filename){
     std::map<std::string, sf::Font>::iterator itr = sm_fonts.find(filename);
     if(itr!=sm_fonts.end()){
         return &(itr->second);

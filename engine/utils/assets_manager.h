@@ -8,7 +8,7 @@
 class AssetsManager{
     public:
         static sf::Texture* get_texture(const char* filename);
-        static sf::Font* get_font(std::string const& filename);
+        static sf::Font* get_font(const char* filename);
         AssetsManager()=delete;
         AssetsManager(const AssetsManager&) = delete;
     private:
