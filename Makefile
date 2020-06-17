@@ -1,7 +1,8 @@
 CC_LINUX := g++
-CFLAGS_LINUX := -g -Werror -lstdc++ -lsfml-graphics -lsfml-window -lsfml-network -lsfml-system
-SOURCES_LINUX := $(shell find $(shell pwd) -name '*.cpp')
-INCLUDE_LINUX := -I./ -Igame
+ENGINE_PATH := $(shell pwd)
+CFLAGS_LINUX := -g -Werror -lstdc++ $(ENGINE_PATH)/thirdparty/lib/linux/libsfml-graphics.so $(ENGINE_PATH)/thirdparty/lib/linux/libsfml-window.so $(ENGINE_PATH)/thirdparty/lib/linux/libsfml-audio.so $(ENGINE_PATH)/thirdparty/lib/linux/libsfml-system.so $(ENGINE_PATH)/thirdparty/lib/linux/libsfml-network.so
+SOURCES_LINUX := $(shell find $(ENGINE_PATH) -name '*.cpp')
+INCLUDE_LINUX := -I./ -Ithirdparty/include -Igame
 
 CC_MACOS :=
 CFLAGS_MACOS :=
