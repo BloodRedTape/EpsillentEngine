@@ -1,6 +1,6 @@
 CC_LINUX := g++
 ENGINE_PATH := $(shell pwd)
-CFLAGS_LINUX := -g -Werror -lstdc++ $(ENGINE_PATH)/thirdparty/lib/linux/libsfml-graphics.so $(ENGINE_PATH)/thirdparty/lib/linux/libsfml-window.so $(ENGINE_PATH)/thirdparty/lib/linux/libsfml-audio.so $(ENGINE_PATH)/thirdparty/lib/linux/libsfml-system.so $(ENGINE_PATH)/thirdparty/lib/linux/libsfml-network.so
+CFLAGS_LINUX := -g -Werror -lstdc++ -lpthread -lX11 $(ENGINE_PATH)/thirdparty/lib/linux/libsfml-graphics.so $(ENGINE_PATH)/thirdparty/lib/linux/libsfml-window.so $(ENGINE_PATH)/thirdparty/lib/linux/libsfml-audio.so $(ENGINE_PATH)/thirdparty/lib/linux/libsfml-system.so $(ENGINE_PATH)/thirdparty/lib/linux/libsfml-network.so
 SOURCES_LINUX := $(shell find $(ENGINE_PATH) -name '*.cpp')
 INCLUDE_LINUX := -I./ -Ithirdparty/include -Igame
 

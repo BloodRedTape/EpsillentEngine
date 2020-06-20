@@ -5,18 +5,19 @@
 #include <string>
 #include "engine/core/typedefs.hpp"
 #include "engine/scenes/scene.hpp"
-
+#include <mutex>
 
 
 // KING OF THE ENGINE
 class SceneManager{
     private:
         static SceneManager* smp_singleton;
+        std::mutex &mutex;
         BaseScene* current_scene;
         std::map<std::string, BaseScene*> scenes;
 
     public:
-        SceneManager();
+        SceneManager(std::mutex&);
         ~SceneManager();
 
         static _ALWAYS_INLINE_ SceneManager* get_singleton(){

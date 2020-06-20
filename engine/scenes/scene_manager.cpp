@@ -3,7 +3,9 @@
 
 SceneManager* SceneManager::smp_singleton = nullptr;
 
-SceneManager::SceneManager(){
+SceneManager::SceneManager(std::mutex& mtx):
+    mutex(mtx)
+{
     if(smp_singleton==nullptr){
         smp_singleton=this;
         Info("SceneManager: created");
@@ -29,12 +31,16 @@ void SceneManager::render_scene(){
 }
 
 void SceneManager::clean_scene_garbage(){
-    current_scene->clear_garbage();
+    if(current_scene->has_grabage()){
+        std::lock_guard<std::mutex> lock(smp_singleton->mutex);
+        current_scene->clear_garbage();
+    }
 }
 
 
 //IMPLEMENT TO ASSIGN CLUSTERS TO COMPONENTS INSTEAD OF INF FETCH
 void SceneManager::introduce_scene(const std::string& scene_name, BaseScene* p_scene, bool is_displayable = false){
+    std::lock_guard<std::mutex> lock(smp_singleton->mutex);
     scenes.insert(std::pair<std::string, BaseScene*>(scene_name,p_scene)); 
     if(is_displayable){
         current_scene=p_scene;
@@ -46,6 +52,7 @@ void SceneManager::introduce_scene(const std::string& scene_name, BaseScene* p_s
 
 
 void SceneManager::substract_scene(const std::string& name){
+    std::lock_guard<std::mutex> lock(smp_singleton->mutex);
     std::map<std::string, BaseScene*>::iterator map_itr = scenes.find(name);
     if(map_itr==scenes.end()){
         Error("SceneManager: trying to substract scene that wasn't introuduced or doesn't exist");
@@ -69,6 +76,7 @@ BaseScene* SceneManager::get_scene(const std::string& name){
 
 //IMPLEMENT TO ASSIGN CLUSTERS TO COMPONENTS INSTEAD OF INF FETCH
 void SceneManager::set_scene(const std::string& name){
+    std::lock_guard<std::mutex> lock(smp_singleton->mutex);
     std::map<std::string, BaseScene*>::iterator map_itr = scenes.find(name);
     if(map_itr==scenes.end()){
         Error("SceneManager: trying to set scene that wasn't introuduced or doesn't exist");

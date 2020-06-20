@@ -1,9 +1,16 @@
 #include "engine/servers/display_server.hpp"
 #include "engine/utils/debug.hpp"
+#ifndef __linux__
+#include "X11/Xlib.h"
+#endif
 DisplayServer * DisplayServer::smp_singleton = nullptr;
 
-DisplayServer::DisplayServer()
+DisplayServer::DisplayServer(std::mutex& mtx):
+    mutex(mtx)
 {
+    #ifndef __linux__
+    XInitThreads();
+    #endif
     if(smp_singleton==nullptr){
         smp_singleton=this;
         Info("DisplayServer: created");
@@ -16,24 +23,30 @@ DisplayServer::~DisplayServer(){
     Info("DisplayServer: deleted");
 }
 
-RenderWindow& DisplayServer::get_display_target(){
-    if(mp_display_target!=nullptr){
-        return *(get_singleton()->mp_display_target);
-    }else{
-        Warning("DisplayServer: can't find window...");
-        Warning("DisplayServer: created a window using default window configuration");
-        return *(get_singleton()->mp_display_target = &init_window());
-    }
-}
-
-RenderWindow& DisplayServer::init_window(){
-    Info("DisplayServer: inited window");
-    return *(mp_display_target = new RenderWindow(sf::VideoMode(1280,720),"Engine"));
-}   
 
 
-RenderWindow& DisplayServer::new_window(sf::VideoMode mode, const char* p_title){
-    Info("DisplayServer: inited window");
-    return *(mp_display_target = new RenderWindow(mode,p_title));
+
+void DisplayServer::init_window(sf::VideoMode mode, const char* p_title){
+    std::lock_guard<std::mutex> lock(smp_singleton->mutex);
+    Info("DisplayServer: created new window");
+    if(smp_singleton->mp_display_target==nullptr)
+        smp_singleton->mp_display_target = new RenderWindow(mode,p_title);
+    else
+        Warning("DisplayServer: trying to init window twice");
 }  
 
+void DisplayServer::set_frame_rate_limit(int fps){
+    if(smp_singleton->mp_display_target!=nullptr)
+        mp_display_target->setFramerateLimit(fps);
+    else
+        Warning("DisplayServer: set_frame_rate_limit: no window inited");
+}
+
+void DisplayServer::clear_display(){
+    draw_calls=0;
+    smp_singleton->mp_display_target->clear();
+}
+
+void DisplayServer::swap_buffers(){
+    smp_singleton->mp_display_target->display();
+}

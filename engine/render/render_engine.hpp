@@ -9,8 +9,7 @@
 #include "engine/core/processor.hpp"
 //for a short time
 #include <list>
-typedef sf::Drawable Drawable;
-typedef std::list<Drawable*> RenderCluster;
+typedef std::list<sf::Drawable*> RenderCluster;
 
 class RenderEngine{
     private:
@@ -26,7 +25,7 @@ class RenderEngine{
         ~RenderEngine();
 
 
-        void render(Drawable&, const sf::Transform&);
+        void render(sf::Drawable&, const sf::Transform&);
 
 
         _ALWAYS_INLINE_ static RenderEngine* get_singleton(){

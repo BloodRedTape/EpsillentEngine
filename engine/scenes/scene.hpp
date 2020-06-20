@@ -36,6 +36,7 @@ class BaseScene{
     //WARNNING!
     //mark as garbage an ALREADY "destroy()-ed" object
     void mark_garbage(SceneNode*);
+    bool has_grabage(){return !garbage.empty();}
     void clear_garbage();
 
 
