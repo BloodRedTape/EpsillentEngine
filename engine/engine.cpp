@@ -88,13 +88,16 @@ void Engine::RenderLoop::operator()(){
 
     while(smp_singleton->running){
         smp_singleton->display_server->clear_display();
+        
+        mutex.lock();
         smp_singleton->scene_manager->render_scene();
+        mutex.unlock();
 
         if(_show_fps){
             debug_info.setString("fps: " + std::to_string((int)(1/n.getElapsedTime().asSeconds())));
             render_engine->render(debug_info);
         }
-        
+
         smp_singleton->display_server->swap_buffers();
         Profiling(std::string("RenderLoop :")+std::to_string(n.getElapsedTime().asMicroseconds())+" ms \t\t| fps:" + std::to_string(1/n.getElapsedTime().asSeconds()));
         n.restart();
