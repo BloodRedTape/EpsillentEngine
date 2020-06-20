@@ -25,11 +25,11 @@ class BaseScene{
     //Override only if you REALLY understand what is going on
     virtual void render();
     
-    virtual void on_update(const float)=0;
-    virtual void on_init()=0;
+    virtual void on_update(const float){};
+    virtual void on_init(){};
     // ALL PROCESSORS INITIALIZATIONS SHOULD BE DONE HERE
-    virtual void on_start()=0;
-    virtual void on_destroy()=0;
+    virtual void on_start(){};
+    virtual void on_destroy(){};
 
 
     void introduce(SceneNode*);
