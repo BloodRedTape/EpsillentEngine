@@ -26,6 +26,7 @@ class RenderEngine{
 
 
         void render(sf::Drawable&, const sf::Transform&);
+        void render(sf::Drawable&);
 
 
         _ALWAYS_INLINE_ static RenderEngine* get_singleton(){

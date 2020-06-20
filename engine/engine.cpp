@@ -9,6 +9,8 @@ DisplayServer* Engine::display_server = nullptr;  //FOR now this thing is not wo
 
 SceneManager* Engine::scene_manager = nullptr;
 
+bool Engine::_show_fps = false;
+
 
 const sf::VideoMode Engine::k_video_mode = sf::VideoMode(1280,720);  //better window creation
 const char * Engine::k_window_title = "Engine";
@@ -48,10 +50,21 @@ void Engine::init(){
     }
 }
 
+void Engine::shutdown(){
+    if(smp_singleton==this){
+        delete scene_manager;
+        delete render_engine;
+        delete display_server;
+        delete mainframe;
+        Info("Engine: shuted down");
+    }else{
+        Warning("Engine: can't shut down from non-creator instance");
+    }
+}
+
 
 void Engine::UpdateLoop::operator()(){
     sf::Clock n;
-
     float frameTime;
     while(smp_singleton->running){
         smp_singleton->scene_manager->update_scene(frameTime);
@@ -65,9 +78,23 @@ void Engine::UpdateLoop::operator()(){
 }
 void Engine::RenderLoop::operator()(){
     sf::Clock n;
+
+    sf::Font debug_font;
+    debug_font.loadFromFile("resources/mont.otf");
+    
+    sf::Text debug_info;
+    debug_info.setFont(debug_font);
+    debug_info.setFillColor(sf::Color::Green);
+
     while(smp_singleton->running){
         smp_singleton->display_server->clear_display();
         smp_singleton->scene_manager->render_scene();
+
+        if(_show_fps){
+            debug_info.setString("fps: " + std::to_string((int)(1/n.getElapsedTime().asSeconds())));
+            render_engine->render(debug_info);
+        }
+        
         smp_singleton->display_server->swap_buffers();
         Profiling(std::string("RenderLoop :")+std::to_string(n.getElapsedTime().asMicroseconds())+" ms \t\t| fps:" + std::to_string(1/n.getElapsedTime().asSeconds()));
         n.restart();
@@ -94,16 +121,4 @@ void Engine::set_entry_scene(BaseScene* p_scene, const char* name){
     smp_singleton->scene_manager->introduce_scene(name,p_scene,true);
 }
 
-
-void Engine::shutdown(){
-    if(smp_singleton==this){
-        delete scene_manager;
-        delete render_engine;
-        delete display_server;
-        delete mainframe;
-        Info("Engine: shuted down");
-    }else{
-        Warning("Engine: can't shut down from non-creator instance");
-    }
-}
 

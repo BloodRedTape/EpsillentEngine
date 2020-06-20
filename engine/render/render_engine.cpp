@@ -21,7 +21,9 @@ RenderEngine::~RenderEngine(){
 void RenderEngine::render(sf::Drawable& drawable, const sf::Transform& transfrom){
     DisplayServer::get_singleton()->mp_display_target->draw(drawable,transfrom);
 }
-
+void RenderEngine::render(sf::Drawable& drawable){
+    DisplayServer::get_singleton()->mp_display_target->draw(drawable);
+}
 /*
 pastgen implementation
 void RenderEngine::render(RenderWindow& r_render_window){

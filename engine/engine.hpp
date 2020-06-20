@@ -26,9 +26,9 @@ class Engine{
 
         static const sf::VideoMode k_video_mode;  //better window creation
         static const char * k_window_title;
-        int nsdf;
         static Engine *smp_singleton;
         
+        static bool _show_fps;
         class RenderLoop{
             public:
                 void operator()();
@@ -49,6 +49,8 @@ class Engine{
         void start();
         void stop();
         void set_entry_scene(BaseScene*, const char* name);
+
+        void show_fps(bool b){_show_fps=b;};
 
 
 };
