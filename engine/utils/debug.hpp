@@ -4,10 +4,24 @@
 #include "engine/main/main.hpp" // only for fast debug SHOULD BE REMOVED LATER
 #include <assert.h>
 #include <string>
+#include <iostream>
+
+#ifdef PROFILING_MODE
+
+class Profiling{
+public:
+    Profiling(const std::string& message){
+        std::cout<<"[Profiler]: " << message << std::endl;
+    }
+};
+
+
+#else
+    #define Profiling(x) {}
+#endif
+
 
 #ifdef DEBUG_MODE 
-
-#include <iostream>
 
 class Warning{
     public:

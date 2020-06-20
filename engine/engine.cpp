@@ -1,5 +1,4 @@
 #include "engine.hpp"
-#include <chrono>
 #include "platform/platform.hpp"
 
 std::atomic<bool> Engine::running;
@@ -45,7 +44,7 @@ void Engine::init(){
         display_server->set_frame_rate_limit(60);
         Info("Engine: inited");
     }else{
-        Warning("Engine: can't init from non-creator smp_singleton");
+        Warning("Engine: can't init from non-creator instance");
     }
 }
 
@@ -59,8 +58,7 @@ void Engine::UpdateLoop::operator()(){
         smp_singleton->mainframe->compute();
         smp_singleton->scene_manager->clean_scene_garbage();
         frameTime=n.getElapsedTime().asSeconds();
-        
-        Info(std::string("    UpdateLoop")+std::to_string(n.getElapsedTime().asMicroseconds())+" ms | fps:" + std::to_string(1/n.getElapsedTime().asSeconds()));
+        Profiling(std::string("UpdateLoop :")+std::to_string(n.getElapsedTime().asMicroseconds())+" ms \t\t| fps:" + std::to_string(1/n.getElapsedTime().asSeconds()));
         n.restart();
     }
     
@@ -71,7 +69,7 @@ void Engine::RenderLoop::operator()(){
         smp_singleton->display_server->clear_display();
         smp_singleton->scene_manager->render_scene();
         smp_singleton->display_server->swap_buffers();
-        Info(std::string("RenderLoop")+std::to_string(n.getElapsedTime().asMicroseconds())+" ms | fps:" + std::to_string(1/n.getElapsedTime().asSeconds()));
+        Profiling(std::string("RenderLoop :")+std::to_string(n.getElapsedTime().asMicroseconds())+" ms \t\t| fps:" + std::to_string(1/n.getElapsedTime().asSeconds()));
         n.restart();
     }
 }
@@ -105,7 +103,7 @@ void Engine::shutdown(){
         delete mainframe;
         Info("Engine: shuted down");
     }else{
-        Warning("Engine: can't shut down from non-creator smp_singleton");
+        Warning("Engine: can't shut down from non-creator instance");
     }
 }
 
