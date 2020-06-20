@@ -1,16 +1,11 @@
 #include "engine/servers/display_server.hpp"
 #include "engine/utils/debug.hpp"
-#ifndef __linux__
-#include "X11/Xlib.h"
-#endif
+
 DisplayServer * DisplayServer::smp_singleton = nullptr;
 
 DisplayServer::DisplayServer(std::mutex& mtx):
     mutex(mtx)
 {
-    #ifndef __linux__
-    XInitThreads();
-    #endif
     if(smp_singleton==nullptr){
         smp_singleton=this;
         Info("DisplayServer: created");
