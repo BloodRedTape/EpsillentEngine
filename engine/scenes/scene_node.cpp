@@ -36,6 +36,11 @@ void SceneNode::add_child(SceneNode* p_node){
     m_child_nodes.push_back(p_node);
     p_node->set_parent(this,(--m_child_nodes.end()));
 }
+void SceneNode::destroy_children(){
+    for(SceneNode* node: m_child_nodes){
+        node->destroy();
+    }
+}
 
 void SceneNode::set_parent(SceneNode *p_parent, std::list<SceneNode*>::iterator itr_in_parent){
     mp_parent=p_parent;

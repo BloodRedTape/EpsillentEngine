@@ -31,6 +31,7 @@ public:
     void render_traverse(std::queue<SceneNode*>& r_queue);
     
     void add_child(SceneNode*);
+    void destroy_children();
     void set_parent(SceneNode*, std::list<SceneNode*>::iterator);
 
     _ALWAYS_INLINE_ bool is_garbage(){return garbage;}
