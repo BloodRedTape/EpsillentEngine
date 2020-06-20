@@ -106,7 +106,7 @@ void Engine::RenderLoop::operator()(){
 
         smp_singleton->display_server->swap_buffers();
 
-        frame_time = n.getElapsedTime().asMicroseconds();
+        frame_time = n.getElapsedTime().asSeconds();
         fps = 1/frame_time;
         n.restart();
 
