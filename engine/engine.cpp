@@ -14,11 +14,11 @@ SceneManager* Engine::scene_manager = nullptr;
 const sf::VideoMode Engine::k_video_mode = sf::VideoMode(1280,720);  //better window creation
 const char * Engine::k_window_title = "Engine";
 
-Engine* Engine::instance = nullptr;
+Engine* Engine::smp_singleton = nullptr;
 
 Engine::Engine(){
-    if(instance==nullptr){
-        instance=this;
+    if(smp_singleton==nullptr){
+        smp_singleton=this;
         Info("Engine: created");
     }else{
         Warning("Engine: created messy object");
@@ -29,7 +29,7 @@ Engine::~Engine(){
 
 }
 void Engine::init(){
-    if(instance==this){
+    if(smp_singleton==this){
         Platform::init();
         mainframe = new Mainframe();
 
@@ -45,7 +45,7 @@ void Engine::init(){
         display_server->set_frame_rate_limit(60);
         Info("Engine: inited");
     }else{
-        Warning("Engine: can't init from non-creator instance");
+        Warning("Engine: can't init from non-creator smp_singleton");
     }
 }
 
@@ -54,10 +54,10 @@ void Engine::UpdateLoop::operator()(){
     sf::Clock n;
 
     float frameTime;
-    while(instance->running){
-        instance->scene_manager->update_scene(frameTime);
-        instance->mainframe->compute();
-        instance->scene_manager->clean_scene_garbage();
+    while(smp_singleton->running){
+        smp_singleton->scene_manager->update_scene(frameTime);
+        smp_singleton->mainframe->compute();
+        smp_singleton->scene_manager->clean_scene_garbage();
         frameTime=n.getElapsedTime().asSeconds();
         
         Info(std::string("    UpdateLoop")+std::to_string(n.getElapsedTime().asMicroseconds())+" ms | fps:" + std::to_string(1/n.getElapsedTime().asSeconds()));
@@ -67,10 +67,10 @@ void Engine::UpdateLoop::operator()(){
 }
 void Engine::RenderLoop::operator()(){
     sf::Clock n;
-    while(instance->running){
-        instance->display_server->clear_display();
-        instance->scene_manager->render_scene();
-        instance->display_server->swap_buffers();
+    while(smp_singleton->running){
+        smp_singleton->display_server->clear_display();
+        smp_singleton->scene_manager->render_scene();
+        smp_singleton->display_server->swap_buffers();
         Info(std::string("RenderLoop")+std::to_string(n.getElapsedTime().asMicroseconds())+" ms | fps:" + std::to_string(1/n.getElapsedTime().asSeconds()));
         n.restart();
     }
@@ -79,7 +79,7 @@ void Engine::RenderLoop::operator()(){
 void Engine::start(){
     running = true;
 
-    if(instance->scene_manager->get_current_scene()==nullptr){
+    if(smp_singleton->scene_manager->get_current_scene()==nullptr){
         Error("Engine:Create a scene and apply it via Engine::set_entry_scene(BaseScene* p_scene, const char* name)");
     }
     std::thread update{UpdateLoop()};
@@ -93,19 +93,19 @@ void Engine::stop(){
 }
 
 void Engine::set_entry_scene(BaseScene* p_scene, const char* name){
-    instance->scene_manager->introduce_scene(name,p_scene,true);
+    smp_singleton->scene_manager->introduce_scene(name,p_scene,true);
 }
 
 
 void Engine::shutdown(){
-    if(instance==this){
+    if(smp_singleton==this){
         delete scene_manager;
         delete render_engine;
         delete display_server;
         delete mainframe;
         Info("Engine: shuted down");
     }else{
-        Warning("Engine: can't shut down from non-creator instance");
+        Warning("Engine: can't shut down from non-creator smp_singleton");
     }
 }
 

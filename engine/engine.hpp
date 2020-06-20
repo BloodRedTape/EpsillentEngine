@@ -28,7 +28,7 @@ class Engine{
         static const sf::VideoMode k_video_mode;  //better window creation
         static const char * k_window_title;
         int nsdf;
-        static Engine *instance;
+        static Engine *smp_singleton;
         
         class RenderLoop{
             public:
@@ -43,7 +43,7 @@ class Engine{
     public:
         Engine();
         ~Engine();
-        _ALWAYS_INLINE_ Engine* get_singleton(){return instance;}
+        static _ALWAYS_INLINE_ Engine* get_singleton(){return smp_singleton;}
         void init();
         void shutdown();
         // TODO engine set window config
