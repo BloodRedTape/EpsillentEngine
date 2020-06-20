@@ -1,6 +1,5 @@
 #ifndef ENGINE
 #define ENGINE
-#include "main/main.hpp"
 #include "core/typedefs.hpp"
 
 #include "physics/physics_engine.hpp"

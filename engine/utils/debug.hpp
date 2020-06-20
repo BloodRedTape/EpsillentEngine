@@ -1,7 +1,7 @@
 #ifndef DEBUG_H
 #define DEBUG_H
 
-#include "engine/main/main.hpp" // only for fast debug SHOULD BE REMOVED LATER
+#include "engine/config/config.hpp" // only for fast debug SHOULD BE REMOVED LATER
 #include <assert.h>
 #include <string>
 #include <iostream>
