@@ -53,13 +53,13 @@ public:
     // detach children node
     void detach_node(std::list<SceneNode*>::iterator);
     //called every loop cycle
-    virtual void on_update(const float delta_time)=0;
+    virtual void on_update(const float delta_time){};
     // called on object initialization
-    virtual void on_init()=0;
+    virtual void on_init(){};
     // called after scene context switch
-    virtual void on_start()=0;
+    virtual void on_start(){};
     // called before destroying;
-    virtual void on_destroy()=0;
+    virtual void on_destroy(){};
 
     void translate(const sf::Vector2f& r_offset);
     void translate(const float x_offset,const float y_offset);
