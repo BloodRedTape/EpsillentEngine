@@ -65,19 +65,25 @@ void Engine::shutdown(){
 
 void Engine::UpdateLoop::operator()(){
     sf::Clock n;
-    float frameTime;
+    float frame_time = 0;
+    float fps;
     while(smp_singleton->running){
-        smp_singleton->scene_manager->update_scene(frameTime);
+        smp_singleton->scene_manager->update_scene(frame_time);
         smp_singleton->mainframe->compute();
         smp_singleton->scene_manager->clean_scene_garbage();
-        frameTime=n.getElapsedTime().asSeconds();
-        Profiling(std::string("UpdateLoop :")+std::to_string(n.getElapsedTime().asMicroseconds())+" ms \t\t| fps:" + std::to_string(1/n.getElapsedTime().asSeconds()));
+
+        frame_time=n.getElapsedTime().asSeconds();
+        fps = 1/frame_time;
         n.restart();
+
+        Profiling(std::string("UpdateLoop :")+std::to_string(frame_time)+" ms \t\t| fps:" + std::to_string(fps));
     }
     
 }
 void Engine::RenderLoop::operator()(){
     sf::Clock n;
+    float fps = 0;
+    float frame_time = 0;
 
     sf::Font debug_font;
     debug_font.loadFromFile("resources/mont.otf");
@@ -94,13 +100,17 @@ void Engine::RenderLoop::operator()(){
         mutex.unlock();
 
         if(_show_fps){
-            debug_info.setString("fps: " + std::to_string((int)(1/n.getElapsedTime().asSeconds())));
+            debug_info.setString("fps: " + std::to_string(fps));
             render_engine->render(debug_info);
         }
 
         smp_singleton->display_server->swap_buffers();
-        Profiling(std::string("RenderLoop :")+std::to_string(n.getElapsedTime().asMicroseconds())+" ms \t\t| fps:" + std::to_string(1/n.getElapsedTime().asSeconds()));
+
+        frame_time = n.getElapsedTime().asMicroseconds();
+        fps = 1/frame_time;
         n.restart();
+
+        Profiling(std::string("RenderLoop :")+std::to_string(frame_time)+" ms \t\t| fps:" + std::to_string(fps));
     }
 }
 
