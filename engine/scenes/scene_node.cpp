@@ -44,7 +44,6 @@ void SceneNode::render_traverse(std::queue<SceneNode*>& traverse_queue){
 void SceneNode::add_child(SceneNode* p_node){
     m_child_nodes.push_back(p_node);
     p_node->set_parent(this,(--m_child_nodes.end()));
-    p_node->m_global_transform = m_global_transform*p_node->m_transform;
 }
 void SceneNode::destroy_children(){
     for(SceneNode* node: m_child_nodes){
