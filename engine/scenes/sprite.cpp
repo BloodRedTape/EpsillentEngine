@@ -7,7 +7,7 @@ void Sprite::update(){
 }
 
 void Sprite::render(){
-    RenderEngine::get_singleton()->render(m_shape, m_parent_transform*m_transform);
+    RenderEngine::get_singleton()->render(m_shape, global_transform());
 
 }
 

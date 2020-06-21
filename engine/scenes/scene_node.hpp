@@ -17,9 +17,9 @@ private:
     BaseScene *mp_scene;
     SceneNode *mp_parent;
     bool garbage;
-protected:
+    bool m_dirty;
     sf::Transform m_transform;
-    sf::Transform m_parent_transform;
+    sf::Transform m_global_transform;
 public:
     SceneNode();
     virtual ~SceneNode();
@@ -65,6 +65,10 @@ public:
     void translate(const float x_offset,const float y_offset);
     void set_rotation(const float angle);
     //void set_origin();
+
+    const sf::Transform& global_transform();
+    _ALWAYS_INLINE_ const sf::Transform& local_transform(){return m_transform;}
+    
 
     friend class RootNode;
     friend class BaseScene;
