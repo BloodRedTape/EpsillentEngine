@@ -41,27 +41,20 @@ void SceneNode::render_traverse(std::queue<SceneNode*>& traverse_queue){
     }
 }
 
-void SceneNode::add_child(SceneNode* p_node){
+void SceneNode::child_add(SceneNode* p_node){
     m_child_nodes.push_back(p_node);
-    p_node->set_parent(this,(--m_child_nodes.end()));
+    p_node->mp_parent=this;
+    p_node->mp_scene=mp_scene;
+    p_node->m_self = std::prev(m_child_nodes.end());
+    p_node->m_dirty = true;
 }
-void SceneNode::destroy_children(){
+void SceneNode::children_destroy(){
     for(SceneNode* node: m_child_nodes){
         node->destroy();
     }
 }
 
-void SceneNode::set_parent(SceneNode *p_parent, std::list<SceneNode*>::iterator itr_in_parent){
-    mp_parent=p_parent;
-    mp_scene=p_parent->mp_scene;
-    m_self=itr_in_parent;
-    m_dirty = true;
-}
 
-void SceneNode::mark_garbage(){
-    mp_scene->mark_garbage(this);
-    garbage=true;
-}
 
 void SceneNode::update(){
 
@@ -74,7 +67,8 @@ void SceneNode::render(){
 void SceneNode::destroy(){
     if(!garbage){
         on_destroy();
-        mark_garbage();
+        mp_scene->mark_garbage(this);
+        garbage=true;
         for(SceneNode* child: m_child_nodes){
             child->destroy();
         }
@@ -82,12 +76,12 @@ void SceneNode::destroy(){
 }
 
 void SceneNode::detach(){
-    mp_parent->detach_node(m_self);
+    mp_parent->child_detach(this);
     mp_parent=nullptr;
 }
 
-void SceneNode::detach_node(std::list<SceneNode*>::iterator node){
-    m_child_nodes.erase(node);
+void SceneNode::child_detach(SceneNode* p_node){
+    m_child_nodes.erase(p_node->m_self);
 }
 
 
@@ -111,4 +105,7 @@ const sf::Transform& SceneNode::global_transform(){
         m_global_transform=mp_parent->global_transform()*m_transform;
     }
     return m_global_transform;
+}
+const sf::Transform& SceneNode::local_transform(){
+    return m_transform;
 }

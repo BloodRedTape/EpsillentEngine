@@ -18,9 +18,10 @@ void BaseScene::render(){
 }
 
 
-void BaseScene::introduce(SceneNode* node){
+void BaseScene::object_introduce(SceneNode* node){
     scene_graph.add_to_root(node);
 }
+
 
 void BaseScene::mark_garbage(SceneNode* p_candidate){
     garbage.push_front(p_candidate);

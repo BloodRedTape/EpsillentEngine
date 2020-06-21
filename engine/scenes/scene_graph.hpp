@@ -16,7 +16,6 @@ public:
     void on_start()override{};
     void on_destroy()override{};
     void on_update(const float)override{};
-    void destroy()override{};
 };
 
 class SceneGraph{
@@ -28,7 +27,7 @@ public:
     void update(const float);
     void render();
     _ALWAYS_INLINE_ void add_to_root(SceneNode* p_node){
-        m_root.add_child(p_node);
+        m_root.child_add(p_node);
     }
 
     

@@ -8,6 +8,7 @@
 #include "engine/core/typedefs.hpp"
 
 class BaseScene;
+class SceneGraph;
 class RootNode;
 
 class SceneNode{
@@ -20,38 +21,32 @@ private:
     bool m_dirty;
     sf::Transform m_transform;
     sf::Transform m_global_transform;
-public:
-    SceneNode();
-    virtual ~SceneNode();
-
-
+    
+private:        
+    friend class RootNode;
+    friend class BaseScene;
+    friend class SceneGraph;
     //add children in update queue
     // apply parent transfrom to self
     void update_traverse(const float dt);
     void render_traverse(std::queue<SceneNode*>& r_queue);
-    
-    void add_child(SceneNode*);
-    void destroy_children();
-    void set_parent(SceneNode*, std::list<SceneNode*>::iterator);
-
-    _ALWAYS_INLINE_ bool is_garbage(){return garbage;}
-    void mark_garbage();
-    
-
-    //Engine purpose function
-    //Override only if you REALLY understand what is going on
-    virtual void update();
-    //Engine purpose function
-    //Override only if you REALLY understand what is going on
-    virtual void destroy();
-
-    virtual void render();
-
     // detach node from parent
     // it will NOT be deleted until you mark_garbage() it
     void detach();
     // detach children node
-    void detach_node(std::list<SceneNode*>::iterator);
+    void child_detach(SceneNode*);
+protected:
+    virtual void update();
+    virtual void render();
+public:
+    SceneNode();
+    virtual ~SceneNode();
+
+    void child_add(SceneNode*);
+    void children_destroy();
+
+    void destroy();
+
     //called every loop cycle
     virtual void on_update(const float delta_time){};
     // called on object initialization
@@ -67,11 +62,10 @@ public:
     //void set_origin();
 
     const sf::Transform& global_transform();
-    _ALWAYS_INLINE_ const sf::Transform& local_transform(){return m_transform;}
+    const sf::Transform& local_transform();
     
 
-    friend class RootNode;
-    friend class BaseScene;
+
 };
 
 #endif
