@@ -11,7 +11,7 @@ void SceneGraph::update(const float dt){
 }
 
 void SceneGraph::render(){
-    std::queue<SceneNode*> traverse_order;
+    std::queue<GameObject*> traverse_order;
     traverse_order.push(&m_root);
     while (!traverse_order.empty())
     {

@@ -18,18 +18,18 @@ void BaseScene::render(){
 }
 
 
-void BaseScene::object_introduce(SceneNode* node){
+void BaseScene::object_introduce(GameObject* node){
     scene_graph.add_to_root(node);
 }
 
 
-void BaseScene::mark_garbage(SceneNode* p_candidate){
+void BaseScene::mark_garbage(GameObject* p_candidate){
     garbage.push_front(p_candidate);
 }
 
 void BaseScene::clear_garbage(){
     if(!garbage.empty()){
-        for(SceneNode* candidate: garbage){
+        for(GameObject* candidate: garbage){
             candidate->detach();
         }
         while(!garbage.empty()){

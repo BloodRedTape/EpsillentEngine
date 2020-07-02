@@ -11,12 +11,12 @@ class BaseScene;
 class SceneGraph;
 class RootNode;
 
-class SceneNode{
+class GameObject{
 private:
-    std::list<SceneNode*> m_child_nodes;
-    std::list<SceneNode*>::iterator m_self;
+    std::list<GameObject*> m_child_nodes;
+    std::list<GameObject*>::iterator m_self;
     BaseScene *mp_scene;
-    SceneNode *mp_parent;
+    GameObject *mp_parent;
     bool garbage;
     bool m_dirty;
     sf::Transform m_transform;
@@ -29,20 +29,20 @@ private:
     //add children in update queue
     // apply parent transfrom to self
     void update_traverse(const float dt);
-    void render_traverse(std::queue<SceneNode*>& r_queue);
+    void render_traverse(std::queue<GameObject*>& r_queue);
     // detach node from parent
     // it will NOT be deleted until you mark_garbage() it
     void detach();
     // detach children node
-    void child_detach(SceneNode*);
+    void child_detach(GameObject*);
 protected:
     virtual void update();
     virtual void render();
 public:
-    SceneNode();
-    virtual ~SceneNode();
+    GameObject();
+    virtual ~GameObject();
 
-    void child_add(SceneNode*);
+    void child_add(GameObject*);
     void children_destroy();
 
     void destroy();

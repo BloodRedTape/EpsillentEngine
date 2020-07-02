@@ -1,9 +1,9 @@
 #ifndef SPRITE
 #define SPRITE
 
-#include "engine/scenes/scene_node.hpp"
+#include "engine/scenes/game_object.hpp"
 
-class Sprite: public SceneNode{
+class Sprite: public GameObject{
 protected:
     sf::RectangleShape m_shape;
 public:

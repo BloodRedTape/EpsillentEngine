@@ -16,16 +16,16 @@ class SceneManager;
 class BaseScene{
 protected:
     SceneGraph scene_graph;
-    std::list<SceneNode*> garbage;
+    std::list<GameObject*> garbage;
     std::list<Collider2D*> physics;
     BaseScene();
     ~BaseScene();
 private:
-    friend class SceneNode;
+    friend class GameObject;
     friend class SceneManager;
     //WARNNING!
     //mark as garbage an ALREADY "destroy()-ed" object
-    void mark_garbage(SceneNode*);
+    void mark_garbage(GameObject*);
     bool has_grabage(){return !garbage.empty();}
     void clear_garbage();
 public:
@@ -43,7 +43,7 @@ public:
     virtual void on_destroy(){};
 
 
-    void object_introduce(SceneNode*);
+    void object_introduce(GameObject*);
 
 
 

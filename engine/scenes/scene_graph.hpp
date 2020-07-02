@@ -2,10 +2,10 @@
 #define SCENE_GRAPH
 
 #include <SFML/Graphics.hpp>
-#include "scene_node.hpp"
+#include "game_object.hpp"
 #include "engine/core/typedefs.hpp"
 
-class RootNode: public SceneNode{
+class RootNode: public GameObject{
 public:
     RootNode(BaseScene* scene){
         mp_parent=nullptr;
@@ -26,7 +26,7 @@ public:
 
     void update(const float);
     void render();
-    _ALWAYS_INLINE_ void add_to_root(SceneNode* p_node){
+    _ALWAYS_INLINE_ void add_to_root(GameObject* p_node){
         m_root.child_add(p_node);
     }
 
