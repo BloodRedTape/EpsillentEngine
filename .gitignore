@@ -1,4 +1,6 @@
 .vscode/
-EPS.out
-a.out
+.vs/
+.idea/
 game/*
+*.out
+*.exe
