@@ -12,7 +12,7 @@ get_display_target()
 
 */
 class Engine;
-class RenderEngine;
+class Renderer2D;
 
 
 class DisplayServer{  
@@ -39,7 +39,7 @@ class DisplayServer{
         void clear_display();
         void swap_buffers();
 
-    friend class RenderEngine;
+    friend class Renderer2D;
     friend class Engine;
 
 };

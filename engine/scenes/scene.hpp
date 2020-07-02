@@ -4,7 +4,7 @@
 #include "engine/core/component.hpp"
 
 //temp
-#include "engine/render/render_engine.hpp"
+#include "engine/render/renderer_2d.hpp"
 #include "engine/scenes/scene_graph.hpp"
 
 #include "engine/physics/collider2d.hpp"

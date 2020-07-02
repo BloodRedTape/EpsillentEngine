@@ -5,7 +5,7 @@
 std::atomic<bool> Engine::running;
 std::mutex Engine::mutex;
 Mainframe* Engine::mainframe = nullptr;
-RenderEngine* Engine::render_engine = nullptr;
+Renderer2D* Engine::render_engine = nullptr;
 DisplayServer* Engine::display_server = nullptr;  //FOR now this thing is not working
 
 SceneManager* Engine::scene_manager = nullptr;
@@ -56,7 +56,7 @@ void Engine::init(){
 
     display_server = new DisplayServer(mutex); //Yeah, required CUSTOM ALLOCATOR, but later
     
-    render_engine = new RenderEngine();
+    render_engine = new Renderer2D();
     
     scene_manager = new SceneManager(mutex);
     

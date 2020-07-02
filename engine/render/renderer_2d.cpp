@@ -1,32 +1,32 @@
 #include "engine/utils/debug.hpp"
-#include "engine/render/render_engine.hpp"
+#include "engine/render/renderer_2d.hpp"
 #include "engine/servers/display_server.hpp"
 
-RenderEngine* RenderEngine::smp_singleton = nullptr;
+Renderer2D* Renderer2D::smp_singleton = nullptr;
 
-RenderEngine::RenderEngine()
+Renderer2D::Renderer2D()
 {
     if(smp_singleton==nullptr){
         smp_singleton=this;
-        Info("RenderEngine: created");
+        Info("Renderer2D: created");
     }else{
-        Warning("RenderEngine: created messy object");
+        Warning("Renderer2D: created messy object");
     }
 }
-RenderEngine::~RenderEngine(){
-    Info("RenderEngine: deleted");
+Renderer2D::~Renderer2D(){
+    Info("Renderer2D: deleted");
 }
 
 
-void RenderEngine::render(sf::Drawable& drawable, const sf::Transform& transfrom){
+void Renderer2D::render(sf::Drawable& drawable, const sf::Transform& transfrom){
     DisplayServer::get_singleton()->mp_display_target->draw(drawable,transfrom);
 }
-void RenderEngine::render(sf::Drawable& drawable){
+void Renderer2D::render(sf::Drawable& drawable){
     DisplayServer::get_singleton()->mp_display_target->draw(drawable);
 }
 /*
 pastgen implementation
-void RenderEngine::render(RenderWindow& r_render_window){
+void Renderer2D::render(RenderWindow& r_render_window){
     r_render_window.clear();
     
     for(RenderCluster::iterator itr = get_singleton()->mp_cluster->begin(); itr!=get_singleton()->mp_cluster->end(); itr++){

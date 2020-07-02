@@ -1,4 +1,4 @@
-#include "engine/render/render_engine.hpp"
+#include "engine/render/renderer_2d.hpp"
 #include "sprite.hpp"
 
 
@@ -7,7 +7,7 @@ void Sprite::update(){
 }
 
 void Sprite::render(){
-    RenderEngine::get_singleton()->render(m_shape, global_transform());
+    Renderer2D::get_singleton()->render(m_shape, global_transform());
 
 }
 

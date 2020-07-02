@@ -11,25 +11,25 @@
 #include <list>
 typedef std::list<sf::Drawable*> RenderCluster;
 
-class RenderEngine{
+class Renderer2D{
     private:
-        static RenderEngine* smp_singleton;
+        static Renderer2D* smp_singleton;
         
 
     public:
-        RenderEngine(const RenderEngine&)=delete;
-        RenderEngine& operator=(const RenderEngine&)=delete;
+        Renderer2D(const Renderer2D&)=delete;
+        Renderer2D& operator=(const Renderer2D&)=delete;
 
         //!!!somewhen create a setup with EngineClusterSet!!!!!
-        RenderEngine();
-        ~RenderEngine();
+        Renderer2D();
+        ~Renderer2D();
 
 
         void render(sf::Drawable&, const sf::Transform&);
         void render(sf::Drawable&);
 
 
-        _ALWAYS_INLINE_ static RenderEngine* get_singleton(){
+        _ALWAYS_INLINE_ static Renderer2D* get_singleton(){
             return smp_singleton;
         } 
 

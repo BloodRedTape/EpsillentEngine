@@ -3,7 +3,7 @@
 #include "core/typedefs.hpp"
 
 #include "physics/physics_engine.hpp"
-#include "render/render_engine.hpp"
+#include "render/renderer_2d.hpp"
 #include "servers/display_server.hpp"
 #include "utils/debug.hpp"
 #include "scenes/scene_manager.hpp"
@@ -19,7 +19,7 @@ class Engine{
         static std::atomic<bool> running;
         static std::mutex mutex;
         static Mainframe* mainframe;
-        static RenderEngine* render_engine;
+        static Renderer2D* render_engine;
         static DisplayServer* display_server;  //FOR now this thing is not working
 
         static SceneManager* scene_manager;
