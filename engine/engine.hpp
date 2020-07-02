@@ -40,6 +40,8 @@ class Engine{
                 void operator()();
         };
 
+        void handle_events(sf::RenderWindow& window);
+
     public:
         Engine();
         ~Engine();

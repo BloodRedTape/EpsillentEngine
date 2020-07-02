@@ -11,7 +11,9 @@ Used to serve game window and avoid through-objects references to it via
 get_display_target()
 
 */
+class Engine;
 class RenderEngine;
+
 
 class DisplayServer{  
     private:
@@ -38,6 +40,7 @@ class DisplayServer{
         void swap_buffers();
 
     friend class RenderEngine;
+    friend class Engine;
 
 };
 

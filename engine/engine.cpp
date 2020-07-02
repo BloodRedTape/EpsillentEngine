@@ -32,6 +32,23 @@ Engine::Engine(){
 Engine::~Engine(){
 
 }
+
+void Engine::handle_events(sf::RenderWindow &window){
+    sf::Event event;
+    while(window.pollEvent(event)){
+        switch (event.type)
+        {
+        case sf::Event::Closed:
+            running = false;
+            break;
+        
+        default:
+            break;
+        }
+    }
+
+}
+
 void Engine::init(){
     if(smp_singleton==this){
         Platform::init();
@@ -76,6 +93,8 @@ void Engine::UpdateLoop::operator()(){
     float fps;
     while(running){
         
+        Engine::get_singleton()->handle_events(*DisplayServer::get_singleton()->mp_display_target);
+
         for(auto itr = layer_stack->begin(); itr!=layer_stack->end();itr++){
             (*itr)->on_update(frame_time);
         }
