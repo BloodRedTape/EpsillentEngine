@@ -40,68 +40,55 @@ void SceneManager::clean_scene_garbage(){
 
 //IMPLEMENT TO ASSIGN CLUSTERS TO COMPONENTS INSTEAD OF INF FETCH
 void SceneManager::introduce_scene(const std::string& scene_name, BaseScene* p_scene, bool is_displayable = false){
-    if(smp_singleton){
-        std::lock_guard<std::mutex> lock(smp_singleton->mutex);
-        smp_singleton->scenes.insert(std::pair<std::string, BaseScene*>(scene_name,p_scene)); 
-        if(is_displayable){
-            smp_singleton->current_scene=p_scene;
-            p_scene->on_init();
-            p_scene->on_start();
-        }
-    }else{
-        Error("SceneManager: has not been inited");
+    ASSERT_ERROR(smp_singleton,"SceneManager: has not been inited");
+    std::lock_guard<std::mutex> lock(smp_singleton->mutex);
+    smp_singleton->scenes.insert(std::pair<std::string, BaseScene*>(scene_name,p_scene)); 
+    if(is_displayable){
+        smp_singleton->current_scene=p_scene;
+        p_scene->on_init();
+        p_scene->on_start();
     }
 }
 
 
 
 void SceneManager::substract_scene(const std::string& name){
-    if(smp_singleton){
-        std::lock_guard<std::mutex> lock(smp_singleton->mutex);
-        std::map<std::string, BaseScene*>::iterator map_itr = smp_singleton->scenes.find(name);
-        if(map_itr==smp_singleton->scenes.end()){
-            Error("SceneManager: trying to substract scene that wasn't introuduced or doesn't exist");
-        }else if(map_itr->second==smp_singleton->current_scene){
-            Error("SceneManager: trying to substract current scene (Possible processor-cluster pipeline corruption)");
-        }else{
-            map_itr->second->on_destroy();
-            smp_singleton->scenes.erase(map_itr);
-        }
+    ASSERT_ERROR(smp_singleton,"SceneManager: has not been inited");
+    std::lock_guard<std::mutex> lock(smp_singleton->mutex);
+    std::map<std::string, BaseScene*>::iterator map_itr = smp_singleton->scenes.find(name);
+    if(map_itr==smp_singleton->scenes.end()){
+        Error("SceneManager: trying to substract scene that wasn't introuduced or doesn't exist");
+    }else if(map_itr->second==smp_singleton->current_scene){
+        Error("SceneManager: trying to substract current scene (Possible processor-cluster pipeline corruption)");
     }else{
-        Error("SceneManager: has not been inited");
+        map_itr->second->on_destroy();
+        smp_singleton->scenes.erase(map_itr);
     }
 }
 
 BaseScene* SceneManager::get_scene(const std::string& name){
-    if(smp_singleton){
-        std::map<std::string, BaseScene*>::iterator map_itr = smp_singleton->scenes.find(name);
-        if(map_itr==smp_singleton->scenes.end()){
-            Error("SceneManager: trying to get scene that wasn't introuduced or doesn't exist");
-            return nullptr; // it won't be returned Error() terminates runtime
-        }else{
-            return map_itr->second;
-        }
+    ASSERT_ERROR(smp_singleton,"SceneManager: has not been inited");
+    std::map<std::string, BaseScene*>::iterator map_itr = smp_singleton->scenes.find(name);
+    if(map_itr==smp_singleton->scenes.end()){
+        Error("SceneManager: trying to get scene that wasn't introuduced or doesn't exist");
+        return nullptr; // it won't be returned Error() terminates runtime
     }else{
-        Error("SceneManager: has not been inited");
-        return nullptr;
+        return map_itr->second;
     }
 }
 
 //IMPLEMENT TO ASSIGN CLUSTERS TO COMPONENTS INSTEAD OF INF FETCH
 void SceneManager::set_scene(const std::string& name){
-    if(smp_singleton){
-        std::lock_guard<std::mutex> lock(smp_singleton->mutex);
-        std::map<std::string, BaseScene*>::iterator map_itr = smp_singleton->scenes.find(name);
-        if(map_itr==smp_singleton->scenes.end()){
-            Error("SceneManager: trying to set scene that wasn't introuduced or doesn't exist");
-        }else if(map_itr->second==smp_singleton->current_scene){
-            Warning("SceneManager: trying to set already established scene");
-        }else{
-            smp_singleton->current_scene = map_itr->second;
-            smp_singleton->current_scene->on_start();
-        }
+    ASSERT_ERROR(smp_singleton,"SceneManager: has not been inited");
+    std::lock_guard<std::mutex> lock(smp_singleton->mutex);
+    std::map<std::string, BaseScene*>::iterator map_itr = smp_singleton->scenes.find(name);
+    if(map_itr==smp_singleton->scenes.end()){
+        Error("SceneManager: trying to set scene that wasn't introuduced or doesn't exist");
+    }else if(map_itr->second==smp_singleton->current_scene){
+        Warning("SceneManager: trying to set already established scene");
     }else{
-        Error("SceneManager: has not been inited");
+        smp_singleton->current_scene = map_itr->second;
+        smp_singleton->current_scene->on_start();
     }
 
 }

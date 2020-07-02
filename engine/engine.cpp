@@ -50,40 +50,34 @@ void Engine::handle_events(sf::RenderWindow &window){
 }
 
 void Engine::init(){
-    if(smp_singleton==this){
-        Platform::init();
-        mainframe = new Mainframe();
+    ASSERT_WARRNING(smp_singleton==this,"Engine: can't init from non-creator instance");
+    Platform::init();
+    mainframe = new Mainframe();
 
-        display_server = new DisplayServer(mutex); //Yeah, required CUSTOM ALLOCATOR, but later
-        
-        render_engine = new RenderEngine();
-        
-        scene_manager = new SceneManager(mutex);
-        
-        layer_stack = new LayerStack();
+    display_server = new DisplayServer(mutex); //Yeah, required CUSTOM ALLOCATOR, but later
+    
+    render_engine = new RenderEngine();
+    
+    scene_manager = new SceneManager(mutex);
+    
+    layer_stack = new LayerStack();
 
-        layer_stack->push_layer(new GameLayer);
+    layer_stack->push_layer(new GameLayer);
 
-        display_server->init_window(k_video_mode,k_window_title);
-        
-        display_server->set_frame_rate_limit(60);
-        Info("Engine: inited");
-    }else{
-        Warning("Engine: can't init from non-creator instance");
-    }
+    display_server->init_window(k_video_mode,k_window_title);
+    
+    display_server->set_frame_rate_limit(60);
+    Info("Engine: inited");
 }
 
 void Engine::shutdown(){
-    if(smp_singleton==this){
-        delete layer_stack;
-        delete scene_manager;
-        delete render_engine;
-        delete display_server;
-        delete mainframe;
-        Info("Engine: shuted down");
-    }else{
-        Warning("Engine: can't shut down from non-creator instance");
-    }
+    ASSERT_WARRNING(smp_singleton==this,"Engine: can't shut down from non-creator instance");
+    delete layer_stack;
+    delete scene_manager;
+    delete render_engine;
+    delete display_server;
+    delete mainframe;
+    Info("Engine: shuted down");
 }
 
 

@@ -52,10 +52,7 @@ public:
     template <typename T>
     T* component_get(const std::string& name){
         std::map<std::string,Component*>::iterator itr = m_components.find(T::static_type()+name);
-        if(itr == m_components.end()){
-            Error("Component " + name + " not found");
-            return nullptr;
-        }
+        ASSERT_ERROR(itr != m_components.end(),"Component " + name + " not found");
         return static_cast<T*>(itr->second);
     }
 

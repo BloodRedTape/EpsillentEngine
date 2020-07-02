@@ -1,6 +1,6 @@
 ENGINE_VERSION := 0
 ENGINE_SUBVERSION := 5
-ENGINE_PATCHLEVEL := 1
+ENGINE_PATCHLEVEL := 2
 
 include game/ProjectConfig.mk
 
