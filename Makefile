@@ -36,7 +36,16 @@ linux:
 	@echo
 	@./$(GAME_TITLE)-v$(GAME_VERSION).$(GAME_SUBVERSION).out
 macos:
-	$(info Building for macos)
+	@echo "+----------------------------------+"
+	@echo "|                                  |"
+	@echo "|            EpsEngine v$(ENGINE_VERSION).$(ENGINE_SUBVERSION).$(ENGINE_PATCHLEVEL)          |"            |"
+	@echo "|                                  |"
+	@echo "|        by Epsillent inc.         |"
+	@echo "+----------------------------------+"
+
+	@g++ -std=c++11 $(SOURCES_MACOS) $(INCLUDE_MACOS) $(ENGINE_PATH)/thirdparty/lib/macos/libsfml-graphics.dylib $(ENGINE_PATH)/thirdparty/lib/macos/libsfml-system.dylib /$(ENGINE_PATH)/thirdparty/lib/macos/libsfml-window.dylib -o out 
+	@install_name_tool -change @rpath/libsfml-graphics.2.5.dylib $(ENGINE_PATH)/thirdparty/lib/macos/libsfml-graphics.2.5.1.dylib $(ENGINE_PATH)/out && install_name_tool -change @rpath/libsfml-window.2.5.dylib $(ENGINE_PATH)/thirdparty/lib//macos/libsfml-window.2.5.1.dylib $(ENGINE_PATH)/out && install_name_tool -change @rpath/libsfml-system.2.5.dylib $(ENGINE_PATH)/thirdparty/lib/macos/libsfml-system.2.5.1.dylib $(ENGINE_PATH)/out
+
 
 clean:
 	rm $(GAME_TITLE)-v$(GAME_VERSION).$(GAME_SUBVERSION).out
