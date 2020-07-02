@@ -8,6 +8,7 @@
 #include "utils/debug.hpp"
 #include "scenes/scene_manager.hpp"
 #include "core/mainframe.hpp"
+#include "engine/core/layer_stack.hpp"
 
 #include <thread>
 #include <mutex>
@@ -22,7 +23,7 @@ class Engine{
         static DisplayServer* display_server;  //FOR now this thing is not working
 
         static SceneManager* scene_manager;
-
+        static LayerStack* layer_stack;
 
         static const sf::VideoMode k_video_mode;  //better window creation
         static const char * k_window_title;

@@ -8,7 +8,7 @@
 #include <mutex>
 
 class Engine;
-
+class GameLayer;
 // KING OF THE ENGINE
 class SceneManager{
 private:
@@ -19,6 +19,7 @@ private:
 
 private:
     friend class Engine;
+    friend class GameLayer;
     
     void update_scene(const float dt);
     void render_scene();

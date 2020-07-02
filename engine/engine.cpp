@@ -1,5 +1,6 @@
 #include "engine.hpp"
 #include "platform/platform.hpp"
+#include "engine/scenes/game_layer.hpp"
 
 std::atomic<bool> Engine::running;
 std::mutex Engine::mutex;
@@ -8,6 +9,8 @@ RenderEngine* Engine::render_engine = nullptr;
 DisplayServer* Engine::display_server = nullptr;  //FOR now this thing is not working
 
 SceneManager* Engine::scene_manager = nullptr;
+
+LayerStack* Engine::layer_stack = nullptr;
 
 bool Engine::_show_fps = false;
 
@@ -40,6 +43,9 @@ void Engine::init(){
         
         scene_manager = new SceneManager(mutex);
         
+        layer_stack = new LayerStack();
+
+        layer_stack->push_layer(new GameLayer);
 
         display_server->init_window(k_video_mode,k_window_title);
         
@@ -52,6 +58,7 @@ void Engine::init(){
 
 void Engine::shutdown(){
     if(smp_singleton==this){
+        delete layer_stack;
         delete scene_manager;
         delete render_engine;
         delete display_server;
@@ -68,9 +75,10 @@ void Engine::UpdateLoop::operator()(){
     float frame_time = 0;
     float fps;
     while(running){
-        scene_manager->update_scene(frame_time);
-        mainframe->compute();
-        scene_manager->clean_scene_garbage();
+        
+        for(auto itr = layer_stack->begin(); itr!=layer_stack->end();itr++){
+            (*itr)->on_update(frame_time);
+        }
 
         frame_time=n.getElapsedTime().asSeconds();
         fps = 1/frame_time;
@@ -95,9 +103,11 @@ void Engine::RenderLoop::operator()(){
     while(running){
         display_server->clear_display();
         
-        mutex.lock();
-        scene_manager->render_scene();
-        mutex.unlock();
+        for(auto itr = layer_stack->begin(); itr != layer_stack->end(); itr++){
+            mutex.lock();
+            (*itr)->on_render();
+            mutex.unlock();
+        }
 
         if(_show_fps){
             debug_info.setString("fps: " + std::to_string(fps));
