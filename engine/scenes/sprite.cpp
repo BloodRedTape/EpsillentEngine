@@ -1,4 +1,5 @@
 #include "engine/render/renderer_2d.hpp"
+#include "engine/render/draw_call.hpp"
 #include "sprite.hpp"
 
 
@@ -7,8 +8,7 @@ void Sprite::update(){
 }
 
 void Sprite::render(){
-    Renderer2D::get_singleton()->render(m_shape, global_transform());
-
+    DrawCallInterface::draw(m_shape, global_transform());
 }
 
 void Sprite::on_init(){

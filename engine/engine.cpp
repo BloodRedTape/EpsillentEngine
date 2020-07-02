@@ -5,7 +5,7 @@
 std::atomic<bool> Engine::running;
 std::mutex Engine::mutex;
 Mainframe* Engine::mainframe = nullptr;
-Renderer2D* Engine::render_engine = nullptr;
+DrawCallInterface* Engine::draw_call_interface = nullptr;
 DisplayServer* Engine::display_server = nullptr;  //FOR now this thing is not working
 
 SceneManager* Engine::scene_manager = nullptr;
@@ -55,8 +55,10 @@ void Engine::init(){
     mainframe = new Mainframe();
 
     display_server = new DisplayServer(mutex); //Yeah, required CUSTOM ALLOCATOR, but later
-    
-    render_engine = new Renderer2D();
+    display_server->init_window(k_video_mode,k_window_title);
+    display_server->set_frame_rate_limit(60);
+
+    draw_call_interface = new DrawCallInterface(display_server->mp_display_target);
     
     scene_manager = new SceneManager(mutex);
     
@@ -64,9 +66,7 @@ void Engine::init(){
 
     layer_stack->push_layer(new GameLayer);
 
-    display_server->init_window(k_video_mode,k_window_title);
-    
-    display_server->set_frame_rate_limit(60);
+
     Info("Engine: inited");
 }
 
@@ -74,7 +74,7 @@ void Engine::shutdown(){
     ASSERT_WARRNING(smp_singleton==this,"Engine: can't shut down from non-creator instance");
     delete layer_stack;
     delete scene_manager;
-    delete render_engine;
+    delete draw_call_interface;
     delete display_server;
     delete mainframe;
     Info("Engine: shuted down");
@@ -114,7 +114,7 @@ void Engine::RenderLoop::operator()(){
     debug_info.setFillColor(sf::Color::Green);
 
     while(running){
-        display_server->clear_display();
+        DrawCallInterface::clear();
         
         for(auto itr = layer_stack->begin(); itr != layer_stack->end(); itr++){
             mutex.lock();
@@ -124,10 +124,10 @@ void Engine::RenderLoop::operator()(){
 
         if(_show_fps){
             debug_info.setString("fps: " + std::to_string(fps));
-            render_engine->render(debug_info);
+            DrawCallInterface::draw(debug_info);
         }
 
-        display_server->swap_buffers();
+        DrawCallInterface::swap_buffers();
 
         frame_time = n.getElapsedTime().asSeconds();
         fps = 1/frame_time;

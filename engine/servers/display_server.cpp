@@ -38,7 +38,6 @@ void DisplayServer::set_frame_rate_limit(int fps){
 }
 
 void DisplayServer::clear_display(){
-    draw_calls=0;
     smp_singleton->mp_display_target->clear();
 }
 

@@ -9,7 +9,7 @@
 #include "scenes/scene_manager.hpp"
 #include "core/mainframe.hpp"
 #include "engine/core/layer_stack.hpp"
-
+#include "engine/render/draw_call.hpp"
 #include <thread>
 #include <mutex>
 #include <atomic>
@@ -19,7 +19,7 @@ class Engine{
         static std::atomic<bool> running;
         static std::mutex mutex;
         static Mainframe* mainframe;
-        static Renderer2D* render_engine;
+        static DrawCallInterface* draw_call_interface;
         static DisplayServer* display_server;  //FOR now this thing is not working
 
         static SceneManager* scene_manager;

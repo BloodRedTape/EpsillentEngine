@@ -12,16 +12,12 @@ get_display_target()
 
 */
 class Engine;
-class Renderer2D;
-
 
 class DisplayServer{  
     private:
         std::mutex& mutex;
         sf::RenderWindow* mp_display_target;
         static DisplayServer* smp_singleton;
-
-        int draw_calls;
 
     public:
         DisplayServer(std::mutex&);
@@ -39,7 +35,6 @@ class DisplayServer{
         void clear_display();
         void swap_buffers();
 
-    friend class Renderer2D;
     friend class Engine;
 
 };
