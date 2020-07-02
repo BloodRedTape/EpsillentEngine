@@ -23,6 +23,12 @@ public:
 
 #ifdef DEBUG_MODE 
 
+#define ASSERT(exp) ASSERT_ERROR(exp, "Asserion failed")
+#define ASSERT_ERROR(exp,msg) if(!(exp)){Error(msg);}
+#define ASSERT_WARRNING(exp,msg) if(!(exp)){Warning(msg);}
+#define ASSERT_INFO(exp,msg) if(!(exp)){Info(msg);}
+
+
 class Warning{
     public:
         Warning(const std::string message){
@@ -46,7 +52,10 @@ class Info{
 
 #define Info(arg) {}
 #define Warning(arg){}
-
+#define ASSERT(exp) {}
+#define ASSERT_ERROR(exp,msg) {}
+#define ASSERT_WARRNING(exp,msg) {}
+#define ASSERT_INFO(exp,msg) {}
 
 #endif
 
