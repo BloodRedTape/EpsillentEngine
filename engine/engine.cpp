@@ -67,10 +67,10 @@ void Engine::UpdateLoop::operator()(){
     sf::Clock n;
     float frame_time = 0;
     float fps;
-    while(smp_singleton->running){
-        smp_singleton->scene_manager->update_scene(frame_time);
-        smp_singleton->mainframe->compute();
-        smp_singleton->scene_manager->clean_scene_garbage();
+    while(running){
+        scene_manager->update_scene(frame_time);
+        mainframe->compute();
+        scene_manager->clean_scene_garbage();
 
         frame_time=n.getElapsedTime().asSeconds();
         fps = 1/frame_time;
@@ -92,11 +92,11 @@ void Engine::RenderLoop::operator()(){
     debug_info.setFont(debug_font);
     debug_info.setFillColor(sf::Color::Green);
 
-    while(smp_singleton->running){
-        smp_singleton->display_server->clear_display();
+    while(running){
+        display_server->clear_display();
         
         mutex.lock();
-        smp_singleton->scene_manager->render_scene();
+        scene_manager->render_scene();
         mutex.unlock();
 
         if(_show_fps){
@@ -104,7 +104,7 @@ void Engine::RenderLoop::operator()(){
             render_engine->render(debug_info);
         }
 
-        smp_singleton->display_server->swap_buffers();
+        display_server->swap_buffers();
 
         frame_time = n.getElapsedTime().asSeconds();
         fps = 1/frame_time;
@@ -117,7 +117,7 @@ void Engine::RenderLoop::operator()(){
 void Engine::start(){
     running = true;
 
-    if(smp_singleton->scene_manager->get_current_scene()==nullptr){
+    if(scene_manager->get_current_scene()==nullptr){
         Error("Engine:Create a scene and apply it via Engine::set_entry_scene(BaseScene* p_scene, const char* name)");
     }
     std::thread update{UpdateLoop()};
@@ -131,7 +131,7 @@ void Engine::stop(){
 }
 
 void Engine::set_entry_scene(BaseScene* p_scene, const char* name){
-    smp_singleton->scene_manager->introduce_scene(name,p_scene,true);
+    scene_manager->introduce_scene(name,p_scene,true);
 }
 
 
