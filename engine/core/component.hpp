@@ -7,11 +7,10 @@ class GameObject;
 class Component{
 protected:
     GameObject * mp_owner;
-
-    void set_owner(GameObject*);
 public: 
-    Component(){};
+    Component(GameObject*);
     virtual ~Component(){};
+    virtual void finalize()=0;
 };
 
 

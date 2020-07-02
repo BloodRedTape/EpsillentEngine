@@ -14,7 +14,7 @@ void BaseScene::update(const float dt){
     scene_graph.update(dt);
 }
 void BaseScene::render(){
-    scene_graph.render();
+    scene_renderer.render();
 }
 
 
@@ -31,6 +31,9 @@ void BaseScene::clear_garbage(){
     if(!garbage.empty()){
         for(GameObject* candidate: garbage){
             candidate->detach();
+            for(auto &component: candidate->m_components){
+                component.second->finalize();
+            }
         }
         while(!garbage.empty()){
             delete garbage.back();

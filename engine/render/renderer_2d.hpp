@@ -1,28 +1,26 @@
 #ifndef RENDER_H
 #define RENDER_H
 
+#include <list>
 #include <memory>
 #include <SFML/Graphics.hpp>
-#include "engine/core/typedefs.hpp"
-//#include "engine/core/cluster.hpp"
-#include "engine/servers/display_server.hpp"
-#include "engine/core/processor.hpp"
-//for a short time
-#include <list>
+#include "engine/components/sprite_2d.hpp"
 
 class Renderer2D{
-    private:
-        
+private:
+    std::list<Sprite2D> m_sprites;
+public:
+    Renderer2D(const Renderer2D&)=delete;
+    Renderer2D& operator=(const Renderer2D&)=delete;
 
-    public:
-        Renderer2D(const Renderer2D&)=delete;
-        Renderer2D& operator=(const Renderer2D&)=delete;
 
+    Renderer2D();
+    ~Renderer2D();
 
-        Renderer2D();
-        ~Renderer2D();
+    void render();
 
-        void render();
+    Sprite2D* sprite_new(GameObject*);
+    void sprite_delete(Sprite2D*);
 
 };
 

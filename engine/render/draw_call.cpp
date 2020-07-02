@@ -16,7 +16,7 @@ DrawCallInterface::DrawCallInterface(sf::RenderWindow* win):
 }
 
 DrawCallInterface::~DrawCallInterface(){
-
+    Info("DrawCallInterface: deleted");
 }
 
 

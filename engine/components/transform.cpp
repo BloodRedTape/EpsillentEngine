@@ -3,11 +3,11 @@
 
 
 Transform::Transform(GameObject* owner):
+    Component(owner),
     m_transform(),
     m_global_transform(),
     m_dirty(false)
 {
-    set_owner(owner);
 }
 
 void Transform::translate(const sf::Vector2f& r_offset){

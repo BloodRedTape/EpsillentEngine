@@ -17,6 +17,7 @@ class BaseScene{
 protected:
     SceneGraph scene_graph;
     std::list<GameObject*> garbage;
+    Renderer2D scene_renderer;
     std::list<Collider2D*> physics;
     BaseScene();
     ~BaseScene();
@@ -45,7 +46,7 @@ public:
 
     void object_introduce(GameObject*);
 
-
+    Renderer2D& renderer(){return scene_renderer;}
 
 };
 

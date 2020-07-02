@@ -16,6 +16,7 @@ public:
     Transform(GameObject* owner);
 
     static std::string static_type(){return "Transform";}
+    void finalize()override{};
 
     void translate(const sf::Vector2f& r_offset);
     void translate(const float x_offset,const float y_offset);

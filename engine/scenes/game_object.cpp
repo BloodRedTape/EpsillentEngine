@@ -7,9 +7,9 @@ GameObject::GameObject():
     m_transform(this),
     mp_scene(nullptr),
     mp_parent(nullptr),
-    garbage(false)
+    garbage(false),
+    inited(false)
 {
-    on_init();
     m_components.insert(std::pair<std::string,Component*>(Transform::static_type()+"Transform",&m_transform));
 }
 
@@ -40,13 +40,17 @@ void GameObject::render_traverse(std::queue<GameObject*>& traverse_queue){
         traverse_queue.push(*itr);
     }
 }
-
+#include <cstdlib>
 void GameObject::child_add(GameObject* p_node){
     m_child_nodes.push_back(p_node);
     p_node->mp_parent=this;
     p_node->mp_scene=mp_scene;
     p_node->m_transform.m_dirty=true;
     p_node->m_self = std::prev(m_child_nodes.end());
+    if(!p_node->inited){
+        p_node->on_init();
+        p_node->inited=true;
+    }
 }
 void GameObject::children_destroy(){
     for(GameObject* node: m_child_nodes){

@@ -24,6 +24,7 @@ private:
     BaseScene *mp_scene;
     GameObject *mp_parent;
     bool garbage;
+    bool inited;
     std::map<std::string,Component*> m_components;
 
     
@@ -56,6 +57,21 @@ public:
         return static_cast<T*>(itr->second);
     }
 
+    template <typename T>
+    T* component_add(const std::string& name){
+        T*t = T::init(this);
+        m_components.insert(std::pair<std::string,Component*>(T::static_type()+name,t));
+        return t;
+    }
+    template <typename T>
+    void component_remove(const std::string& name){
+        std::map<std::string,Component*>::iterator itr = m_components.find(T::static_type()+name);
+        ASSERT_ERROR(itr != m_components.end(),"Component " + name + " not found");
+        itr->second->finalize();
+        m_components.erase(itr);
+    }
+
+    BaseScene* scene(){return mp_scene;};
 
     void child_add(GameObject*);
     void children_destroy();
