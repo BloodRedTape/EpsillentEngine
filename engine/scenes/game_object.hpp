@@ -1,11 +1,16 @@
 #ifndef SCENE_NODE
 #define SCENE_NODE
 
-#include <SFML/Graphics.hpp>
+#include <map>
 #include <list> // basicaly have to be replaced with better data structure
 #include <queue>
 #include <memory>
+#include <string>
+#include <SFML/Graphics.hpp>
 #include "engine/core/typedefs.hpp"
+#include "engine/components/transform.hpp"
+#include "engine/utils/debug.hpp"
+
 
 class BaseScene;
 class SceneGraph;
@@ -13,19 +18,20 @@ class RootNode;
 
 class GameObject{
 private:
+    Transform m_transform;
     std::list<GameObject*> m_child_nodes;
     std::list<GameObject*>::iterator m_self;
     BaseScene *mp_scene;
     GameObject *mp_parent;
     bool garbage;
-    bool m_dirty;
-    sf::Transform m_transform;
-    sf::Transform m_global_transform;
+    std::map<std::string,Component*> m_components;
+
     
 private:        
     friend class RootNode;
     friend class BaseScene;
     friend class SceneGraph;
+    friend class Transform;
     //add children in update queue
     // apply parent transfrom to self
     void update_traverse(const float dt);
@@ -41,6 +47,18 @@ protected:
 public:
     GameObject();
     virtual ~GameObject();
+
+
+    template <typename T>
+    T* component_get(const std::string& name){
+        std::map<std::string,Component*>::iterator itr = m_components.find(T::static_type()+name);
+        if(itr == m_components.end()){
+            Error("Component " + name + " not found");
+            return nullptr;
+        }
+        return static_cast<T*>(itr->second);
+    }
+
 
     void child_add(GameObject*);
     void children_destroy();

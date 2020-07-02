@@ -30,6 +30,6 @@ void Mainframe::reload(){
 
 void Mainframe::compute(){
     for(std::vector<Processor*>::iterator itr = get_singleton()->m_processors.begin(); itr!=get_singleton()->m_processors.end(); itr++){
-        (*itr)->process();
+        
     }
 }

@@ -1,21 +1,18 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include <list> // as always, this should be replaced with better data structure
+class GameObject;
 
 
 class Component{
-    public:
-        typedef std::list<Component*> Cluster;
-    protected:
-        Cluster& mr_self_cluster;
-        Cluster::iterator m_self_iterator;
-    public:
-        // parametr is a reference to a cluster of the suitable processor
-        Component(Cluster&);
-        ~Component();
+protected:
+    GameObject * mp_owner;
+
+    void set_owner(GameObject*);
+public: 
+    Component(){};
+    virtual ~Component(){};
 };
-typedef Component::Cluster Cluster;
 
 
 #endif

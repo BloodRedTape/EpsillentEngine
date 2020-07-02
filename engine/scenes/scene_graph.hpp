@@ -9,7 +9,6 @@ class RootNode: public GameObject{
 public:
     RootNode(BaseScene* scene){
         mp_parent=nullptr;
-        m_dirty = false;
         mp_scene=scene;
     }
     void on_init()override{};

@@ -4,13 +4,13 @@
 #include "engine/utils/debug.hpp"
 
 GameObject::GameObject():
-    m_transform(),
+    m_transform(this),
     mp_scene(nullptr),
     mp_parent(nullptr),
-    garbage(false),
-    m_dirty(true)
+    garbage(false)
 {
-
+    on_init();
+    m_components.insert(std::pair<std::string,Component*>(Transform::static_type()+"Transform",&m_transform));
 }
 
 GameObject::~GameObject()
@@ -45,8 +45,8 @@ void GameObject::child_add(GameObject* p_node){
     m_child_nodes.push_back(p_node);
     p_node->mp_parent=this;
     p_node->mp_scene=mp_scene;
+    p_node->m_transform.m_dirty=true;
     p_node->m_self = std::prev(m_child_nodes.end());
-    p_node->m_dirty = true;
 }
 void GameObject::children_destroy(){
     for(GameObject* node: m_child_nodes){
@@ -87,7 +87,6 @@ void GameObject::child_detach(GameObject* p_node){
 
 
 void GameObject::translate(const sf::Vector2f& r_offset){
-    m_dirty = true;
     m_transform.translate(r_offset);
 }
 void GameObject::translate(const float x, const float y){
@@ -95,17 +94,13 @@ void GameObject::translate(const float x, const float y){
 }
 
 void GameObject::set_rotation(const float angle){
-    m_dirty = true;
-    m_transform.rotate(angle);
+    m_transform.set_rotation(angle);
 }
 
 
 const sf::Transform& GameObject::global_transform(){
-    if(m_dirty){
-        m_global_transform=mp_parent->global_transform()*m_transform;
-    }
-    return m_global_transform;
+    return m_transform.global_transform();
 }
 const sf::Transform& GameObject::local_transform(){
-    return m_transform;
+    return m_transform.local_transform();
 }

@@ -11,12 +11,7 @@
 // also it would be nice if your inheritance from this class was a singleton
 //template<typename T> // this template is just for fun XD
 class Processor{
-    protected:
-        Cluster* p_current_cluster;
-    public:
-        Processor(Cluster*);
-        void set_cluster();
-        virtual void process()=0;
+
 
 };
 
