@@ -22,7 +22,7 @@ PLATFORM := $(shell uname -s)
 
 
 
-all: $(PLATFORM)
+all:
 	@tput setaf 9
 	@echo "+----------------------------------+"
 	@echo "|                                  |"
@@ -32,14 +32,17 @@ all: $(PLATFORM)
 	@echo "+----------------------------------+"
 	@tput sgr0
 	@echo
+	$(info [ENGINE-v$(ENGINE_VERSION).$(ENGINE_SUBVERSION).$(ENGINE_PATCHLEVEL)]: compiling for $(PLATFORM))
+	@$(MAKE) $(PLATFORM)
 
 Darwin:
 	@rm -f libengine.dylib
-	$(CC_MACOS) $(CFLAGS_MACOS) $(INCLUDE) $(SOURCES) -o libengine.dylib
+	@$(CC_MACOS) $(CFLAGS_MACOS) $(INCLUDE) $(SOURCES) -o libengine.dylib
 Linux:
 	@rm -f libengine.so
-	$(CC_LINUX) $(CFLAGS_LINUX) $(INCLUDE) $(SOURCES) -o libengine.so
+	@$(CC_LINUX) $(CFLAGS_LINUX) $(INCLUDE) $(SOURCES) -o libengine.so
 
-
+clean:
+	@rm -f libengine.*
 
 

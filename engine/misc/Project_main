@@ -1,0 +1,53 @@
+#include "engine.hpp"
+
+struct Player: public GameObject{
+    Sprite2D * sprite;
+    float speed;
+
+    void on_init()override{
+        speed = 200.f;
+        sprite = component_add<Sprite2D>("PlayerSprite");
+        sprite->set_color(sf::Color::Green);
+        sprite->set_size(200,300);
+    }
+
+    void on_update(float dt)override{
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
+            translate(0,-speed*dt);
+        }
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
+            translate(0,speed*dt);
+        }
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
+            translate(speed*dt,0);
+        }
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
+            translate(-speed*dt,0);
+        }
+    }
+
+
+};
+
+class Scene: public BaseScene{
+private:
+public:
+    void on_init()override{
+        object_introduce(new Player);
+    }
+
+    void on_update(float dt)override{
+
+    }
+};
+
+Engine * engine;
+
+int main(){
+    engine = new Engine();
+    engine->init("Application");
+    engine->show_fps(true);
+    engine->set_entry_scene(new Scene,"MainScene");
+    engine->start();
+    engine->shutdown();
+}

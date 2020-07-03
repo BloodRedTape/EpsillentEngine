@@ -1,0 +1,75 @@
+ENGINE_PATH := ../../engine
+INCLUDE := -I$(ENGINE_PATH)/sources/ -I$(ENGINE_PATH)/thirdparty/include -I./
+
+
+CC_LINUX := g++
+CFLAGS_LINUX := -Werror
+LINKER_FLAGS_LINUX_BUILD := -lX11 -lstdc++ -lpthread -Wl,-R$(ENGINE_PATH)/thirdparty/lib/Linux $(ENGINE_PATH)/libengine.so $(ENGINE_PATH)/thirdparty/lib/Linux/libsfml-audio.so $(ENGINE_PATH)/thirdparty/lib/Linux/libsfml-window.so $(ENGINE_PATH)/thirdparty/lib/Linux/libsfml-graphics.so $(ENGINE_PATH)/thirdparty/lib/Linux/libsfml-system.so $(ENGINE_PATH)/thirdparty/lib/Linux/libsfml-network.so
+LINKER_FLAGS_LINUX_DISTRIBUTION := -lX11 -lstdc++ -lpthread -Llibs -Wl,-R./libs -lengine -lsfml-window -lsfml-graphics -lsfml-system -lsfml-network -lsfml-audio
+
+CC_MACOS := g++
+CFLAGS_MACOS := -dynamiclib -std=c++11 
+
+
+
+include ProjectConfig.mk
+
+OUT_NAME := $(GAME_TITLE)-v$(GAME_VERSION).$(GAME_SUBVERSION)
+
+.PHONY: all clean rebuild distribution Linux Linux_distribution Darwin  Darwin_distribution
+
+PLATFORM := $(shell uname -s)
+
+
+all: 
+	$(info [INFO]: compiling $(GAME_TITLE) project)
+	@$(MAKE) $(PLATFORM)
+
+rebuild: 
+	@(cd ../../engine/; make)
+	$(info [INFO]: compiling $(GAME_TITLE) project)
+	@$(MAKE) $(PLATFORM)
+
+distribution: 
+	$(info [INFO]: setting up package structure)
+	@rm -fr out/$(GAME_TITLE)
+	@mkdir -p out/
+	@mkdir out/$(GAME_TITLE)
+	$(info [INFO]: copying libs and game resources)
+	@cp -r $(GAME_RESOURCES_FOLDER) out/$(GAME_TITLE)/
+	@cp -r $(ENGINE_PATH)/thirdparty/lib/$(PLATFORM)/ out/$(GAME_TITLE)/
+	@mv out/$(GAME_TITLE)/$(PLATFORM) out/$(GAME_TITLE)/libs
+
+	$(info [INFO]: compiling $(GAME_TITLE) project)
+	@$(MAKE) $(PLATFORM)_distribution
+
+
+clean:
+	$(info [INFO]: cleaning out/)
+	@rm -fr out/*
+
+$(ENGINE_PATH)/libengine.dylib:
+	$(info [INFO]: engine was not compiled)
+	$(info [INFO]: compiling engine...)
+	(cd ../../engine/; make)
+
+Darwin: $(ENGINE_PATH)/libengine.dylib
+
+
+Darwin_distribution: $(ENGINE_PATH)/libengine.dylib
+
+
+
+$(ENGINE_PATH)/libengine.so:
+	$(info [INFO]: engine was not compiled)
+	$(info [INFO]: compiling engine...)
+	@(cd ../../engine/; make)
+
+Linux: $(ENGINE_PATH)/libengine.so
+	@$(CC_LINUX) $(INCLUDE) $(GAME_SOURCES) $(CFLAGS_LINUX) $(LINKER_FLAGS_LINUX_BUILD) -o $(OUT_NAME).out
+
+
+Linux_distribution: $(ENGINE_PATH)/libengine.so
+	@cp $(ENGINE_PATH)/libengine.so out/$(GAME_TITLE)/libs/libengine.so
+	@(cd out/$(GAME_TITLE); $(CC_LINUX) -I../../$(ENGINE_PATH)/sources/ -I../../$(ENGINE_PATH)/thirdparty/include -I../../ $(subst ./,../../,$(GAME_SOURCES)) $(CFLAGS_LINUX) $(LINKER_FLAGS_LINUX_DISTRIBUTION) -o $(OUT_NAME))
+	
