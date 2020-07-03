@@ -1,6 +1,10 @@
 .vscode/
 .vs/
 .idea/
-game/*
+engine/*.so
+engine/*.dylib
+engine/*.dll
+projects/*
+!projects/*.sh
 *.out
 *.exe
