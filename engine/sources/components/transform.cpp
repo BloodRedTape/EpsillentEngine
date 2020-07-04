@@ -23,7 +23,7 @@ void Transform::set_rotation(const float angle){
     m_transform.rotate(angle);
 }
 
-const sf::Transform& Transform::global_transform(){
+sf::Transform Transform::global_transform(){
     if(m_dirty){
         m_global_transform=mp_owner->mp_parent->global_transform()*m_transform;
     }
