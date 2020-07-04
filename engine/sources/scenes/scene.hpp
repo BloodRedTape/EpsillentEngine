@@ -20,6 +20,7 @@ protected:
     SceneGraph scene_graph;
     std::list<GameObject*> garbage;
     Renderer2D scene_renderer;
+    std::list<Component*> objects_components;
     std::list<Collider2D*> physics;
     sf::Clock clock;
     BaseScene();
@@ -50,6 +51,7 @@ public:
     void object_introduce(GameObject*);
 
     Renderer2D& renderer(){return scene_renderer;}
+    std::list<Component*>& components(){return objects_components;}
 
 };
 

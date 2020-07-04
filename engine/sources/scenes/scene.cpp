@@ -12,6 +12,9 @@ BaseScene::~BaseScene(){
 
 void BaseScene::update(const float dt){
     scene_graph.update(dt);
+    for(Component *comp: objects_components){
+        comp->update(dt);
+    }
 }
 void BaseScene::render(){
     scene_renderer.render();

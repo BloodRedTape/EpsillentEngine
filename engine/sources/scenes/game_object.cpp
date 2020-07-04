@@ -97,6 +97,11 @@ void GameObject::translate(const float x, const float y){
     translate(sf::Vector2f(x,y));
 }
 
+void GameObject::set_transform(const sf::Transform& trans){
+    m_transform.m_transform=trans;
+    m_transform.m_dirty=true;
+}
+
 void GameObject::set_rotation(const float angle){
     m_transform.set_rotation(angle);
 }

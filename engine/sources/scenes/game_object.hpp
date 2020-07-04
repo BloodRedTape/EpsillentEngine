@@ -72,6 +72,7 @@ public:
     }
 
     BaseScene* scene(){return mp_scene;};
+    GameObject* parent(){return mp_parent;}
 
     void child_add(GameObject*);
     void children_destroy();
@@ -89,6 +90,7 @@ public:
 
     void translate(const sf::Vector2f& r_offset);
     void translate(const float x_offset,const float y_offset);
+    void set_transform(const sf::Transform&);
     void set_rotation(const float angle);
     //void set_origin();
 

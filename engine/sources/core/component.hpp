@@ -11,6 +11,7 @@ public:
     Component(GameObject*);
     virtual ~Component(){};
     virtual void finalize()=0;
+    virtual void update(float dt){};
 };
 
 
