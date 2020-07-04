@@ -34,23 +34,25 @@ ParticleSystem::ParticleSystem(GameObject * owner):
     Component(owner),
     spawn_props(sf::Vector2f(40,40),sf::Vector2i(50,50),1.f,400,sf::Color::White,sf::Color::White),
     spawn_rate(0.01f),
+    spawn_position(0,0),
     time(0)
 {
 
 }
 
-void ParticleSystem::set_properties(const ParticleProperties& props,double rate){
+void ParticleSystem::set_properties(const ParticleProperties& props,double rate, const sf::Vector2f& pos){
     if(rate < 0.0)
         rate = 0.000001;
     spawn_props= props;
     spawn_rate = rate;
+    spawn_position = pos;
 }
 
 void ParticleSystem::update(float dt){
     time +=dt;
     if(time>=spawn_rate){
         time-=spawn_rate;
-        mp_owner->scene()->object_introduce(new Particle(mp_owner->global_transform(),spawn_props));
+        mp_owner->scene()->object_introduce(new Particle(mp_owner->global_transform().translate(spawn_position),spawn_props));
     }
 }
 

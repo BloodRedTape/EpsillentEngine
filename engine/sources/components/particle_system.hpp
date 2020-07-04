@@ -38,13 +38,14 @@ class ParticleSystem: public Component{
 private:
     std::list<Component*>::iterator m_self;
     ParticleProperties spawn_props;
+    sf::Vector2f spawn_position;
     double time;
     double spawn_rate;
 public:
     ParticleSystem(GameObject * owner);
     void update(float dt)override;
 
-    void set_properties(const ParticleProperties&, double spawn_rate);
+    void set_properties(const ParticleProperties&, double spawn_rate, const sf::Vector2f& spawn_pos = sf::Vector2f(0,0));
 
     static ParticleSystem* init(GameObject*);
     void finalize()override;

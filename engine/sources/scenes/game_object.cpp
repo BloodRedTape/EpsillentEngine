@@ -58,6 +58,11 @@ void GameObject::children_destroy(){
     }
 }
 
+void GameObject::object_introduce(GameObject* object){
+    object->set_transform(m_transform.global_transform());
+    mp_scene->object_introduce(object);
+}
+
 
 
 void GameObject::update(){
@@ -107,7 +112,7 @@ void GameObject::set_rotation(const float angle){
 }
 
 
-const sf::Transform& GameObject::global_transform(){
+sf::Transform GameObject::global_transform(){
     return m_transform.global_transform();
 }
 const sf::Transform& GameObject::local_transform(){

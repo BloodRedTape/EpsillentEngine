@@ -77,6 +77,8 @@ public:
     void child_add(GameObject*);
     void children_destroy();
 
+    void object_introduce(GameObject*);
+
     void destroy();
 
     //called every loop cycle
@@ -94,7 +96,7 @@ public:
     void set_rotation(const float angle);
     //void set_origin();
 
-    const sf::Transform& global_transform();
+    sf::Transform global_transform();
     const sf::Transform& local_transform();
     
 
