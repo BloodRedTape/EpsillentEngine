@@ -18,7 +18,7 @@ void Transform::translate(const float x, const float y){
     translate(sf::Vector2f(x,y));
 }
 
-void Transform::set_rotation(const float angle){
+void Transform::rotate(const float angle){
     m_dirty = true;
     m_transform.rotate(angle);
 }

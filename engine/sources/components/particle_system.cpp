@@ -27,7 +27,7 @@ void Particle::on_update(float dt){
     sprite->set_size(size*scale);
     sprite->set_color(sf::Color(color_begin.r - (color_begin.r-color_end.r)*(1-scale),color_begin.g - (color_begin.g-color_end.g)*(1-scale),color_begin.b - (color_begin.b-color_end.b)*(1-scale),255));
     translate(direction*dt);
-    set_rotation(delta_angle*dt);
+    rotate(delta_angle*dt);
 }
 
 

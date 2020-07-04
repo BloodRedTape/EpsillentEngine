@@ -20,7 +20,7 @@ public:
 
     void translate(const sf::Vector2f& r_offset);
     void translate(const float x_offset,const float y_offset);
-    void set_rotation(const float angle);
+    void rotate(const float angle);
 
     sf::Transform global_transform();
     const sf::Transform& local_transform();

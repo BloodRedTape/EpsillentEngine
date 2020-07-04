@@ -107,8 +107,8 @@ void GameObject::set_transform(const sf::Transform& trans){
     m_transform.m_dirty=true;
 }
 
-void GameObject::set_rotation(const float angle){
-    m_transform.set_rotation(angle);
+void GameObject::rotate(const float angle){
+    m_transform.rotate(angle);
 }
 
 
