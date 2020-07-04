@@ -89,7 +89,6 @@ void Engine::UpdateLoop::operator()(){
     float fps;
     while(running){
         
-        Engine::get_singleton()->handle_events(*DisplayServer::get_singleton()->mp_display_target);
 
         for(auto itr = layer_stack->begin(); itr!=layer_stack->end();itr++){
             (*itr)->on_update(frame_time);
@@ -116,6 +115,8 @@ void Engine::RenderLoop::operator()(){
     debug_info.setFillColor(sf::Color::Green);
 
     while(running){
+        Engine::get_singleton()->handle_events(*DisplayServer::get_singleton()->mp_display_target);
+
         DrawCallInterface::clear();
         
         for(auto itr = layer_stack->begin(); itr != layer_stack->end(); itr++){
