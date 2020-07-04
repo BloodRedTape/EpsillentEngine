@@ -1,5 +1,7 @@
 #ifndef ENGINE
 #define ENGINE
+
+#include "config/config.hpp"
 #include "core/typedefs.hpp"
 
 #include "physics/physics_engine.hpp"
@@ -15,7 +17,7 @@
 #include <atomic>
 #include "SFML/System.hpp"
 
-class Engine{
+class ENGINE_API Engine{
     private:
         static std::atomic<bool> running;
         static std::mutex mutex;

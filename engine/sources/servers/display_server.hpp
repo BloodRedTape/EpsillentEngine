@@ -2,6 +2,7 @@
 #define DISPLAY_SERVER_H
 
 #include <SFML/Graphics.hpp>
+#include "config/config.hpp"
 #include "core/typedefs.hpp"
 #include <mutex>
 typedef sf::RenderWindow RenderWindow;
@@ -13,7 +14,7 @@ get_display_target()
 */
 class Engine;
 
-class DisplayServer{  
+class ENGINE_API DisplayServer{
     private:
         std::mutex& mutex;
         sf::RenderWindow* mp_display_target;

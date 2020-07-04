@@ -1,9 +1,10 @@
 #ifndef GAME_LAYER_H
 #define GAME_LAYER_H
 
+#include "config/config.hpp"
 #include "core/layer.hpp"
 
-class GameLayer: public Layer{
+class ENGINE_API GameLayer: public Layer{
 private:
 
 public:

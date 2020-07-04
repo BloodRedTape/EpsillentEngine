@@ -1,8 +1,9 @@
 #ifndef LAYER_H
 #define LAYER_H
 
+#include "config/config.hpp"
 
-class Layer{
+class ENGINE_API Layer{
 private:
 
 public:

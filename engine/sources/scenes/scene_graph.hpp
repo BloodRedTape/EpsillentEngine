@@ -1,11 +1,12 @@
 #ifndef SCENE_GRAPH
 #define SCENE_GRAPH
 
+#include "config/config.hpp"
 #include <SFML/Graphics.hpp>
 #include "game_object.hpp"
 #include "core/typedefs.hpp"
 
-class RootNode: public GameObject{
+class ENGINE_API RootNode: public GameObject{
 public:
     RootNode(BaseScene* scene){
         mp_parent=nullptr;
@@ -17,7 +18,7 @@ public:
     void on_update(const float)override{};
 };
 
-class SceneGraph{
+class ENGINE_API SceneGraph{
 private:
     RootNode m_root;
 public:

@@ -2,10 +2,10 @@
 #define COLLIDER2D_H
 
 
+#include "config/config.hpp"
 
 
-
-class Collider2D{
+class ENGINE_API Collider2D{
     float i;
     public:
 };

@@ -3,14 +3,14 @@
 
 
 #include "core/component.hpp"
-
+#include "config/config.hpp"
 
 
 // NO, STOP THINKING ABOUT IT
 // THERE IS NOTHING CONNECTED WITH CPU
 // also it would be nice if your inheritance from this class was a singleton
 //template<typename T> // this template is just for fun XD
-class Processor{
+class ENGINE_API Processor{
 
 
 };

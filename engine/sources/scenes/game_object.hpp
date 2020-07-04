@@ -6,6 +6,7 @@
 #include <queue>
 #include <memory>
 #include <string>
+#include "config/config.hpp"
 #include <SFML/Graphics.hpp>
 #include "core/typedefs.hpp"
 #include "components/transform.hpp"
@@ -16,7 +17,7 @@ class BaseScene;
 class SceneGraph;
 class RootNode;
 
-class GameObject{
+class ENGINE_API GameObject{
 private:
     Transform m_transform;
     std::list<GameObject*> m_child_nodes;

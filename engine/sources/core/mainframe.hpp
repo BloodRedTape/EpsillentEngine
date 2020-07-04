@@ -2,11 +2,12 @@
 #define MAINFRAME_H
 
 #include <vector>
+#include "config/config.hpp"
 #include "core/typedefs.hpp"
 #include "core/processor.hpp"
 
 
-class Mainframe{
+class ENGINE_API Mainframe{
     private:
         static Mainframe* smp_singleton;
         std::vector<Processor*> m_processors;

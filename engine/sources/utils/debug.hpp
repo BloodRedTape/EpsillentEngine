@@ -29,7 +29,7 @@ public:
 #define ASSERT_INFO(exp,msg) if(!(exp)){Info(msg);}
 
 
-class Warning{
+class ENGINE_API Warning{
     public:
         Warning(const std::string message){
             #ifdef DEBUG_MODE
@@ -38,7 +38,7 @@ class Warning{
         }
 };
 
-class Info{
+class ENGINE_API Info{
     public:
         Info(const std::string message){
             #ifdef DEBUG_MODE
@@ -59,7 +59,7 @@ class Info{
 
 #endif
 
-class Error{
+class ENGINE_API Error{
     public:
         Error(const std::string message){
             #ifdef DEBUG_MODE

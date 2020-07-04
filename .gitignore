@@ -4,7 +4,12 @@
 engine/*.so
 engine/*.dylib
 engine/*.dll
+engine/*.lib
+engine/*.pdb
+engine/out
+engine/.vs
 projects/*
+projects/
 !projects/*.sh
 *.out
 *.exe

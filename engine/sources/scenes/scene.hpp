@@ -1,6 +1,7 @@
 #ifndef SCENE_H
 #define SCENE_H
 
+#include "config/config.hpp"
 #include "core/component.hpp"
 
 //temp
@@ -15,7 +16,7 @@
 
 class SceneManager;
 
-class BaseScene{
+class ENGINE_API BaseScene{
 protected:
     SceneGraph scene_graph;
     std::list<GameObject*> garbage;

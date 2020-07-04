@@ -2,12 +2,13 @@
 #define SPRITE_2D
 
 #include <list>
+#include "config/config.hpp"
 #include "SFML/Graphics.hpp"
 #include "core/component.hpp"
 
 class Renderer2D;
 
-class Sprite2D: public Component{
+class ENGINE_API Sprite2D: public Component{
 private:
     sf::RectangleShape m_shape;
     std::list<Sprite2D>::iterator m_self;

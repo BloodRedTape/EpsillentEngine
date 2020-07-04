@@ -2,9 +2,10 @@
 #define DRAW_CALL_H
 
 #include "SFML/Graphics.hpp"
+#include "config/config.hpp"
 #include "core/typedefs.hpp"
 
-class DrawCallInterface{
+class ENGINE_API DrawCallInterface{
 private:
     static DrawCallInterface * smp_singleton;
     sf::RenderWindow* window;

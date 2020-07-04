@@ -3,10 +3,11 @@
 
 #include <list>
 #include <memory>
+#include "config/config.hpp"
 #include <SFML/Graphics.hpp>
 #include "components/sprite_2d.hpp"
 
-class Renderer2D{
+class ENGINE_API Renderer2D{
 private:
     std::list<Sprite2D> m_sprites;
 public:

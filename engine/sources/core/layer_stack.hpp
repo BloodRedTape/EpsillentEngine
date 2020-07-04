@@ -2,10 +2,11 @@
 #define LAYER_STACK_H
 
 #include <vector>
+#include "config/config.hpp"
 #include "core/layer.hpp"
 
 
-class LayerStack{
+class ENGINE_API LayerStack{
 private:
     std::vector<Layer*> layers;
 public:

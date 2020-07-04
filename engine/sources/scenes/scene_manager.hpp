@@ -3,6 +3,7 @@
 
 #include <map>
 #include <string>
+#include "config/config.hpp"
 #include "core/typedefs.hpp"
 #include "scenes/scene.hpp"
 #include <mutex>
@@ -10,7 +11,7 @@
 class Engine;
 class GameLayer;
 // KING OF THE ENGINE
-class SceneManager{
+class ENGINE_API SceneManager{
 private:
     static SceneManager* smp_singleton;
     std::mutex &mutex;

@@ -4,8 +4,9 @@
 #include <SFML/Graphics.hpp>
 #include <map>
 #include <string>
+#include "config/config.hpp"
 
-class AssetsManager{
+class ENGINE_API AssetsManager{
     public:
         static sf::Texture* get_texture(const char* filename);
         static sf::Font* get_font(const char* filename);

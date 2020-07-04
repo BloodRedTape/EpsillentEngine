@@ -1,9 +1,10 @@
 #ifndef SPRITE
 #define SPRITE
 
+#include "config/config.hpp"
 #include "scenes/game_object.hpp"
 
-class Sprite: public GameObject{
+class ENGINE_API Sprite: public GameObject{
 protected:
     sf::RectangleShape m_shape;
 public:

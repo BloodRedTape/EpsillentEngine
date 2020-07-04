@@ -1,6 +1,7 @@
 #ifndef PARTICLE_SYSTEM_H
 #define PARTICLE_SYSTEM_H
 
+#include "config/config.hpp"
 #include "core/component.hpp"
 #include "scenes/game_object.hpp"
 #include "components/sprite_2d.hpp"
@@ -26,7 +27,7 @@ struct ParticleSystemProperties{
     }
 };
 
-class Particle: public GameObject{
+class ENGINE_API Particle: public GameObject{
 private:
     sf::Vector2f size;
     float life_time;
@@ -49,7 +50,7 @@ public:
 };
 
 
-class ParticleSystem: public Component{
+class ENGINE_API ParticleSystem: public Component{
 private:
     std::list<Component*>::iterator m_self;
     ParticleSystemProperties m_properties;

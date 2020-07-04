@@ -1,11 +1,12 @@
 #ifndef TRANSFORM_H
 #define TRANSFORM_H
 
+#include "config/config.hpp"
 #include <string>
 #include "core/component.hpp"
 #include "SFML/Graphics/Transform.hpp"
 
-class Transform: public Component{
+class ENGINE_API Transform: public Component{
 private:
     sf::Transform m_transform;
     sf::Transform m_global_transform;

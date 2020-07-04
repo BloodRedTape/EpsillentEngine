@@ -1,10 +1,11 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
+#include "config/config.hpp"
 class GameObject;
 
 
-class Component{
+class ENGINE_API Component{
 protected:
     GameObject * mp_owner;
 public: 
