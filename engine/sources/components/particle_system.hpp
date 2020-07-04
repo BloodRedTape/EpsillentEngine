@@ -6,28 +6,43 @@
 #include "components/sprite_2d.hpp"
 #include "components/transform.hpp"
 
-struct ParticleProperties{
+//do not touch!
+struct ParticleSystemProperties{
+    //particle data
     sf::Vector2f size;
     float life_time;
     int speed;
     sf::Vector2i dispersion;
     sf::Color color_begin;
     sf::Color color_end;
-    float scale;
-    ParticleProperties(const sf::Vector2f& dim,const sf::Vector2i& disp, float time, int sp,const sf::Color& begin, const sf::Color& end):
-        size(dim), dispersion(disp) , life_time(time),speed(sp), color_begin(begin), color_end(end), scale(1)
+    float delta_angle;
+    // particle system data
+    sf::Vector2f spawn_position;
+    double spawn_rate;
+    ParticleSystemProperties():
+        size(40,40),life_time(0.5),speed(100),delta_angle(2),dispersion(50,50),color_begin(sf::Color::White), color_end(sf::Color::Black), spawn_position(0,0), spawn_rate(0.0002)
     {
+
     }
 };
 
 class Particle: public GameObject{
 private:
+    sf::Vector2f size;
+    float life_time;
+    int speed;
+    sf::Vector2i dispersion;
+    sf::Color color_begin;
+    sf::Color color_end;
+    float delta_angle;
+    float scale;
+
     Sprite2D* sprite;
-    ParticleProperties props;
     sf::Vector2f direction;
+    float angle;
     double time;
 public:
-    Particle(const sf::Transform&,const ParticleProperties&);
+    Particle(const sf::Transform&,const ParticleSystemProperties&);
 
     void on_init()override;
     void on_update(float dt)override;
@@ -37,16 +52,16 @@ public:
 class ParticleSystem: public Component{
 private:
     std::list<Component*>::iterator m_self;
-    ParticleProperties spawn_props;
-    sf::Vector2f spawn_position;
+    ParticleSystemProperties m_properties;
     double time;
-    double spawn_rate;
 public:
     ParticleSystem(GameObject * owner);
     void update(float dt)override;
 
-    void set_properties(const ParticleProperties&, double spawn_rate, const sf::Vector2f& spawn_pos = sf::Vector2f(0,0));
-
+    void set_properties(const ParticleSystemProperties&);
+    
+    ParticleSystemProperties& properties(){return m_properties;};
+    
     static ParticleSystem* init(GameObject*);
     void finalize()override;
     static std::string static_type(){return "ParticleSystem";}

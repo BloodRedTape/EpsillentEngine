@@ -2,57 +2,53 @@
 #include "components/sprite_2d.hpp"
 #include "scenes/game_object.hpp"
 #include "scenes/scene.hpp"
+#include <cstring>
 
-Particle::Particle(const sf::Transform& trans,const ParticleProperties& prop):
-    props(prop),
+Particle::Particle(const sf::Transform& trans,const ParticleSystemProperties& prop):
     time(0.0f),
-    direction(rand()%(props.speed*2)-props.speed,rand()%(2*props.speed)-props.speed)
+    direction(rand()%(prop.speed*2)-prop.speed,rand()%(2*prop.speed)-prop.speed)
 {
     set_transform(trans);
+    memcpy(&size.x,&prop.size.x,sizeof(prop)-16);
 }
 
 
 void Particle::on_init(){
     sprite = component_add<Sprite2D>("Sprite");
-    sprite->set_color(sf::Color(props.color_begin.r + (props.color_begin.r-props.color_end.r)*(1-props.scale),props.color_begin.g + (props.color_begin.g-props.color_end.g)*(1-props.scale),props.color_begin.b + (props.color_begin.b-props.color_end.b)*(1-props.scale),255));
-    sprite->set_size(props.size);
-    translate(rand()%props.dispersion.x-props.dispersion.x/2,rand()%props.dispersion.y-props.dispersion.y/2);
+    sprite->set_color(sf::Color(color_begin.r + (color_begin.r-color_end.r)*(1-scale),color_begin.g + (color_begin.g-color_end.g)*(1-scale),color_begin.b + (color_begin.b-color_end.b)*(1-scale),255));
+    sprite->set_size(size);
+    translate(rand()%dispersion.x-dispersion.x/2,rand()%dispersion.y-dispersion.y/2);
 }
 
 void Particle::on_update(float dt){
     time+=dt;
-    if(time>=props.life_time)destroy();
-    props.scale = (props.life_time-time)/props.life_time;
-    sprite->set_size(props.size*props.scale);
-    sprite->set_color(sf::Color(props.color_begin.r - (props.color_begin.r-props.color_end.r)*(1-props.scale),props.color_begin.g - (props.color_begin.g-props.color_end.g)*(1-props.scale),props.color_begin.b - (props.color_begin.b-props.color_end.b)*(1-props.scale),255));
+    if(time>=life_time)destroy();
+    scale = (life_time-time)/life_time;
+    sprite->set_size(size*scale);
+    sprite->set_color(sf::Color(color_begin.r - (color_begin.r-color_end.r)*(1-scale),color_begin.g - (color_begin.g-color_end.g)*(1-scale),color_begin.b - (color_begin.b-color_end.b)*(1-scale),255));
     translate(direction*dt);
+    set_rotation(delta_angle*dt);
 }
 
 
 
 ParticleSystem::ParticleSystem(GameObject * owner):
     Component(owner),
-    spawn_props(sf::Vector2f(40,40),sf::Vector2i(50,50),1.f,400,sf::Color::White,sf::Color::White),
-    spawn_rate(0.01f),
-    spawn_position(0,0),
+    m_properties(),
     time(0)
 {
 
 }
 
-void ParticleSystem::set_properties(const ParticleProperties& props,double rate, const sf::Vector2f& pos){
-    if(rate < 0.0)
-        rate = 0.000001;
-    spawn_props= props;
-    spawn_rate = rate;
-    spawn_position = pos;
+void ParticleSystem::set_properties(const ParticleSystemProperties& props){
+    m_properties = props;
 }
 
 void ParticleSystem::update(float dt){
     time +=dt;
-    if(time>=spawn_rate){
-        time-=spawn_rate;
-        mp_owner->scene()->object_introduce(new Particle(mp_owner->global_transform().translate(spawn_position),spawn_props));
+    if(time>=m_properties.spawn_rate){
+        time-=m_properties.spawn_rate;
+        mp_owner->scene()->object_introduce(new Particle(mp_owner->global_transform().translate(m_properties.spawn_position),m_properties));
     }
 }
 
