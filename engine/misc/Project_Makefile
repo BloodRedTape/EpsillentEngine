@@ -32,13 +32,13 @@ rebuild:
 
 distribution: 
 	$(info [INFO]: setting up package structure)
-	@rm -fr out/$(GAME_TITLE)
-	@mkdir -p out/
-	@mkdir out/$(GAME_TITLE)
+	@rm -fr out/$(PLATFORM)/$(GAME_TITLE)
+	@mkdir -p out/$(PLATFORM)
+	@mkdir out/$(PLATFORM)/$(GAME_TITLE)
 	$(info [INFO]: copying libs and game resources)
-	@cp -r $(GAME_RESOURCES_FOLDER) out/$(GAME_TITLE)/
-	@cp -r $(ENGINE_PATH)/thirdparty/lib/$(PLATFORM)/ out/$(GAME_TITLE)/
-	@mv out/$(GAME_TITLE)/$(PLATFORM) out/$(GAME_TITLE)/libs
+	@cp -r $(GAME_RESOURCES_FOLDER) out/$(PLATFORM)/$(GAME_TITLE)/
+	@cp -r $(ENGINE_PATH)/thirdparty/lib/$(PLATFORM)/ out/$(PLATFORM)/$(GAME_TITLE)/
+	@mv out/$(PLATFORM)/$(GAME_TITLE)/$(PLATFORM) out/$(PLATFORM)/$(GAME_TITLE)/libs
 
 	$(info [INFO]: compiling $(GAME_TITLE) project)
 	@$(MAKE) $(PLATFORM)_distribution
@@ -70,6 +70,6 @@ Linux: $(ENGINE_PATH)/libengine.so
 
 
 Linux_distribution: $(ENGINE_PATH)/libengine.so
-	@cp $(ENGINE_PATH)/libengine.so out/$(GAME_TITLE)/libs/libengine.so
-	@(cd out/$(GAME_TITLE); $(CC_LINUX) -I../../$(ENGINE_PATH)/sources/ -I../../$(ENGINE_PATH)/thirdparty/include -I../../ $(subst ./,../../,$(GAME_SOURCES)) $(CFLAGS_LINUX) $(LINKER_FLAGS_LINUX_DISTRIBUTION) -o $(OUT_NAME))
+	@cp $(ENGINE_PATH)/libengine.so out/$(PLATFORM)/$(GAME_TITLE)/libs/libengine.so
+	@(cd out/$(PLATFORM)/$(GAME_TITLE); $(CC_LINUX) -I../../../$(ENGINE_PATH)/sources/ -I../../../$(ENGINE_PATH)/thirdparty/include -I../../../ $(subst ./,../../../,$(GAME_SOURCES)) $(CFLAGS_LINUX) $(LINKER_FLAGS_LINUX_DISTRIBUTION) -o $(OUT_NAME))
 	

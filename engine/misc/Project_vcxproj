@@ -81,14 +81,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)out</OutDir>
-    <IntDir>$(SolutionDir)out\obj</IntDir>
+    <OutDir>$(SolutionDir)out\windows</OutDir>
+    <IntDir>$(SolutionDir)out\windows\obj</IntDir>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)sources;$(SolutionDir)..\..\engine\sources;$(SolutionDir)..\..\engine\thirdparty\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(ProjectDir)out</OutDir>
-    <IntDir>$(ProjectDir)out\obj</IntDir>
+    <OutDir>$(ProjectDir)out\windows</OutDir>
+    <IntDir>$(ProjectDir)out\windows\obj</IntDir>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)sources;$(SolutionDir)..\..\engine\sources;$(SolutionDir)..\..\engine\thirdparty\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
