@@ -1,29 +1,123 @@
 #include "engine.hpp"
+#include "components/particle_system.hpp"
+
+struct Explosion: public GameObject{
+    ParticleSystem * system;
+    float lifetime;
+    float time;
+    Explosion():
+        time(0), lifetime(0.2f)
+    {}
+
+    void on_init()override{
+        system = component_add<ParticleSystem>("sdf");
+        ParticleSystemProperties props;
+        props.color_begin = sf::Color::Yellow;
+        props.color_end = sf::Color::Red;
+        props.speed = 300;
+        system->set_properties(props);
+    }
+    void on_update(float dt)override{
+        time += dt;
+        if(time > lifetime){
+            destroy();
+        }
+    }
+};
+
+struct Bullet: public GameObject{
+    ParticleSystem * system;
+    sf::Vector2f direction;
+    float lifetime;
+    float time;
+    Bullet(const sf::Vector2f& dir):
+        direction(dir),
+        time(0),
+        lifetime(1.0f)
+    {}
+
+    void on_init()override{
+        system = component_add<ParticleSystem>("sdf");
+        ParticleSystemProperties props;
+        props.color_begin = sf::Color::Yellow;
+        props.color_end = sf::Color::Red;
+        system->set_properties(props);
+
+    }
+    void on_update(float dt)override{
+        translate(direction*dt);
+        time += dt;
+        if(time > lifetime){
+            destroy();
+            object_introduce(new Explosion);
+        }
+    }
+};
 
 struct Player: public GameObject{
     Sprite2D * sprite;
+    ParticleSystem * system;
     float speed;
+    double spawn_rate;
+    sf::Vector2f direction;
+    bool shooted;
+    Player():
+        shooted(false),
+        direction(800,0),
+        speed(600.f),
+        spawn_rate(0.01f)
+    {}
 
     void on_init()override{
-        speed = 200.f;
+
         sprite = component_add<Sprite2D>("PlayerSprite");
         sprite->set_color(sf::Color::Green);
         sprite->set_size(200,300);
+        system = component_add<ParticleSystem>("sdf");
+
+        ParticleSystemProperties props;
+        props.spawn_position = sf::Vector2f(100,0);
+        props.color_begin = sf::Color::Green;
+        props.color_end = sf::Color(0,0,0,0);
+        props.life_time = 2;
+        props.spawn_rate = 0.05;
+        props.speed = 400;
+        props.delta_angle = 90;
+
+        system->set_properties(props);
     }
 
     void on_update(float dt)override{
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
             translate(0,-speed*dt);
+            direction = sf::Vector2f(0,-800);
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
             translate(0,speed*dt);
+            direction = sf::Vector2f(0,800);
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
             translate(speed*dt,0);
+            direction = sf::Vector2f(800,0);
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
             translate(-speed*dt,0);
+            direction = sf::Vector2f(-800,0);
         }
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q)){
+            Engine::get_singleton()->stop();
+        }
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
+            if(!shooted){
+                object_introduce(new Bullet(direction), sf::Vector2f(100,150));
+                shooted  = true;
+            }
+        }else{
+            shooted = false;
+        }
+
+        
+        
     }
 
 
@@ -33,19 +127,21 @@ class Scene: public BaseScene{
 private:
 public:
     void on_init()override{
+        
         object_introduce(new Player);
     }
 
     void on_update(float dt)override{
-
+        
     }
 };
+
 
 Engine * engine;
 
 int main(){
     engine = new Engine();
-    engine->init("Application");
+    engine->init("Game");
     engine->show_fps(true);
     engine->set_entry_scene(new Scene,"MainScene");
     engine->start();
