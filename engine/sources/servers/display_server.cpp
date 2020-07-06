@@ -22,11 +22,11 @@ DisplayServer::~DisplayServer(){
 
 
 
-void DisplayServer::init_window(sf::VideoMode mode, const char* p_title){
+void DisplayServer::init_window(sf::VideoMode mode, const char* p_title, uint32 style){
     std::lock_guard<std::mutex> lock(smp_singleton->mutex);
     if(smp_singleton->mp_display_target==nullptr){
         Info("DisplayServer: created new window");
-        smp_singleton->mp_display_target = new RenderWindow(mode,p_title);
+        smp_singleton->mp_display_target = new RenderWindow(mode,p_title,style);
     }else{
         Warning("DisplayServer: trying to init window twice");
     }

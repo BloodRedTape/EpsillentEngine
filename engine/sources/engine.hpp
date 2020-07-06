@@ -16,6 +16,25 @@
 #include <mutex>
 #include <atomic>
 #include "SFML/System.hpp"
+#include "SFML/Window/WindowStyle.hpp"
+
+
+
+struct EngineProperties{
+    sf::String window_title;
+    // if set to sf::Style::Fullscreen, width and heigth properties are ignored
+    uint32 window_style;
+    uint32 window_width;
+    uint32 window_heigth;
+    // no fps limit with 0 value
+    uint32 frame_rate_limit;
+    bool show_fps;
+    EngineProperties():
+        window_title("Game"), 
+        window_style(sf::Style::Default), window_width(1280), window_heigth(720), frame_rate_limit(0), show_fps(false)
+    {}
+};
+
 
 class ENGINE_API Engine{
     private:
@@ -47,14 +66,12 @@ class ENGINE_API Engine{
         Engine();
         ~Engine();
         static _ALWAYS_INLINE_ Engine* get_singleton(){return smp_singleton;}
-        void init(const sf::String& title);
+        void init(const EngineProperties& props);
         void shutdown();
         // TODO engine set window config
         void start();
         void stop();
         void set_entry_scene(BaseScene*, const char* name);
-
-        void show_fps(bool b){_show_fps=b;};
 
 
 };

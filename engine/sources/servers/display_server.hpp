@@ -31,7 +31,7 @@ class ENGINE_API DisplayServer{
             return smp_singleton;
         }
         //void set_display_targer(DisplayTarget& p_dt){get_singleton()->display_target=p_dt;}
-        void init_window(sf::VideoMode mode, const char* p_title);
+        void init_window(sf::VideoMode mode, const char* p_title, uint32 style);
         void set_frame_rate_limit(int fps);
         void clear_display();
         void swap_buffers();

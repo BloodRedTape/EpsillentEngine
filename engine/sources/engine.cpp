@@ -48,7 +48,7 @@ void Engine::handle_events(sf::RenderWindow &window){
 
 }
 
-void Engine::init(const sf::String& title){
+void Engine::init(const EngineProperties& props){
     ASSERT_WARRNING(smp_singleton==this,"Engine: can't init from non-creator instance");
     Platform::init();
 
@@ -56,9 +56,15 @@ void Engine::init(const sf::String& title){
     mainframe = new Mainframe();
 
     display_server = new DisplayServer(mutex); //Yeah, required CUSTOM ALLOCATOR, but later
-    display_server->init_window(k_video_mode,"GameEngine");
-    display_server->mp_display_target->setTitle(title);
-    display_server->set_frame_rate_limit(60);
+    if(props.window_style == sf::Style::Fullscreen){
+        display_server->init_window(sf::VideoMode::getDesktopMode(),props.window_title.toAnsiString().c_str(),props.window_style);
+    }else{
+        display_server->init_window(sf::VideoMode(props.window_width,props.window_heigth),props.window_title.toAnsiString().c_str(),props.window_style);
+    }
+        
+    if(props.frame_rate_limit)
+        display_server->set_frame_rate_limit(props.frame_rate_limit);
+    _show_fps = props.show_fps;
 
     draw_call_interface = new DrawCallInterface(display_server->mp_display_target);
     

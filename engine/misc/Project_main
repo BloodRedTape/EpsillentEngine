@@ -137,13 +137,25 @@ public:
 };
 
 
-Engine * engine;
 
 int main(){
-    engine = new Engine();
-    engine->init("Game");
-    engine->show_fps(true);
+    // to make games with engine we need, well, engine
+    Engine * engine = new Engine();
+    // set engine properties
+    EngineProperties props;
+    props.window_title = "Super AAA game";
+    //props.window_style = sf::Style::Fullscreen;
+    props.window_width = 1280;
+    props.window_heigth = 720;
+    props.show_fps = true;
+    // set 0 to disable fps limit
+    props.frame_rate_limit = 60;
+
+    // we have to init engine with certain properties
+    engine->init(props);
+    // and propvide it with a scene (inherited from a BaseScene)
     engine->set_entry_scene(new Scene,"MainScene");
+    // now lets start your game!
     engine->start();
     engine->shutdown();
 }
