@@ -14,6 +14,7 @@ CFLAGS_LINUX := -Werror -shared -fPIC -lpthread -lstdc++ -lX11
 
 CC_MACOS := g++
 CFLAGS_MACOS := -dynamiclib -std=c++11 
+LINKER_MACOS := $(ENGINE_PATH)/thirdparty/lib/Darwin/libsfml-graphics.dylib $(ENGINE_PATH)/thirdparty/lib/Darwin/libsfml-system.dylib /$(ENGINE_PATH)/thirdparty/lib/Darwin/libsfml-window.dylib
 
 
 .PHONY: all Linux Darwin
@@ -37,7 +38,7 @@ all:
 
 Darwin:
 	@rm -f libengine.dylib
-	@$(CC_MACOS) $(CFLAGS_MACOS) $(INCLUDE) $(SOURCES) -o libengine.dylib
+	@$(CC_MACOS) $(CFLAGS_MACOS) $(INCLUDE) $(SOURCES) $(LINKER_MACOS) -o libengine.dylib 
 Linux:
 	@rm -f libengine.so
 	@$(CC_LINUX) $(CFLAGS_LINUX) $(INCLUDE) $(SOURCES) -o libengine.so
