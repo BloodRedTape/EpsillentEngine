@@ -39,8 +39,7 @@ distribution:
 	@mkdir out/$(PLATFORM)/$(GAME_TITLE)
 	$(info [INFO]: copying libs and game resources)
 	@cp -r $(GAME_RESOURCES_FOLDER) out/$(PLATFORM)/$(GAME_TITLE)/
-	@cp -r $(ENGINE_PATH)/thirdparty/lib/$(PLATFORM)/ out/$(PLATFORM)/$(GAME_TITLE)/
-	@mv out/$(PLATFORM)/$(GAME_TITLE)/$(PLATFORM) out/$(PLATFORM)/$(GAME_TITLE)/libs
+
 
 	$(info [INFO]: compiling $(GAME_TITLE) project)
 	@$(MAKE) $(PLATFORM)_distribution
@@ -61,8 +60,12 @@ Darwin: $(ENGINE_PATH)/libengine.dylib
 
 
 Darwin_distribution: $(ENGINE_PATH)/libengine.dylib
+	@cp -r $(ENGINE_PATH)/thirdparty/lib/$(PLATFORM)/ out/$(PLATFORM)/$(GAME_TITLE)/libs
+	@cp $(ENGINE_PATH)/libengine.dylib out/$(PLATFORM)/$(GAME_TITLE)/libs/libengine.dylib
+	$(CC_DARWIN) $(INCLUDE) $(GAME_SOURCES) $(CFLAGS_DARWIN) $(LINKER_FLAGS_DARWIN_BUILD) -o $(GAME_TITLE)
+	@install_name_tool -change @rpath/libsfml-graphics.2.5.dylib @executable_path/libs/libsfml-graphics.2.5.1.dylib $(GAME_TITLE) && install_name_tool -change @rpath/libsfml-window.2.5.dylib @executable_path/libs/libsfml-window.2.5.1.dylib $(GAME_TITLE) && install_name_tool -change @rpath/libsfml-system.2.5.dylib @executable_path/libs/libsfml-system.2.5.1.dylib $(GAME_TITLE) && install_name_tool -change libengine.dylib @executable_path/libs/libengine.dylib $(GAME_TITLE)
 
-
+	mv $(GAME_TITLE) out/$(PLATFORM)/$(GAME_TITLE)/$(GAME_TITLE)
 
 $(ENGINE_PATH)/libengine.so:
 	$(info [INFO]: engine was not compiled)
@@ -74,6 +77,10 @@ Linux: $(ENGINE_PATH)/libengine.so
 
 
 Linux_distribution: $(ENGINE_PATH)/libengine.so
+	@cp -r $(ENGINE_PATH)/thirdparty/lib/$(PLATFORM)/ out/$(PLATFORM)/$(GAME_TITLE)/
+	@mv out/$(PLATFORM)/$(GAME_TITLE)/$(PLATFORM) out/$(PLATFORM)/$(GAME_TITLE)/libs
 	@cp $(ENGINE_PATH)/libengine.so out/$(PLATFORM)/$(GAME_TITLE)/libs/libengine.so
 	@(cd out/$(PLATFORM)/$(GAME_TITLE); $(CC_LINUX) -I../../../$(ENGINE_PATH)/sources/ -I../../../$(ENGINE_PATH)/thirdparty/include -I../../../ $(subst ./,../../../,$(GAME_SOURCES)) $(CFLAGS_LINUX) $(LINKER_FLAGS_LINUX_DISTRIBUTION) -o $(OUT_NAME))
+	
+
 	
