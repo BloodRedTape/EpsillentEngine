@@ -7,8 +7,10 @@ CFLAGS_LINUX := -Werror
 LINKER_FLAGS_LINUX_BUILD := -lX11 -lstdc++ -lpthread -Wl,-R$(ENGINE_PATH)/thirdparty/lib/Linux $(ENGINE_PATH)/libengine.so $(ENGINE_PATH)/thirdparty/lib/Linux/libsfml-audio.so $(ENGINE_PATH)/thirdparty/lib/Linux/libsfml-window.so $(ENGINE_PATH)/thirdparty/lib/Linux/libsfml-graphics.so $(ENGINE_PATH)/thirdparty/lib/Linux/libsfml-system.so $(ENGINE_PATH)/thirdparty/lib/Linux/libsfml-network.so
 LINKER_FLAGS_LINUX_DISTRIBUTION := -lX11 -lstdc++ -lpthread -Llibs -Wl,-R./libs -lengine -lsfml-window -lsfml-graphics -lsfml-system -lsfml-network -lsfml-audio
 
-CC_MACOS := g++
-CFLAGS_MACOS := -dynamiclib -std=c++11 
+CC_DARWIN := g++
+CFLAGS_DARWIN := -std=c++11 
+LINKER_FLAGS_DARWIN_BUILD := $(ENGINE_PATH)/libengine.dylib $(ENGINE_PATH)/thirdparty/lib/Darwin/libsfml-graphics.dylib $(ENGINE_PATH)/thirdparty/lib/Darwin/libsfml-system.dylib $(ENGINE_PATH)/thirdparty/lib/Darwin/libsfml-window.dylib
+ 
 
 
 
@@ -54,6 +56,8 @@ $(ENGINE_PATH)/libengine.dylib:
 	(cd ../../engine/; make)
 
 Darwin: $(ENGINE_PATH)/libengine.dylib
+	$(CC_DARWIN) $(INCLUDE) $(GAME_SOURCES) $(CFLAGS_DARWIN) $(LINKER_FLAGS_DARWIN_BUILD) -o $(GAME_TITLE)
+	@install_name_tool -change @rpath/libsfml-graphics.2.5.dylib @executable_path/$(ENGINE_PATH)/thirdparty/lib/Darwin/libsfml-graphics.2.5.1.dylib $(GAME_TITLE) && install_name_tool -change @rpath/libsfml-window.2.5.dylib @executable_path/$(ENGINE_PATH)/thirdparty/lib/Darwin/libsfml-window.2.5.1.dylib $(GAME_TITLE) && install_name_tool -change @rpath/libsfml-system.2.5.dylib @executable_path/$(ENGINE_PATH)/thirdparty/lib/Darwin/libsfml-system.2.5.1.dylib $(GAME_TITLE) && install_name_tool -change libengine.dylib @executable_path/$(ENGINE_PATH)/libengine.dylib $(GAME_TITLE)
 
 
 Darwin_distribution: $(ENGINE_PATH)/libengine.dylib
