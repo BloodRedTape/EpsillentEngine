@@ -3,7 +3,7 @@
 
 #include "config/config.hpp"
 #include "core/component.hpp"
-
+#include "scenes/scene_cluster.hpp"
 //temp
 #include "render/renderer_2d.hpp"
 #include "scenes/scene_graph.hpp"
@@ -20,9 +20,7 @@ class ENGINE_API BaseScene{
 protected:
     SceneGraph scene_graph;
     std::list<GameObject*> garbage;
-    Renderer2D scene_renderer;
-    std::list<Component*> objects_components;
-    std::list<Collider2D*> physics;
+    SceneCluster scene_cluster;
     sf::Clock clock;
     BaseScene();
     ~BaseScene();
@@ -51,8 +49,7 @@ public:
 
     void object_introduce(GameObject*);
 
-    Renderer2D& renderer(){return scene_renderer;}
-    std::list<Component*>& components(){return objects_components;}
+    SceneCluster& cluster(){return scene_cluster;}
 
 };
 

@@ -26,10 +26,10 @@ void Sprite2D::set_texture(sf::Texture* texture){
 
 
 Sprite2D* Sprite2D::init(GameObject* owner){
-    return owner->scene()->renderer().sprite_new(owner);
+    return owner->scene()->cluster().renderer2d.sprite_new(owner);
 }
 
 
 void Sprite2D::finalize(){
-    mp_owner->scene()->renderer().sprite_delete(this);
+    mp_owner->scene()->cluster().renderer2d.sprite_delete(this);
 }

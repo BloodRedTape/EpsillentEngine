@@ -55,11 +55,11 @@ void ParticleSystem::update(float dt){
 
 ParticleSystem* ParticleSystem::init(GameObject* owner){
     ParticleSystem *p = new ParticleSystem(owner);
-    owner->scene()->components().push_back(p);
-    p->m_self = std::prev(owner->scene()->components().end());
+    owner->scene()->cluster().components.push_back(p);
+    p->m_self = std::prev(owner->scene()->cluster().components.end());
     return p;
 }
 
 void ParticleSystem::finalize(){
-    mp_owner->scene()->components().erase(m_self);
+    mp_owner->scene()->cluster().components.erase(m_self);
 }
