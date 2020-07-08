@@ -6,8 +6,8 @@ PhysicsEngine::PhysicsEngine(){
 }
 
 void PhysicsEngine::update(){
-    for(Trigger2D& i: colliders){
-        for(Trigger2D& j: colliders){
+    for(Trigger2D& i: triggers){
+        for(Trigger2D& j: triggers){
             if(&i!=&j){
                 if(i.collide(j)){
                     i.m_callback(j);
@@ -17,12 +17,12 @@ void PhysicsEngine::update(){
     }
 }
 
-Trigger2D *PhysicsEngine::collider_2d_new(GameObject* owner){
-    auto itr = colliders.insert(colliders.end(),Trigger2D(owner));
+Trigger2D *PhysicsEngine::trigger_2d_new(GameObject* owner){
+    auto itr = triggers.insert(triggers.end(),Trigger2D(owner));
     itr->m_self = itr;
     return &*itr;
 }
 
-void PhysicsEngine::collider_2d_delete(Trigger2D* collider){
-    colliders.erase(collider->m_self);
+void PhysicsEngine::trigger_2d_delete(Trigger2D* collider){
+    triggers.erase(collider->m_self);
 }

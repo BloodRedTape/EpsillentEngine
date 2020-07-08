@@ -21,11 +21,11 @@ bool Trigger2D::collide(const Trigger2D& other){
 
 
 Trigger2D* Trigger2D::init(GameObject *owner){
-    return owner->scene()->cluster().physics.collider_2d_new(owner);
+    return owner->scene()->cluster().physics.trigger_2d_new(owner);
 }
 
 void Trigger2D::finalize(){
-    mp_owner->scene()->cluster().physics.collider_2d_delete(this);
+    mp_owner->scene()->cluster().physics.trigger_2d_delete(this);
 }
 
 
