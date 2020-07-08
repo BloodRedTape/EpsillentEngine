@@ -10,6 +10,9 @@ protected:
     GameObject * mp_owner;
 public: 
     Component(GameObject*);
+    
+    GameObject* owner();
+
     virtual ~Component(){};
     virtual void finalize()=0;
     virtual void update(float dt){};

@@ -5,10 +5,8 @@
 #include "core/component.hpp"
 #include "scenes/scene_cluster.hpp"
 //temp
-#include "render/renderer_2d.hpp"
 #include "scenes/scene_graph.hpp"
 
-#include "physics/collider2d.hpp"
 // to achieve at least something in MY word
 // you HAVE TO inherit from THIS class
 

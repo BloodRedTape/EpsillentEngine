@@ -6,3 +6,8 @@ mp_owner(owner)
 {
     
 }
+
+
+GameObject * Component::owner(){
+    return mp_owner;
+}
