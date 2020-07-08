@@ -8,7 +8,8 @@ GameObject::GameObject():
     mp_scene(nullptr),
     mp_parent(nullptr),
     garbage(false),
-    inited(false)
+    inited(false),
+    m_tag("unknown")
 {
     m_components.insert(std::pair<std::string,Component*>(Transform::static_type()+"Transform",&m_transform));
 }
@@ -40,7 +41,11 @@ void GameObject::render_traverse(std::queue<GameObject*>& traverse_queue){
         traverse_queue.push(*itr);
     }
 }
-#include <cstdlib>
+
+void GameObject::set_tag(const std::string& tag){
+    m_tag = tag;
+}
+
 void GameObject::child_add(GameObject* p_node){
     m_child_nodes.push_back(p_node);
     p_node->mp_parent=this;

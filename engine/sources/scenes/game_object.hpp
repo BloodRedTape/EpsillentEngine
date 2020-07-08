@@ -27,8 +27,7 @@ private:
     bool garbage;
     bool inited;
     std::map<std::string,Component*> m_components;
-
-    
+    std::string m_tag;
 private:        
     friend class RootNode;
     friend class BaseScene;
@@ -74,6 +73,9 @@ public:
 
     BaseScene* scene(){return mp_scene;};
     GameObject* parent(){return mp_parent;}
+
+    const std::string& tag(){return m_tag;}
+    void set_tag(const std::string&);
 
     void child_add(GameObject*);
     void children_destroy();
