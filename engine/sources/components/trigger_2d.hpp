@@ -9,35 +9,35 @@
 #include "SFML/Graphics/Rect.hpp"
 
 class PhysicsEngine;
-class Collider2D;
+class Trigger2D;
 
-struct Collider2DProperties{
+struct Trigger2DProperties{
     sf::FloatRect size;
-    std::function<void(Collider2D)> callback;
-    Collider2DProperties();
+    std::function<void(Trigger2D)> callback;
+    Trigger2DProperties();
 };
 
 
 
-class ENGINE_API Collider2D: public Component{
+class ENGINE_API Trigger2D: public Component{
 private:
-    std::list<Collider2D>::iterator m_self;
+    std::list<Trigger2D>::iterator m_self;
     sf::FloatRect m_size;
-    std::function<void(Collider2D)> m_callback;
+    std::function<void(Trigger2D)> m_callback;
 private:
-    Collider2D(GameObject *owner);
-    bool collide(const Collider2D&);
+    Trigger2D(GameObject *owner);
+    bool collide(const Trigger2D&);
     friend class PhysicsEngine;
 public:
 
-    static Collider2D* init(GameObject *);
+    static Trigger2D* init(GameObject *);
     void finalize()override;
 
-    void set_properties(const Collider2DProperties&);
+    void set_properties(const Trigger2DProperties&);
 
-    static std::string static_type(){return "Collider2D";}
+    static std::string static_type(){return "Trigger2D";}
 
-    static void empty_callback(Collider2D){};
+    static void empty_callback(Trigger2D){};
     _ALWAYS_INLINE_ static sf::FloatRect size(float width,float heigth){
         return sf::FloatRect(sf::Vector2f(0,0),sf::Vector2f(width,heigth));
     }
