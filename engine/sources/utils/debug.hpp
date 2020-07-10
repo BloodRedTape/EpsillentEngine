@@ -20,6 +20,8 @@ public:
     #define Profiling(x) {}
 #endif
 
+#define ARG(x) std::to_string(x)
+#define ARG_VEC(n,v) std::string(n)+std::string(" x: ") + std::to_string(v.x) + std::string(" y:") + std::to_string(v.y) + std::string(" ") 
 
 #ifdef DEBUG_MODE 
 
@@ -27,6 +29,7 @@ public:
 #define ASSERT_ERROR(exp,msg) if(!(exp)){Error(msg);}
 #define ASSERT_WARRNING(exp,msg) if(!(exp)){Warning(msg);}
 #define ASSERT_INFO(exp,msg) if(!(exp)){Info(msg);}
+
 
 
 class ENGINE_API Warning{
@@ -55,8 +58,7 @@ class ENGINE_API Info{
 #define ASSERT(exp) {}
 #define ASSERT_ERROR(exp,msg) {}
 #define ASSERT_WARRNING(exp,msg) {}
-#define ASSERT_INFO(exp,msg) {}
-
+#define ASSERT_INFO(exp,msg) {} 
 #endif
 
 class ENGINE_API Error{

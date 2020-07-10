@@ -62,7 +62,7 @@ void Engine::init(const EngineProperties& props){
         display_server->init_window(sf::VideoMode(props.window_width,props.window_heigth),props.window_title.toAnsiString().c_str(),props.window_style);
     }
         
-    if(props.frame_rate_limit)
+    if(props.frame_rate_limit>0)
         display_server->set_frame_rate_limit(props.frame_rate_limit);
     _show_fps = props.show_fps;
 

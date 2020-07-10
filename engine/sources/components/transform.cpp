@@ -12,7 +12,7 @@ Transform::Transform(GameObject* owner):
 
 void Transform::translate(const sf::Vector2f& r_offset){
     m_dirty = true;
-    m_transform.translate(r_offset);
+    m_transform.translate(sf::Vector2f(r_offset.x,r_offset.y*-1));
 }
 void Transform::translate(const float x, const float y){
     translate(sf::Vector2f(x,y));

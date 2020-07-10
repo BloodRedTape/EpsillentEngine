@@ -11,7 +11,7 @@ protected:
 public: 
     Component(GameObject*);
     
-    GameObject* owner();
+    GameObject* owner()const;
 
     virtual ~Component(){};
     virtual void finalize()=0;

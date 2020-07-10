@@ -2,7 +2,7 @@
 
 
 void SceneCluster::update(float dt){
-    physics.update();
+    physics.update(dt);
     for(Component* comp: components){
         comp->update(dt);
     }
