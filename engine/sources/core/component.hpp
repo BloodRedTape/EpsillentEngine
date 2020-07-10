@@ -2,6 +2,7 @@
 #define COMPONENT_H
 
 #include "config/config.hpp"
+#include <string>
 class GameObject;
 
 
