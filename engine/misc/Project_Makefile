@@ -55,17 +55,17 @@ $(ENGINE_PATH)/libengine.dylib:
 	(cd ../../engine/; make)
 
 Darwin: $(ENGINE_PATH)/libengine.dylib
-	$(CC_DARWIN) $(INCLUDE) $(GAME_SOURCES) $(CFLAGS_DARWIN) $(LINKER_FLAGS_DARWIN_BUILD) -o $(GAME_TITLE)
+	@$(CC_DARWIN) $(INCLUDE) $(GAME_SOURCES) $(CFLAGS_DARWIN) $(LINKER_FLAGS_DARWIN_BUILD) -o $(GAME_TITLE)
 	@install_name_tool -change @rpath/libsfml-graphics.2.5.dylib @executable_path/$(ENGINE_PATH)/thirdparty/lib/Darwin/libsfml-graphics.2.5.1.dylib $(GAME_TITLE) && install_name_tool -change @rpath/libsfml-window.2.5.dylib @executable_path/$(ENGINE_PATH)/thirdparty/lib/Darwin/libsfml-window.2.5.1.dylib $(GAME_TITLE) && install_name_tool -change @rpath/libsfml-system.2.5.dylib @executable_path/$(ENGINE_PATH)/thirdparty/lib/Darwin/libsfml-system.2.5.1.dylib $(GAME_TITLE) && install_name_tool -change libengine.dylib @executable_path/$(ENGINE_PATH)/libengine.dylib $(GAME_TITLE)
 
 
 Darwin_distribution: $(ENGINE_PATH)/libengine.dylib
 	@cp -r $(ENGINE_PATH)/thirdparty/lib/$(PLATFORM)/ out/$(PLATFORM)/$(GAME_TITLE)/libs
 	@cp $(ENGINE_PATH)/libengine.dylib out/$(PLATFORM)/$(GAME_TITLE)/libs/libengine.dylib
-	$(CC_DARWIN) $(INCLUDE) $(GAME_SOURCES) $(CFLAGS_DARWIN) $(LINKER_FLAGS_DARWIN_BUILD) -o $(GAME_TITLE)
+	@$(CC_DARWIN) $(INCLUDE) $(GAME_SOURCES) $(CFLAGS_DARWIN) $(LINKER_FLAGS_DARWIN_BUILD) -o $(GAME_TITLE)
 	@install_name_tool -change @rpath/libsfml-graphics.2.5.dylib @executable_path/libs/libsfml-graphics.2.5.1.dylib $(GAME_TITLE) && install_name_tool -change @rpath/libsfml-window.2.5.dylib @executable_path/libs/libsfml-window.2.5.1.dylib $(GAME_TITLE) && install_name_tool -change @rpath/libsfml-system.2.5.dylib @executable_path/libs/libsfml-system.2.5.1.dylib $(GAME_TITLE) && install_name_tool -change libengine.dylib @executable_path/libs/libengine.dylib $(GAME_TITLE)
 
-	mv $(GAME_TITLE) out/$(PLATFORM)/$(GAME_TITLE)/$(GAME_TITLE)
+	@mv $(GAME_TITLE) out/$(PLATFORM)/$(GAME_TITLE)/$(GAME_TITLE)
 
 $(ENGINE_PATH)/libengine.so:
 	$(info [INFO]: engine was not compiled)
