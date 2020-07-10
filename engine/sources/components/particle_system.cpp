@@ -15,7 +15,8 @@ Particle::Particle(const sf::Transform& trans,const ParticleSystemProperties& pr
 
 void Particle::on_init(){
     sprite = component_add<Sprite2D>("Sprite");
-    sprite->set_color(sf::Color(color_begin.r + (color_begin.r-color_end.r)*(1-scale),color_begin.g + (color_begin.g-color_end.g)*(1-scale),color_begin.b + (color_begin.b-color_end.b)*(1-scale),255));
+    sprite->set_color(color_begin);
+    //sprite->set_color(sf::Color(color_begin.r + (color_begin.r-color_end.r)*(1-scale),color_begin.g + (color_begin.g-color_end.g)*(1-scale),color_begin.b + (color_begin.b-color_end.b)*(1-scale),255));
     sprite->set_size(size);
     translate(rand()%dispersion.x-dispersion.x/2,rand()%dispersion.y-dispersion.y/2);
 }
