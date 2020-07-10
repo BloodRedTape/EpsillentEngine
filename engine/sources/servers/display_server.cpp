@@ -30,8 +30,13 @@ void DisplayServer::init_window(sf::VideoMode mode, const char* p_title, uint32 
     }else{
         Warning("DisplayServer: trying to init window twice");
     }
-}  
+} 
 
+
+sf::Vector2u DisplayServer::window_size(){
+    ASSERT_ERROR(smp_singleton,"DisplayServer: wasn not inited");
+    return smp_singleton->mp_display_target->getSize();
+}
 void DisplayServer::set_frame_rate_limit(int fps){
     if(smp_singleton->mp_display_target!=nullptr)
         mp_display_target->setFramerateLimit(fps);
