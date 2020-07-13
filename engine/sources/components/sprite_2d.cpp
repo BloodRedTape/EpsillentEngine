@@ -21,6 +21,9 @@ void Sprite2D::set_rotation(float angle){
 void Sprite2D::rotate(float angle){
     m_shape.rotate(angle);
 }
+void Sprite2D::set_origin(const sf::Vector2f& o){
+    m_shape.setOrigin(o);
+}
 
 void Sprite2D::set_color(const sf::Color& color){
     m_shape.setFillColor(color);
