@@ -21,7 +21,7 @@ void BaseScene::render(){
 
 
 void BaseScene::object_introduce(GameObject* node){
-    ASSERT_ERROR(node->mp_scene=this,"OwnershipFault, object " + node->m_tag + " was created on a different scene");
+    ASSERT_ERROR(node->mp_scene=this,"OwnershipFault, object " + node->m_tag + " was created on a different scene and can't be updated by this");
     scene_graph.add_to_root(node);
 }
 void BaseScene::object_introduce(GameObject* node,const sf::Vector2f& pos){

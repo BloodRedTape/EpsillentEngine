@@ -31,9 +31,11 @@ void PhysicsEngine::update(float dt){
     for(Rigidbody2D& rb: rigidbodies){
         //rb.force_add(float(-dt)*rb.m_force/((float)rb.m_props.inertia/100.f));
         if(rb.m_props.mass){
-            rb.force_add(rb.m_props.gravity);
+            float intertion = (1.f-(0.9f+rb.m_props.inertia/10.f));
             rb.mp_owner->translate(rb.m_force*rb.m_props.mass*dt);
-            rb.force_add(rb.m_force*-(1.f-(0.9f+rb.m_props.inertia/10.f)));
+            rb.force_add(rb.m_force*-intertion);
+            rb.force_add(rb.m_props.gravity);
+            rb.force_add(rb.m_props.gravity*(1.f+intertion));
         }
     }
 }
