@@ -13,9 +13,7 @@ Input::Input(sf::RenderWindow* win):
 }
 
 sf::Vector2i Input::mouse_position(){
-    sf::Vector2i pos = sf::Mouse::getPosition(*smp_singleton->window);
-    pos.y*=-1;
-    return pos;
+    return sf::Mouse::getPosition(*smp_singleton->window);
 }
 bool Input::key_pressed(KeyCode code){
     return sf::Keyboard::isKeyPressed(code);
