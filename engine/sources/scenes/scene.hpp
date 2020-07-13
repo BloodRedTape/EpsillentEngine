@@ -46,6 +46,7 @@ public:
 
 
     void object_introduce(GameObject*);
+    void object_introduce(GameObject*,const sf::Vector2f& pos);
 
     SceneCluster& cluster(){return scene_cluster;}
 

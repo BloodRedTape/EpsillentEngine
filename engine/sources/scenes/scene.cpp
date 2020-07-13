@@ -22,6 +22,10 @@ void BaseScene::render(){
 void BaseScene::object_introduce(GameObject* node){
     scene_graph.add_to_root(node);
 }
+void BaseScene::object_introduce(GameObject* node,const sf::Vector2f& pos){
+    object_introduce(node);
+    node->translate(pos);
+}
 
 
 void BaseScene::mark_garbage(GameObject* p_candidate){
