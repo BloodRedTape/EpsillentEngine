@@ -28,7 +28,7 @@ all:
 	@$(MAKE) $(PLATFORM)
 
 rebuild: 
-	@(cd ../../engine/; make)
+	@(cd ../../engine/; make -j$(shell nproc))
 	$(info [INFO]: compiling $(GAME_TITLE) project)
 	@$(MAKE) $(PLATFORM)
 
@@ -52,7 +52,7 @@ clean:
 $(ENGINE_PATH)/libengine.dylib:
 	$(info [INFO]: engine was not compiled)
 	$(info [INFO]: compiling engine...)
-	(cd ../../engine/; make)
+	(cd ../../engine/; make -j$(shell nproc))
 
 Darwin: $(ENGINE_PATH)/libengine.dylib
 	@$(CC_DARWIN) $(INCLUDE) $(GAME_SOURCES) $(CFLAGS_DARWIN) $(LINKER_FLAGS_DARWIN_BUILD) -o $(GAME_TITLE)
@@ -70,7 +70,7 @@ Darwin_distribution: $(ENGINE_PATH)/libengine.dylib
 $(ENGINE_PATH)/libengine.so:
 	$(info [INFO]: engine was not compiled)
 	$(info [INFO]: compiling engine...)
-	@(cd ../../engine/; make)
+	@(cd ../../engine/; make -j$(shell nproc))
 
 Linux: $(ENGINE_PATH)/libengine.so
 	@$(CC_LINUX) $(INCLUDE) $(GAME_SOURCES) $(CFLAGS_LINUX) $(LINKER_FLAGS_LINUX_BUILD) -o $(OUT_NAME).out

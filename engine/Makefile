@@ -10,7 +10,8 @@ INCLUDE := -I$(ENGINE_PATH)/sources -I$(ENGINE_PATH)/thirdparty/include
 
 
 CC_LINUX := g++
-CFLAGS_LINUX := -Werror -shared -fPIC -lpthread -lstdc++ -lX11
+CFLAGS_LINUX := -shared -lpthread -lX11
+LD_LINUX := ld
 
 CC_MACOS := g++
 CFLAGS_MACOS := -dynamiclib -std=c++11 
@@ -34,6 +35,7 @@ all:
 	@tput sgr0
 	@echo
 	$(info [ENGINE-v$(ENGINE_VERSION).$(ENGINE_SUBVERSION).$(ENGINE_PATCHLEVEL)]: compiling for $(PLATFORM))
+	@mkdir -p out
 	@$(MAKE) $(PLATFORM)
 
 Darwin:
@@ -41,9 +43,10 @@ Darwin:
 	@$(CC_MACOS) $(CFLAGS_MACOS) $(INCLUDE) $(SOURCES) $(LINKER_MACOS) -o libengine.dylib 
 Linux:
 	@rm -f libengine.so
-	@$(CC_LINUX) $(CFLAGS_LINUX) $(INCLUDE) $(SOURCES) -o libengine.so
-
+	@(cd sources; $(MAKE) CC=$(CC_LINUX) CFLAGS="-Werror -c -fPIC" ENGINE_PATH=$(ENGINE_PATH)) 
+	@g++ $(CFLAGS_LINUX) out/*.o -o libengine.so
 clean:
 	@rm -f libengine.*
+	@rm -fr out
 
 

@@ -89,12 +89,12 @@ struct Player: public GameObject{
 
     void on_update(float dt)override{
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-            translate(0,-speed*dt);
-            direction = sf::Vector2f(0,-800);
-        }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
             translate(0,speed*dt);
             direction = sf::Vector2f(0,800);
+        }
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
+            translate(0,-speed*dt);
+            direction = sf::Vector2f(0,-800);
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
             translate(speed*dt,0);
