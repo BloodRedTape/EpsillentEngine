@@ -18,8 +18,12 @@ public:
 
     void set_size(float,float);
     void set_size(const sf::Vector2f&);
+    void set_rotation(float);
+    void rotate(float);
     void set_color(const sf::Color&);
     void set_texture(sf::Texture*);
+
+    float rotation();
 
     static Sprite2D* init(GameObject*);
     void finalize()override;
