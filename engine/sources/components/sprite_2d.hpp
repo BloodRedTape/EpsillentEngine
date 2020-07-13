@@ -18,6 +18,8 @@ public:
 
     void set_size(float,float);
     void set_size(const sf::Vector2f&);
+    void set_position(float,float);
+    void set_position(const sf::Vector2f&);
     void set_rotation(float);
     void rotate(float);
     void set_origin(const sf::Vector2f&);

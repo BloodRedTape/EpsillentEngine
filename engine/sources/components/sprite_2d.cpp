@@ -15,6 +15,12 @@ void Sprite2D::set_size(float x, float y){
 void Sprite2D::set_size(const sf::Vector2f& size){
     m_shape.setSize(size);
 }
+void Sprite2D::set_position(const sf::Vector2f& pos){
+    set_position(pos.x,pos.y);
+}
+void Sprite2D::set_position(float x, float y){
+    m_shape.setPosition(sf::Vector2f(x,y*-1.f));
+}
 void Sprite2D::set_rotation(float angle){
     m_shape.setRotation(angle);
 }
