@@ -6,7 +6,8 @@
 Rigidbody2DProperties::Rigidbody2DProperties():
     mass(1),
     gravity(0,-9.8f),
-    inertia(1)
+    inertia(0.9),
+    rebound(1)
 {}
 
 

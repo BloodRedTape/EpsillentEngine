@@ -13,6 +13,7 @@ struct Rigidbody2DProperties{
     sf::Vector2f gravity;
     float mass;
     float inertia;
+    float rebound;
     Rigidbody2DProperties();
 };
 

@@ -21,32 +21,32 @@ void Collider2D::collide(Collider2D& collider){
             if(collision.y >= 0){ // I quater
                 sf::Vector2f tr(self.left+self.width-self_mid.x,self_mid.y-self.top);
                 if(tang > tr.y/tr.x && collider.m_body->force().y <= 0){ // TR
-                    collider.m_body->force_add_y(abs(collider.m_body->force().y)*collider.m_body->props().inertia);
+                    collider.m_body->force_add_y(abs(collider.m_body->force().y)*collider.m_body->props().rebound);
                 }else if (tang < tr.y/tr.x && collider.m_body->force().x <= 0){
-                    collider.m_body->force_add_x(abs(collider.m_body->force().x)*collider.m_body->props().inertia);
+                    collider.m_body->force_add_x(abs(collider.m_body->force().x)*collider.m_body->props().rebound);
                 }
             }else{ // IV quater 
                 sf::Vector2f dr(self.left+self.width-self_mid.x,self_mid.y-(self.top+self.height));
                 if(tang > dr.y/dr.x  && collider.m_body->force().x <= 0){ // DR
-                    collider.m_body->force_add_x(abs(collider.m_body->force().x)*collider.m_body->props().inertia);
+                    collider.m_body->force_add_x(abs(collider.m_body->force().x)*collider.m_body->props().rebound);
                 }else if(tang < dr.y/dr.x && collider.m_body->force().y >= 0){
-                    collider.m_body->force_add_y(abs(collider.m_body->force().y)*-1.f*collider.m_body->props().inertia);
+                    collider.m_body->force_add_y(abs(collider.m_body->force().y)*-1.f*collider.m_body->props().rebound);
                 }
             }
         }else{
             if(collision.y >=0){ // II quater
                 sf::Vector2f tl(self.left-self_mid.x,self_mid.y-self.top);
                 if(tang > tl.y/tl.x  && collider.m_body->force().x >= 0){ // TL
-                    collider.m_body->force_add_x(abs(collider.m_body->force().x)*-1.f*collider.m_body->props().inertia);
+                    collider.m_body->force_add_x(abs(collider.m_body->force().x)*-1.f*collider.m_body->props().rebound);
                 }else if(tang < tl.y/tl.x && collider.m_body->force().y <= 0){
-                    collider.m_body->force_add_y(abs(collider.m_body->force().y)*collider.m_body->props().inertia);
+                    collider.m_body->force_add_y(abs(collider.m_body->force().y)*collider.m_body->props().rebound);
                 }           
             }else{ // III quater
                 sf::Vector2f dl(self.left-self_mid.x,self_mid.y-(self.top+self.height));
                 if(tang > dl.y/dl.x && collider.m_body->force().y >= 0){ // DL
-                    collider.m_body->force_add_y(abs(collider.m_body->force().y)*-1.f*collider.m_body->props().inertia);
+                    collider.m_body->force_add_y(abs(collider.m_body->force().y)*-1.f*collider.m_body->props().rebound);
                 }else if(tang < dl.y/dl.x  && collider.m_body->force().x >= 0){
-                    collider.m_body->force_add_x(abs(collider.m_body->force().x)*-1.f*collider.m_body->props().inertia);
+                    collider.m_body->force_add_x(abs(collider.m_body->force().x)*-1.f*collider.m_body->props().rebound);
                 }    
             }
         }

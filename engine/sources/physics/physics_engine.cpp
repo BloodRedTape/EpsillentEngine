@@ -33,6 +33,7 @@ void PhysicsEngine::update(float dt){
         if(rb.m_props.mass){
             rb.force_add(rb.m_props.gravity);
             rb.mp_owner->translate(rb.m_force*rb.m_props.mass*dt);
+            rb.force_add(rb.m_force*-(1.f-(0.9f+rb.m_props.inertia/10.f)));
         }
     }
 }
