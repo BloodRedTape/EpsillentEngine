@@ -1,12 +1,10 @@
 #include "physics/collider_2d.hpp"
 #include "components/rigidbody_2d.hpp"
 #include "scenes/game_object.hpp"
-#include <cmath>
-#include "unistd.h"
+
 
 
 #define abs(x) (x<0?(-1.f*x):x)
-//#define abs(x) (x*-1.f)
 
 void Collider2D::collide(Collider2D& collider){
     sf::FloatRect other = collider.m_body->owner()->global_transform().transformRect(collider.m_size);
