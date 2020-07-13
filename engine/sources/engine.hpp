@@ -49,7 +49,7 @@ class ENGINE_API Engine{
         static LayerStack* layer_stack;
         static const sf::VideoMode k_video_mode;  //better window creation
         static Engine *smp_singleton;
-        
+        static sf::Clock time;
         static bool _show_fps;
         class RenderLoop{
             public:

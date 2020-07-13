@@ -1,6 +1,7 @@
 #include "engine.hpp"
 #include "platform/platform.hpp"
 #include "scenes/game_layer.hpp"
+#include "core/math/random.hpp"
 
 std::atomic<bool> Engine::running;
 std::mutex Engine::mutex;
@@ -11,6 +12,7 @@ DisplayServer* Engine::display_server = nullptr;  //FOR now this thing is not wo
 SceneManager* Engine::scene_manager = nullptr;
 
 LayerStack* Engine::layer_stack = nullptr;
+sf::Clock Engine::time;
 
 bool Engine::_show_fps = false;
 
@@ -49,8 +51,10 @@ void Engine::handle_events(sf::RenderWindow &window){
 }
 
 void Engine::init(const EngineProperties& props){
+    time.restart();
     ASSERT_WARRNING(smp_singleton==this,"Engine: can't init from non-creator instance");
     Platform::init();
+    
 
 
     mainframe = new Mainframe();
@@ -74,8 +78,8 @@ void Engine::init(const EngineProperties& props){
 
     layer_stack->push_layer(new GameLayer);
 
-
-    Info("Engine: inited");
+    Random::seed(time.getElapsedTime().asMilliseconds());
+    Info("Engine: init took " + ARG(time.getElapsedTime().asSeconds()) + " seconds");
 }
 
 void Engine::shutdown(){
@@ -94,8 +98,8 @@ void Engine::UpdateLoop::operator()(){
     float frame_time = 0;
     float fps;
     while(running){
+        Random::seed(time.getElapsedTime().asMilliseconds()*reinterpret_cast<unsigned long long>(this));
         
-
         for(auto itr = layer_stack->begin(); itr!=layer_stack->end();itr++){
             (*itr)->on_update(frame_time);
         }
