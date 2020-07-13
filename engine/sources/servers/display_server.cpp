@@ -33,9 +33,9 @@ void DisplayServer::init_window(sf::VideoMode mode, const char* p_title, uint32 
 } 
 
 
-sf::Vector2u DisplayServer::window_size(){
+sf::Vector2i DisplayServer::window_size(){
     ASSERT_ERROR(smp_singleton,"DisplayServer: wasn not inited");
-    return smp_singleton->mp_display_target->getSize();
+    return sf::Vector2i(smp_singleton->mp_display_target->getSize().x,smp_singleton->mp_display_target->getSize().y);
 }
 void DisplayServer::set_frame_rate_limit(int fps){
     if(smp_singleton->mp_display_target!=nullptr)
