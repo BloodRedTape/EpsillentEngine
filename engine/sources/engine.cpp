@@ -8,7 +8,7 @@ std::mutex Engine::mutex;
 Mainframe* Engine::mainframe = nullptr;
 DrawCallInterface* Engine::draw_call_interface = nullptr;
 DisplayServer* Engine::display_server = nullptr;  //FOR now this thing is not working
-
+Input *Engine::input = nullptr;
 SceneManager* Engine::scene_manager = nullptr;
 
 LayerStack* Engine::layer_stack = nullptr;
@@ -72,6 +72,8 @@ void Engine::init(const EngineProperties& props){
 
     draw_call_interface = new DrawCallInterface(display_server->mp_display_target);
     
+    input = new Input(display_server->mp_display_target);
+
     scene_manager = new SceneManager(mutex);
     
     layer_stack = new LayerStack();
@@ -99,7 +101,7 @@ void Engine::UpdateLoop::operator()(){
     float fps;
     while(running){
         Random::seed(time.getElapsedTime().asMilliseconds()*reinterpret_cast<unsigned long long>(this));
-        
+
         for(auto itr = layer_stack->begin(); itr!=layer_stack->end();itr++){
             (*itr)->on_update(frame_time);
         }
