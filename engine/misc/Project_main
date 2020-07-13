@@ -88,26 +88,26 @@ struct Player: public GameObject{
     }
 
     void on_update(float dt)override{
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
+        if(Input::key_pressed(KeyCode::W)){
             translate(0,speed*dt);
             direction = sf::Vector2f(0,800);
         }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
+        if(Input::key_pressed(KeyCode::S)){
             translate(0,-speed*dt);
             direction = sf::Vector2f(0,-800);
         }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
+        if(Input::key_pressed(KeyCode::D)){
             translate(speed*dt,0);
             direction = sf::Vector2f(800,0);
         }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
+        if(Input::key_pressed(KeyCode::A)){
             translate(-speed*dt,0);
             direction = sf::Vector2f(-800,0);
         }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q)){
+        if(Input::key_pressed(KeyCode::Q)){
             Engine::get_singleton()->stop();
         }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
+        if(Input::key_pressed(KeyCode::Space)){
             if(!shooted){
                 object_introduce(new Bullet(direction), sf::Vector2f(100,150));
                 shooted  = true;

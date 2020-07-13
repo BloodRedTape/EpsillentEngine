@@ -12,6 +12,7 @@
 #include "core/mainframe.hpp"
 #include "core/layer_stack.hpp"
 #include "render/draw_call.hpp"
+#include "platform/input.hpp"
 #include <thread>
 #include <mutex>
 #include <atomic>
