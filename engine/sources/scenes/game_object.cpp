@@ -5,7 +5,7 @@
 
 GameObject::GameObject():
     m_transform(this),
-    mp_scene(nullptr),
+    mp_scene(SceneManager::get_current_scene()),
     mp_parent(nullptr),
     garbage(false),
     inited(false),
