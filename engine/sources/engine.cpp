@@ -10,6 +10,7 @@ Mainframe* Engine::mainframe = nullptr;
 DrawCallInterface* Engine::draw_call_interface = nullptr;
 DisplayServer* Engine::display_server = nullptr;  //FOR now this thing is not working
 Input *Engine::input = nullptr;
+UILayer *Engine::ui = nullptr;
 SceneManager* Engine::scene_manager = nullptr;
 
 LayerStack* Engine::layer_stack = nullptr;
@@ -80,7 +81,8 @@ void Engine::init(const EngineProperties& props){
     layer_stack = new LayerStack();
 
     layer_stack->push_layer(new GameLayer);
-    layer_stack->push_layer(new UILayer);
+    ui = new UILayer;
+    layer_stack->push_layer(ui);
 
     Random::seed(time.getElapsedTime().asMilliseconds());
     Info("Engine: init took " + ARG(time.getElapsedTime().asSeconds()) + " seconds");
@@ -174,4 +176,8 @@ void Engine::set_entry_scene(BaseScene* p_scene, const char* name){
     scene_manager->introduce_scene(name,p_scene,true);
 }
 
+
+void Engine::set_ui_controller(UIController* c){
+    ui->set_controller(c);
+}
 

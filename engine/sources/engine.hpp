@@ -18,6 +18,8 @@
 #include <atomic>
 #include "SFML/System.hpp"
 #include "SFML/Window/WindowStyle.hpp"
+#include "ui/ui_controller.hpp"
+#include "ui/ui_layer.hpp"
 
 
 
@@ -45,6 +47,7 @@ class ENGINE_API Engine{
         static DrawCallInterface* draw_call_interface;
         static DisplayServer* display_server;  //FOR now this thing is not working
         static Input* input;
+        static UILayer* ui;
         static SceneManager* scene_manager;
         static LayerStack* layer_stack;
         static const sf::VideoMode k_video_mode;  //better window creation
@@ -73,6 +76,8 @@ class ENGINE_API Engine{
         void start();
         void stop();
         void set_entry_scene(BaseScene*, const char* name);
+
+        void set_ui_controller(UIController*);
 
 
 };
