@@ -1,7 +1,6 @@
 #ifndef SCENE_NODE
 #define SCENE_NODE
 
-#include <map>
 #include <list> // basicaly have to be replaced with better data structure
 #include <queue>
 #include <memory>
@@ -26,7 +25,7 @@ private:
     GameObject *mp_parent;
     bool garbage;
     bool inited;
-    std::map<std::string,Component*> m_components;
+    std::list<Component*> m_components;
     std::string m_tag;
 private:        
     friend class RootNode;
@@ -49,26 +48,16 @@ public:
     GameObject();
     virtual ~GameObject();
 
-
-    template <typename T>
-    T* component_get(const std::string& name){
-        std::map<std::string,Component*>::iterator itr = m_components.find(T::static_type()+name);
-        ASSERT_ERROR(itr != m_components.end(),"Component " + name + " not found");
-        return static_cast<T*>(itr->second);
-    }
-
-    template <typename T>
-    T* component_add(const std::string& name){
-        T*t = T::init(this);
-        m_components.insert(std::pair<std::string,Component*>(T::static_type()+name,t));
+    template <typename T, typename... Props>
+    T* component_add(const Props&...props){
+        T*t = T::init(this,props...);
+        m_components.push_back(t);
         return t;
     }
-    template <typename T>
-    void component_remove(const std::string& name){
-        std::map<std::string,Component*>::iterator itr = m_components.find(T::static_type()+name);
-        ASSERT_ERROR(itr != m_components.end(),"Component " + name + " not found");
-        itr->second->finalize();
-        m_components.erase(itr);
+
+    void component_remove(Component *component){
+        component->finalize();
+        m_components.remove(component);
     }
 
     BaseScene* scene(){return mp_scene;};

@@ -10,12 +10,12 @@ struct Explosion: public GameObject{
     {}
 
     void on_init()override{
-        system = component_add<ParticleSystem>("sdf");
         ParticleSystemProperties props;
         props.color_begin = sf::Color::Yellow;
         props.color_end = sf::Color::Red;
         props.speed = 300;
-        system->set_properties(props);
+        system = component_add<ParticleSystem>(props);
+
     }
     void on_update(float dt)override{
         time += dt;
@@ -37,11 +37,11 @@ struct Bullet: public GameObject{
     {}
 
     void on_init()override{
-        system = component_add<ParticleSystem>("sdf");
         ParticleSystemProperties props;
         props.color_begin = sf::Color::Yellow;
         props.color_end = sf::Color::Red;
-        system->set_properties(props);
+        system = component_add<ParticleSystem>(props);
+
 
     }
     void on_update(float dt)override{
@@ -70,11 +70,9 @@ struct Player: public GameObject{
 
     void on_init()override{
 
-        sprite = component_add<Sprite2D>("PlayerSprite");
+        sprite = component_add<Sprite2D>();
         sprite->set_color(sf::Color::Green);
         sprite->set_size(200,300);
-        system = component_add<ParticleSystem>("sdf");
-
         ParticleSystemProperties props;
         props.spawn_position = sf::Vector2f(100,0);
         props.color_begin = sf::Color::Green;
@@ -83,18 +81,18 @@ struct Player: public GameObject{
         props.spawn_rate = 0.05;
         props.speed = 400;
         props.delta_angle = 90;
+        system = component_add<ParticleSystem>(props);
 
-        system->set_properties(props);
     }
 
     void on_update(float dt)override{
         if(Input::key_pressed(KeyCode::W)){
             translate(0,speed*dt);
-            direction = sf::Vector2f(0,800);
+            direction = sf::Vector2f(0,-800);
         }
         if(Input::key_pressed(KeyCode::S)){
             translate(0,-speed*dt);
-            direction = sf::Vector2f(0,-800);
+            direction = sf::Vector2f(0,800);
         }
         if(Input::key_pressed(KeyCode::D)){
             translate(speed*dt,0);

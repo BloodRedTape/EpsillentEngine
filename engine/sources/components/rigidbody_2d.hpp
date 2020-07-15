@@ -26,8 +26,8 @@ private:
 
     friend class PhysicsEngine;
 public:
-    Rigidbody2D(GameObject *owner);
-    void set_properties(const Rigidbody2DProperties&);
+    Rigidbody2D(GameObject *owner,const Rigidbody2DProperties& props = Rigidbody2DProperties());
+    Rigidbody2D& set_properties(const Rigidbody2DProperties&);
     void force_add(const sf::Vector2f&);
     void force_add_x(float f){force_add(sf::Vector2f(f,0));};
     void force_add_y(float f){force_add(sf::Vector2f(0,f));};
@@ -37,7 +37,7 @@ public:
     sf::Vector2f force()const{return m_force;}
     const Rigidbody2DProperties& props()const{return m_props;}
 
-    static Rigidbody2D *init(GameObject*);
+    static Rigidbody2D *init(GameObject*, const Rigidbody2DProperties& props  = Rigidbody2DProperties());
     void finalize()override;
 
     static std::string static_type(){return "Rigidbody2D";}

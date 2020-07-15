@@ -13,10 +13,10 @@ Trigger2DProperties::Trigger2DProperties():
 {}
 
 
-Trigger2D::Trigger2D(GameObject *owner):
+Trigger2D::Trigger2D(GameObject *owner, const Trigger2DProperties& props):
     Component(owner)
 {
-    set_properties(Trigger2DProperties());
+    set_properties(props);
 }
 
 
@@ -28,8 +28,8 @@ bool Trigger2D::collide(const Collider2D& other){
     return mp_owner->global_transform().transformRect(m_size).intersects(other.body()->owner()->global_transform().transformRect(other.size()));
 }
 
-Trigger2D* Trigger2D::init(GameObject *owner){
-    return owner->scene()->cluster().physics.trigger_2d_new(owner);
+Trigger2D* Trigger2D::init(GameObject *owner,const Trigger2DProperties& props){
+    return &owner->scene()->cluster().physics.trigger_2d_new(owner)->set_properties(props);
 }
 
 void Trigger2D::finalize(){
@@ -37,9 +37,10 @@ void Trigger2D::finalize(){
 }
 
 
-void Trigger2D::set_properties(const Trigger2DProperties &props){
+Trigger2D& Trigger2D::set_properties(const Trigger2DProperties &props){
     m_callback = props.callback;
     m_size = props.size;
+    return *this;
 }
 
 

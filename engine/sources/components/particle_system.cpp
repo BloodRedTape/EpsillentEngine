@@ -14,7 +14,7 @@ Particle::Particle(const sf::Transform& trans,const ParticleSystemProperties& pr
 
 
 void Particle::on_init(){
-    sprite = component_add<Sprite2D>("Sprite");
+    sprite = component_add<Sprite2D>();
     sprite->set_color(color_begin);
     //sprite->set_color(sf::Color(color_begin.r + (color_begin.r-color_end.r)*(1-scale),color_begin.g + (color_begin.g-color_end.g)*(1-scale),color_begin.b + (color_begin.b-color_end.b)*(1-scale),255));
     sprite->set_size(size);
@@ -33,9 +33,9 @@ void Particle::on_update(float dt){
 
 
 
-ParticleSystem::ParticleSystem(GameObject * owner):
+ParticleSystem::ParticleSystem(GameObject * owner, const ParticleSystemProperties& props):
     Component(owner),
-    m_properties(),
+    m_properties(props),
     time(0)
 {
 
@@ -54,8 +54,8 @@ void ParticleSystem::update(float dt){
 }
 
 
-ParticleSystem* ParticleSystem::init(GameObject* owner){
-    ParticleSystem *p = new ParticleSystem(owner);
+ParticleSystem* ParticleSystem::init(GameObject* owner, const ParticleSystemProperties& props){
+    ParticleSystem *p = new ParticleSystem(owner, props);
     owner->scene()->cluster().components.push_back(p);
     p->m_self = std::prev(owner->scene()->cluster().components.end());
     return p;

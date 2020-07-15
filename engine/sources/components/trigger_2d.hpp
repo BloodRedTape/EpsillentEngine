@@ -26,16 +26,16 @@ private:
     sf::FloatRect m_size;
     std::function<void(Trigger2D)> m_callback;
 private:
-    Trigger2D(GameObject *owner);
+    Trigger2D(GameObject *owner, const Trigger2DProperties& props = Trigger2DProperties());
     bool collide(const Trigger2D&);
     bool collide(const Collider2D&);
     friend class PhysicsEngine;
 public:
 
-    static Trigger2D* init(GameObject *);
+    static Trigger2D* init(GameObject *,const Trigger2DProperties& props = Trigger2DProperties());
     void finalize()override;
 
-    void set_properties(const Trigger2DProperties&);
+    Trigger2D& set_properties(const Trigger2DProperties&);
 
     static std::string static_type(){return "Trigger2D";}
 

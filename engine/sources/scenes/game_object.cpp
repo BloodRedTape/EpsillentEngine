@@ -11,7 +11,7 @@ GameObject::GameObject():
     inited(false),
     m_tag("unknown")
 {
-    m_components.insert(std::pair<std::string,Component*>(Transform::static_type()+"Transform",&m_transform));
+    m_components.push_back(&m_transform);
 }
 
 GameObject::~GameObject()

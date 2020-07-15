@@ -38,8 +38,8 @@ void BaseScene::clear_garbage(){
     if(!garbage.empty()){
         for(GameObject* candidate: garbage){
             candidate->detach();
-            for(auto &component: candidate->m_components){
-                component.second->finalize();
+            for(Component *component: candidate->m_components){
+                component->finalize();
             }
         }
         while(!garbage.empty()){

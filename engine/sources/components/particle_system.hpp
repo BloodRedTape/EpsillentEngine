@@ -56,14 +56,14 @@ private:
     ParticleSystemProperties m_properties;
     double time;
 public:
-    ParticleSystem(GameObject * owner);
+    ParticleSystem(GameObject * owner, const ParticleSystemProperties& props = ParticleSystemProperties());
     void update(float dt)override;
 
     void set_properties(const ParticleSystemProperties&);
     
     ParticleSystemProperties& properties(){return m_properties;};
     
-    static ParticleSystem* init(GameObject*);
+    static ParticleSystem* init(GameObject*, const ParticleSystemProperties& props = ParticleSystemProperties());
     void finalize()override;
     static std::string static_type(){return "ParticleSystem";}
 };
