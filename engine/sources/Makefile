@@ -7,9 +7,9 @@ OUT := $(ENGINE_PATH)/out
 
 
 
-.PHONY: all components core physics platform render scenes servers utils
+.PHONY: all components core physics platform render scenes servers ui utils
 
-all: components core physics platform render scenes servers utils $(OUT)/engine.o
+all: components core physics platform render scenes servers ui utils $(OUT)/engine.o
 
 
 components:
@@ -26,6 +26,8 @@ scenes:
 	@(cd scenes; $(MAKE) CC=$(CC) CFLAGS="$(CFLAGS)" ENGINE_PATH=$(ENGINE_PATH))
 servers:
 	@(cd servers; $(MAKE) CC=$(CC) CFLAGS="$(CFLAGS)" ENGINE_PATH=$(ENGINE_PATH))
+ui:
+	@(cd ui; $(MAKE) CC=$(CC) CFLAGS="$(CFLAGS)" ENGINE_PATH=$(ENGINE_PATH))
 utils:
 	@(cd utils; $(MAKE) CC=$(CC) CFLAGS="$(CFLAGS)" ENGINE_PATH=$(ENGINE_PATH))
 $(OUT)/engine.o: engine.cpp

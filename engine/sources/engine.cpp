@@ -1,6 +1,7 @@
 #include "engine.hpp"
 #include "platform/platform.hpp"
 #include "scenes/game_layer.hpp"
+#include "ui/ui_layer.hpp"
 #include "core/math/random.hpp"
 
 std::atomic<bool> Engine::running;
@@ -79,6 +80,7 @@ void Engine::init(const EngineProperties& props){
     layer_stack = new LayerStack();
 
     layer_stack->push_layer(new GameLayer);
+    layer_stack->push_layer(new UILayer);
 
     Random::seed(time.getElapsedTime().asMilliseconds());
     Info("Engine: init took " + ARG(time.getElapsedTime().asSeconds()) + " seconds");
