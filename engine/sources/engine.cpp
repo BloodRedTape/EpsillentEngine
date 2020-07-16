@@ -81,8 +81,7 @@ void Engine::init(const EngineProperties& props){
     layer_stack = new LayerStack();
 
     layer_stack->push_layer(new GameLayer);
-    ui = new UILayer;
-    layer_stack->push_layer(ui);
+
 
     Random::seed(time.getElapsedTime().asMilliseconds());
     Info("Engine: init took " + ARG(time.getElapsedTime().asSeconds()) + " seconds");
@@ -178,6 +177,10 @@ void Engine::set_entry_scene(BaseScene* p_scene, const char* name){
 
 
 void Engine::set_ui_controller(UIController* c){
+    if(!ui){
+        ui = new UILayer;
+        layer_stack->push_layer(ui);
+    }
     ui->set_controller(c);
 }
 
