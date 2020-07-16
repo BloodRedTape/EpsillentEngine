@@ -87,11 +87,11 @@ struct Player: public GameObject{
 
     void on_update(float dt)override{
         if(Input::key_pressed(KeyCode::W)){
-            translate(0,speed*dt);
+            translate(0,-speed*dt);
             direction = sf::Vector2f(0,-800);
         }
         if(Input::key_pressed(KeyCode::S)){
-            translate(0,-speed*dt);
+            translate(0,speed*dt);
             direction = sf::Vector2f(0,800);
         }
         if(Input::key_pressed(KeyCode::D)){

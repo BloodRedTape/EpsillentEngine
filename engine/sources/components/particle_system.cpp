@@ -4,11 +4,11 @@
 #include "scenes/scene.hpp"
 #include <cstring>
 
-Particle::Particle(const sf::Transform& trans,const ParticleSystemProperties& prop):
+Particle::Particle(const sf::Vector2f& position,const ParticleSystemProperties& prop):
     time(0.0f),
     direction(rand()%(prop.speed*2)-prop.speed,rand()%(2*prop.speed)-prop.speed)
 {
-    set_transform(trans);
+    translate(position);
     memcpy(&size.x,&prop.size.x,sizeof(prop)-16);
 }
 
@@ -49,7 +49,7 @@ void ParticleSystem::update(float dt){
     time +=dt;
     if(time>=m_properties.spawn_rate){
         time-=m_properties.spawn_rate;
-        mp_owner->scene()->object_introduce(new Particle(mp_owner->global_transform().translate(m_properties.spawn_position),m_properties));
+        mp_owner->scene()->object_introduce(new Particle(mp_owner->global_position()+m_properties.spawn_position,m_properties));
     }
 }
 

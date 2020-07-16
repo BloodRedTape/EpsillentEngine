@@ -43,7 +43,7 @@ private:
     float angle;
     double time;
 public:
-    Particle(const sf::Transform&,const ParticleSystemProperties&);
+    Particle(const sf::Vector2f&,const ParticleSystemProperties&);
 
     void on_init()override;
     void on_update(float dt)override;

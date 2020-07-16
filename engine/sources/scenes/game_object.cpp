@@ -64,7 +64,7 @@ void GameObject::children_destroy(){
 }
 
 void GameObject::object_introduce(GameObject* object,const sf::Vector2f& relative_pos){
-    object->set_transform(m_transform.global_transform().translate(relative_pos));
+    object->translate(m_transform.m_global_position+relative_pos);
     mp_scene->object_introduce(object);
 }
 
@@ -107,15 +107,19 @@ void GameObject::translate(const float x, const float y){
     translate(sf::Vector2f(x,y));
 }
 
+/*
 void GameObject::set_transform(const sf::Transform& trans){
-    m_transform.m_transform=trans;
+    //m_transform.m_transform=trans;
     m_transform.m_dirty=true;
-}
+} */
 
 void GameObject::rotate(const float angle){
     m_transform.rotate(angle);
 }
 
+sf::Vector2f GameObject::global_position(){
+    return m_transform.global_position();
+}
 
 sf::Transform GameObject::global_transform(){
     return m_transform.global_transform();

@@ -8,8 +8,9 @@
 
 class ENGINE_API Transform: public Component{
 private:
-    sf::Transform m_transform;
-    sf::Transform m_global_transform;
+    sf::Vector2f m_local_position;
+    sf::Vector2f m_global_position;
+    float rotation;
     bool m_dirty;
 
     friend class GameObject;
@@ -22,6 +23,8 @@ public:
     void translate(const sf::Vector2f& r_offset);
     void translate(const float x_offset,const float y_offset);
     void rotate(const float angle);
+
+    sf::Vector2f global_position();
 
     sf::Transform global_transform();
     const sf::Transform& local_transform();
