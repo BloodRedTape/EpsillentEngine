@@ -3,6 +3,7 @@
 #include "SFML/System/Vector2.hpp"
 #include "core/math/random.hpp"
 #include "core/typedefs.hpp"
+#define PI 3.141
 #include <cmath>
 
 #define abs(x) ((x)>0?(x):(x)*-1)
@@ -29,11 +30,11 @@ _FORCE_INLINE_ sf::Vector2f normalize(const sf::Vector2f& vector){
 }
 
 _FORCE_INLINE_ float degree(float rad){
-    return rad/M_PI*180;
+    return rad/PI*180;
 }
 
 _FORCE_INLINE_ float rad(float degree){
-    return degree/180*M_PI;
+    return degree/180*PI;
 }
 
 }; // end of Math::

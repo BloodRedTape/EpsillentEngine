@@ -20,30 +20,41 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sources\components\particle_system.hpp" />
+    <ClInclude Include="sources\components\rigidbody_2d.hpp" />
     <ClInclude Include="sources\components\sprite_2d.hpp" />
     <ClInclude Include="sources\components\transform.hpp" />
+    <ClInclude Include="sources\components\trigger_2d.hpp" />
     <ClInclude Include="sources\config\config.hpp" />
     <ClInclude Include="sources\core\component.hpp" />
     <ClInclude Include="sources\core\instance.hpp" />
     <ClInclude Include="sources\core\layer.hpp" />
     <ClInclude Include="sources\core\layer_stack.hpp" />
     <ClInclude Include="sources\core\mainframe.hpp" />
+    <ClInclude Include="sources\core\math\math.hpp" />
+    <ClInclude Include="sources\core\math\random.hpp" />
     <ClInclude Include="sources\core\os\time.hpp" />
     <ClInclude Include="sources\core\processor.hpp" />
     <ClInclude Include="sources\core\typedefs.hpp" />
     <ClInclude Include="sources\engine.hpp" />
     <ClInclude Include="sources\physics\collider2d.hpp" />
+    <ClInclude Include="sources\physics\collider_2d.hpp" />
     <ClInclude Include="sources\physics\physics_engine.hpp" />
+    <ClInclude Include="sources\platform\input.hpp" />
     <ClInclude Include="sources\platform\platform.hpp" />
     <ClInclude Include="sources\render\draw_call.hpp" />
     <ClInclude Include="sources\render\renderer_2d.hpp" />
     <ClInclude Include="sources\scenes\game_layer.hpp" />
     <ClInclude Include="sources\scenes\game_object.hpp" />
     <ClInclude Include="sources\scenes\scene.hpp" />
+    <ClInclude Include="sources\scenes\scene_cluster.hpp" />
     <ClInclude Include="sources\scenes\scene_graph.hpp" />
     <ClInclude Include="sources\scenes\scene_manager.hpp" />
     <ClInclude Include="sources\scenes\sprite.hpp" />
     <ClInclude Include="sources\servers\display_server.hpp" />
+    <ClInclude Include="sources\ui\button.hpp" />
+    <ClInclude Include="sources\ui\ui_controller.hpp" />
+    <ClInclude Include="sources\ui\ui_layer.hpp" />
+    <ClInclude Include="sources\ui\widget.hpp" />
     <ClInclude Include="sources\utils\assets_manager.h" />
     <ClInclude Include="sources\utils\debug.hpp" />
     <ClInclude Include="thirdparty\include\SFML\Audio.hpp" />
@@ -147,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
+    <None Include="sources\ui\Makefile" />
     <None Include="thirdparty\include\SFML\Audio\SoundFileFactory.inl" />
     <None Include="thirdparty\include\SFML\Graphics\Glsl.inl" />
     <None Include="thirdparty\include\SFML\Graphics\Rect.inl" />
@@ -170,27 +182,37 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\components\particle_system.cpp" />
+    <ClCompile Include="sources\components\rigidbody_2d.cpp" />
     <ClCompile Include="sources\components\sprite_2d.cpp" />
     <ClCompile Include="sources\components\transform.cpp" />
+    <ClCompile Include="sources\components\trigger_2d.cpp" />
     <ClCompile Include="sources\core\component.cpp" />
     <ClCompile Include="sources\core\instance.cpp" />
     <ClCompile Include="sources\core\layer_stack.cpp" />
     <ClCompile Include="sources\core\mainframe.cpp" />
+    <ClCompile Include="sources\core\math\math.cpp" />
+    <ClCompile Include="sources\core\math\random.cpp" />
     <ClCompile Include="sources\core\os\time.cpp" />
     <ClCompile Include="sources\core\processor.cpp" />
     <ClCompile Include="sources\engine.cpp" />
-    <ClCompile Include="sources\physics\collider2d.cpp" />
+    <ClCompile Include="sources\physics\collider_2d.cpp" />
     <ClCompile Include="sources\physics\physics_engine.cpp" />
+    <ClCompile Include="sources\platform\input.cpp" />
     <ClCompile Include="sources\platform\platform.cpp" />
     <ClCompile Include="sources\render\draw_call.cpp" />
     <ClCompile Include="sources\render\renderer_2d.cpp" />
     <ClCompile Include="sources\scenes\game_layer.cpp" />
     <ClCompile Include="sources\scenes\game_object.cpp" />
     <ClCompile Include="sources\scenes\scene.cpp" />
+    <ClCompile Include="sources\scenes\scene_cluster.cpp" />
     <ClCompile Include="sources\scenes\scene_graph.cpp" />
     <ClCompile Include="sources\scenes\scene_manager.cpp" />
     <ClCompile Include="sources\scenes\sprite.cpp" />
     <ClCompile Include="sources\servers\display_server.cpp" />
+    <ClCompile Include="sources\ui\button.cpp" />
+    <ClCompile Include="sources\ui\ui_controller.cpp" />
+    <ClCompile Include="sources\ui\ui_layer.cpp" />
+    <ClCompile Include="sources\ui\widget.cpp" />
     <ClCompile Include="sources\utils\assets_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
