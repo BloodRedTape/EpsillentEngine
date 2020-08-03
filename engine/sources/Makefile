@@ -31,5 +31,5 @@ ui:
 utils:
 	@(cd utils; $(MAKE) CC=$(CC) CFLAGS="$(CFLAGS)" ENGINE_PATH=$(ENGINE_PATH))
 $(OUT)/engine.o: engine.cpp
-	$(CC) $(CFLAGS) $(INCLUDE) $(CFLAGS) engine.cpp -o $(OUT)/engine.o
+	$(CC) $(CFLAGS) $(INCLUDE) engine.cpp -o $(OUT)/engine.o
 

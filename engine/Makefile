@@ -9,8 +9,9 @@ SOURCES := $(shell find $(ENGINE_PATH) -name '*.cpp')
 INCLUDE := -I$(ENGINE_PATH)/sources -I$(ENGINE_PATH)/thirdparty/include
 
 
-CC_LINUX := g++
-CFLAGS_LINUX := -shared -lpthread -lX11
+CC_LINUX := clang
+CC_FLAGS_LINUX := -Werror -c -fPIC -std=c++11 
+LD_FLAGS_LINUX := -shared -lpthread -lX11 -lm -lstdc++
 LD_LINUX := ld
 
 CC_MACOS := g++
@@ -43,8 +44,8 @@ Darwin:
 	@$(CC_MACOS) $(CFLAGS_MACOS) $(INCLUDE) $(SOURCES) $(LINKER_MACOS) -o libengine.dylib 
 Linux:
 	@rm -f libengine.so
-	@(cd sources; $(MAKE) CC=$(CC_LINUX) CFLAGS="-Werror -c -fPIC" ENGINE_PATH=$(ENGINE_PATH)) 
-	@g++ $(CFLAGS_LINUX) out/*.o -o libengine.so
+	@(cd sources; $(MAKE) CC=$(CC_LINUX) CFLAGS="$(CC_FLAGS_LINUX)" ENGINE_PATH=$(ENGINE_PATH)) 
+	@$(CC_LINUX) $(LD_FLAGS_LINUX) out/*.o -o libengine.so
 clean:
 	@rm -f libengine.*
 	@rm -fr out
