@@ -3,7 +3,7 @@
 #include "SFML/System/Vector2.hpp"
 #include "core/math/random.hpp"
 #include "core/typedefs.hpp"
-#define PI 3.141
+#define PI 3.14159265358979323846
 #include <cmath>
 
 #define abs(x) ((x)>0?(x):(x)*-1)
