@@ -1,5 +1,5 @@
 ENGINE_PATH := ../../engine
-INCLUDE := -I$(ENGINE_PATH)/sources/ -I$(ENGINE_PATH)/thirdparty/include -I./
+INCLUDE := -I$(ENGINE_PATH)/sources/ -I$(ENGINE_PATH)/thirdparty/include -I./sources
 
 
 CC_LINUX := clang
@@ -81,7 +81,7 @@ Linux_distribution: $(ENGINE_PATH)/libengine.so
 	@cp -r $(ENGINE_PATH)/thirdparty/lib/$(PLATFORM)/ out/$(PLATFORM)/$(GAME_TITLE)/
 	@mv out/$(PLATFORM)/$(GAME_TITLE)/$(PLATFORM) out/$(PLATFORM)/$(GAME_TITLE)/libs
 	@cp $(ENGINE_PATH)/libengine.so out/$(PLATFORM)/$(GAME_TITLE)/libs/libengine.so
-	@(cd out/$(PLATFORM)/$(GAME_TITLE); $(CC_LINUX) -I../../../$(ENGINE_PATH)/sources/ -I../../../$(ENGINE_PATH)/thirdparty/include -I../../../ $(subst ./,../../../,$(GAME_SOURCES)) $(CFLAGS_LINUX) $(LINKER_FLAGS_LINUX_DISTRIBUTION) -o $(OUT_NAME))
+	(cd out/$(PLATFORM)/$(GAME_TITLE); $(CC_LINUX) -I../../../sources/ -I../../../$(ENGINE_PATH)/thirdparty/include -I../../../$(ENGINE_PATH)/sources $(subst ./,../../../,$(GAME_SOURCES)) $(CFLAGS_LINUX) $(LINKER_FLAGS_LINUX_DISTRIBUTION) -o $(OUT_NAME))
 	
 
 	
