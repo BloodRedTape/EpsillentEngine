@@ -13,9 +13,11 @@ private:
     callback m_callback;
     bool pressed;
 public:
-    Button(const sf::Vector2f &size, const sf::Color& color, const callback& func);
+    Button(const sf::Vector2f &size, const sf::Color& color);
     void on_update(float dt);
     void on_render();
+
+    void set_callback(const callback& func);
 };
 
 #endif

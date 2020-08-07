@@ -2,6 +2,11 @@
 #include <queue>
 #include "utils/debug.hpp"
 
+
+UIController::UIController():
+    root(nullptr)
+{}
+
 void UIController::update(float dt){
     ASSERT_ERROR(root,"UIController has to provide a root widget in order to display ui"); 
     root->update(dt);

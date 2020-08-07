@@ -2,9 +2,13 @@
 #include "render/draw_call.hpp"
 #include "platform/input.hpp"
 
-Button::Button(const sf::Vector2f& size, const sf::Color& color, const callback& func):
+void null_callback(void){
+
+}
+
+Button::Button(const sf::Vector2f& size, const sf::Color& color):
     m_shape(size),
-    m_callback(func)
+    m_callback(&null_callback)
 {
     m_shape.setFillColor(color);
 }
@@ -24,3 +28,8 @@ void Button::on_update(float dt){
         pressed = false;
     }
 }
+
+void Button::set_callback(const callback& func){
+    m_callback = func;
+}
+
