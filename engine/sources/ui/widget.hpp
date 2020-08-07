@@ -1,14 +1,14 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
-#include <list>
+#include <vector>
 #include <queue>
 
 class UIController;
 
 class Widget{
 private:
-    std::list<Widget*> children;
+    std::vector<Widget*> children;
 private:
     void render(std::queue<Widget*>&);
     void update(float dt);

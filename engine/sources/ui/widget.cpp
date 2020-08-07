@@ -13,3 +13,7 @@ void Widget::render(std::queue<Widget*>& queue){
         queue.push(w);
     }
 }
+
+void Widget::child_add(Widget *w){
+    children.push_back(w);
+}
