@@ -48,7 +48,6 @@ class ENGINE_API Engine{
         static DisplayServer* display_server;  //FOR now this thing is not working
         static Input* input;
         static UILayer* ui;
-        static SceneManager* scene_manager;
         static LayerStack* layer_stack;
         static const sf::VideoMode k_video_mode;  //better window creation
         static Engine *smp_singleton;

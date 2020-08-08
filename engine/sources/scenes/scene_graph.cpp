@@ -20,3 +20,7 @@ void SceneGraph::render(){
         traverse_order.pop();
     };
 }
+
+void SceneGraph::clear(){
+    m_root.children_destroy();
+}

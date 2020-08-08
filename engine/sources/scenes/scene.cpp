@@ -8,7 +8,10 @@ BaseScene::BaseScene():
 }
 
 BaseScene::~BaseScene(){
-    
+    // destroy all root node's children
+    scene_graph.clear();
+    // clear them
+    clear_garbage();
 }
 
 void BaseScene::update(const float dt){

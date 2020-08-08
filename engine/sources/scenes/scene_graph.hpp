@@ -30,6 +30,8 @@ public:
         m_root.child_add(p_node);
     }
 
+    void clear();
+
     
 
 };

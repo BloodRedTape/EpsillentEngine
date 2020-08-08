@@ -1,7 +1,7 @@
 #ifndef SCENE_MANAGER_H
 #define SCENE_MANAGER_H
 
-#include <map>
+#include <unordered_map>
 #include <string>
 #include "config/config.hpp"
 #include "core/typedefs.hpp"
@@ -10,28 +10,25 @@
 
 class Engine;
 class GameLayer;
-// KING OF THE ENGINE
+
 class ENGINE_API SceneManager{
 private:
-    static SceneManager* smp_singleton;
-    std::mutex &mutex;
-    BaseScene* current_scene;
-    std::map<std::string, BaseScene*> scenes;
-
+    static std::mutex *p_sync_mutex;
+    static BaseScene *p_current_scene;
+    static std::unordered_map<std::string, BaseScene *> scenes;
 private:
     friend class Engine;
     friend class GameLayer;
-    
-    void update_scene(const float dt);
-    void render_scene();
-    void clean_scene_garbage();
-public:
-    SceneManager(std::mutex&);
-    ~SceneManager();
 
-    static _ALWAYS_INLINE_ SceneManager* get_singleton(){
-        return smp_singleton;
-    }
+    static void initialize(std::mutex *p_sync);
+    static void finalize();
+    
+    static void update_scene(const float dt);
+    static void render_scene();
+    static void clean_scene_garbage();
+public:
+    SceneManager() = default;
+    ~SceneManager() = default;
     
 
     static BaseScene* get_scene(const std::string& );

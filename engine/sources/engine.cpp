@@ -3,7 +3,7 @@
 #include "scenes/game_layer.hpp"
 #include "ui/ui_layer.hpp"
 #include "core/math/random.hpp"
-
+#include "utils/debug.hpp"
 std::atomic<bool> Engine::running;
 std::mutex Engine::mutex;
 Mainframe* Engine::mainframe = nullptr;
@@ -11,7 +11,6 @@ DrawCallInterface* Engine::draw_call_interface = nullptr;
 DisplayServer* Engine::display_server = nullptr;  //FOR now this thing is not working
 Input *Engine::input = nullptr;
 UILayer *Engine::ui = nullptr;
-SceneManager* Engine::scene_manager = nullptr;
 
 LayerStack* Engine::layer_stack = nullptr;
 sf::Clock Engine::time;
@@ -76,7 +75,7 @@ void Engine::init(const EngineProperties& props){
     
     input = new Input(display_server->mp_display_target);
 
-    scene_manager = new SceneManager(mutex);
+    SceneManager::initialize(&mutex);
     
     layer_stack = new LayerStack();
 
@@ -90,7 +89,7 @@ void Engine::init(const EngineProperties& props){
 void Engine::shutdown(){
     ASSERT_WARRNING(smp_singleton==this,"Engine: can't shut down from non-creator instance");
     delete layer_stack;
-    delete scene_manager;
+    SceneManager::finalize();
     delete draw_call_interface;
     delete display_server;
     delete mainframe;
@@ -157,10 +156,7 @@ void Engine::RenderLoop::operator()(){
 
 void Engine::start(){
     running = true;
-
-    if(scene_manager->get_current_scene()==nullptr){
-        Error("Engine:Create a scene and apply it via Engine::set_entry_scene(BaseScene* p_scene, const char* name)");
-    }
+    ASSERT_ERROR(SceneManager::get_current_scene(),"Engine:Create a scene and apply it via Engine::set_entry_scene(BaseScene* p_scene, const char* name)")
     std::thread update{UpdateLoop()};
     update.detach();
     RenderLoop render;
@@ -172,7 +168,7 @@ void Engine::stop(){
 }
 
 void Engine::set_entry_scene(BaseScene* p_scene, const char* name){
-    scene_manager->introduce_scene(name,p_scene,true);
+    SceneManager::introduce_scene(name,p_scene,true);
 }
 
 
