@@ -21,7 +21,7 @@ protected:
     SceneCluster scene_cluster;
     sf::Clock clock;
     BaseScene();
-    ~BaseScene();
+    virtual ~BaseScene();
 private:
     friend class GameObject;
     friend class SceneManager;
