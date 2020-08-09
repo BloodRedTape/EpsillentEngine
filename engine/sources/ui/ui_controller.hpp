@@ -9,12 +9,16 @@ class UIController{
 protected:
     View* root;
     friend class UILayer;
-public:
-    UIController();
-    virtual ~UIController() = default;
 private:
     void update(float dt);
     void render();
+public:
+    UIController();
+    virtual ~UIController();
+
+    virtual void on_init(){};
+    virtual void on_update(float dt){};
+    virtual void on_destroy(){};
 };
 
 #endif

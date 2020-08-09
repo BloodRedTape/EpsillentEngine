@@ -5,11 +5,17 @@
 
 UIController::UIController():
     root(nullptr)
-{}
+{
+    on_init();
+}
+UIController::~UIController(){
+    on_destroy();
+}
 
 void UIController::update(float dt){
     ASSERT_ERROR(root,"UIController has to provide a root View in order to display ui"); 
     root->update(dt);
+    on_update(dt);
 }
 
 void UIController::render(){
