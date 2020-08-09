@@ -16,6 +16,10 @@ DisplayServer::DisplayServer(std::mutex& mtx):
 }
 
 DisplayServer::~DisplayServer(){
+    if (smp_singleton = this) {
+        if (mp_display_target)
+            delete mp_display_target;
+    }
     Info("DisplayServer: deleted");
 }
 

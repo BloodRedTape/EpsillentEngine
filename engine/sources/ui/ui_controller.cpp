@@ -10,6 +10,8 @@ UIController::UIController():
 }
 UIController::~UIController(){
     on_destroy();
+    ASSERT_ERROR(root, "UIController has to provide a root View in order to display ui");
+    delete root;
 }
 
 void UIController::update(float dt){
