@@ -6,13 +6,13 @@
 
 class UIController;
 
-class Widget{
+class View{
 private:
     virtual void render();
     virtual void update(float dt);
     friend class UIController;
 public:
-    virtual ~Widget(){};
+    virtual ~View(){};
 
     virtual void on_render()=0;
     virtual void on_update(float dt)=0;

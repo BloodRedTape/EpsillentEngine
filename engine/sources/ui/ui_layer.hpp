@@ -3,7 +3,7 @@
 
 #include "config/config.hpp"
 #include "core/layer.hpp"
-#include "ui/widget.hpp"
+#include "ui/view.hpp"
 #include "ui/ui_controller.hpp"
 
 class ENGINE_API UILayer: public Layer{

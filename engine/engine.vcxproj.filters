@@ -390,7 +390,7 @@
     <ClInclude Include="sources\engine.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sources\ui\widget.hpp">
+    <ClInclude Include="sources\ui\view.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sources\ui\button.hpp">

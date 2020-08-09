@@ -8,7 +8,7 @@ UIController::UIController():
 {}
 
 void UIController::update(float dt){
-    ASSERT_ERROR(root,"UIController has to provide a root widget in order to display ui"); 
+    ASSERT_ERROR(root,"UIController has to provide a root View in order to display ui"); 
     root->update(dt);
 }
 

@@ -2,12 +2,12 @@
 #define BUTTON_H
 
 #include <functional>
-#include "ui/widget.hpp"
+#include "ui/view.hpp"
 #include "SFML/Graphics/RectangleShape.hpp"
 
 using callback = std::function<void(void)>;
 
-class Button: public Widget{
+class Button: public View{
 private:
     sf::RectangleShape m_shape;
     callback m_callback;

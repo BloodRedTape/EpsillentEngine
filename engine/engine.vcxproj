@@ -54,7 +54,7 @@
     <ClInclude Include="sources\ui\button.hpp" />
     <ClInclude Include="sources\ui\ui_controller.hpp" />
     <ClInclude Include="sources\ui\ui_layer.hpp" />
-    <ClInclude Include="sources\ui\widget.hpp" />
+    <ClInclude Include="sources\ui\view.hpp" />
     <ClInclude Include="sources\utils\assets_manager.h" />
     <ClInclude Include="sources\utils\debug.hpp" />
     <ClInclude Include="thirdparty\include\SFML\Audio.hpp" />

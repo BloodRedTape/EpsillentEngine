@@ -1,13 +1,13 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include "ui/widget.hpp"
+#include "ui/view.hpp"
 
 class UILayer;
 
 class UIController{
 protected:
-    Widget* root;
+    View* root;
     friend class UILayer;
 public:
     UIController();
