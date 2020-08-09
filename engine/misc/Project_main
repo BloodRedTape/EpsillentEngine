@@ -143,8 +143,7 @@ int main(){
     EngineProperties props;
     props.window_title = "Super AAA game";
     //props.window_style = sf::Style::Fullscreen;
-    props.window_width = 1280;
-    props.window_heigth = 720;
+    props.mode = sf::VideoMode(1280,720);
     props.show_fps = true;
     // set 0 to disable fps limit
     props.frame_rate_limit = 60;

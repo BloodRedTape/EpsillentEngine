@@ -25,16 +25,14 @@
 
 struct EngineProperties{
     sf::String window_title;
-    // if set to sf::Style::Fullscreen, width and heigth properties are ignored
     uint32 window_style;
-    uint32 window_width;
-    uint32 window_heigth;
+    sf::VideoMode mode;
     // no fps limit with 0 value
     uint32 frame_rate_limit;
     bool show_fps;
     EngineProperties():
         window_title("Game"), 
-        window_style(sf::Style::Default), window_width(1280), window_heigth(720), frame_rate_limit(0), show_fps(false)
+        window_style(sf::Style::Default), mode(1280,720), frame_rate_limit(0), show_fps(false)
     {}
 };
 
@@ -45,7 +43,6 @@ class ENGINE_API Engine{
         static std::mutex mutex;
         static Mainframe* mainframe;
         static DrawCallInterface* draw_call_interface;
-        static DisplayServer* display_server;  //FOR now this thing is not working
         static Input* input;
         static UILayer* ui;
         static LayerStack* layer_stack;

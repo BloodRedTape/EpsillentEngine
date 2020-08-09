@@ -8,7 +8,6 @@ std::atomic<bool> Engine::running;
 std::mutex Engine::mutex;
 Mainframe* Engine::mainframe = nullptr;
 DrawCallInterface* Engine::draw_call_interface = nullptr;
-DisplayServer* Engine::display_server = nullptr;  //FOR now this thing is not working
 Input *Engine::input = nullptr;
 UILayer *Engine::ui = nullptr;
 
@@ -60,20 +59,15 @@ void Engine::init(const EngineProperties& props){
 
     mainframe = new Mainframe();
 
-    display_server = new DisplayServer(mutex); //Yeah, required CUSTOM ALLOCATOR, but later
-    if(props.window_style == sf::Style::Fullscreen){
-        display_server->init_window(sf::VideoMode::getDesktopMode(),props.window_title.toAnsiString().c_str(),props.window_style);
-    }else{
-        display_server->init_window(sf::VideoMode(props.window_width,props.window_heigth),props.window_title.toAnsiString().c_str(),props.window_style);
-    }
+    DisplayServer::initialize(&mutex, props.mode, props.window_title.toAnsiString().c_str(), props.window_style);
         
     if(props.frame_rate_limit>0)
-        display_server->set_frame_rate_limit(props.frame_rate_limit);
+        DisplayServer::set_frame_rate_limit(props.frame_rate_limit);
     _show_fps = props.show_fps;
 
-    draw_call_interface = new DrawCallInterface(display_server->mp_display_target);
+    draw_call_interface = new DrawCallInterface(DisplayServer::mp_display_target);
     
-    input = new Input(display_server->mp_display_target);
+    input = new Input(DisplayServer::mp_display_target);
 
     SceneManager::initialize(&mutex);
     
@@ -91,7 +85,7 @@ void Engine::shutdown(){
     delete layer_stack;
     SceneManager::finalize();
     delete draw_call_interface;
-    delete display_server;
+    DisplayServer::finalize();
     delete mainframe;
     Info("Engine: shuted down");
 }
@@ -129,7 +123,7 @@ void Engine::RenderLoop::operator()(){
     debug_info.setFillColor(sf::Color::Green);
 
     while(running){
-        Engine::get_singleton()->handle_events(*DisplayServer::get_singleton()->mp_display_target);
+        Engine::get_singleton()->handle_events(*DisplayServer::mp_display_target);
 
         DrawCallInterface::clear();
         
