@@ -4,6 +4,7 @@
 #include "ui/ui_layer.hpp"
 #include "core/math/random.hpp"
 #include "utils/debug.hpp"
+#include "utils/assets_manager.hpp"
 std::atomic<bool> Engine::running;
 std::mutex Engine::mutex;
 Mainframe* Engine::mainframe = nullptr;
@@ -85,6 +86,7 @@ void Engine::shutdown(){
     delete layer_stack;
     SceneManager::finalize();
     delete draw_call_interface;
+    AssetsManager::clear();
     DisplayServer::finalize();
     delete mainframe;
     Info("Engine: shuted down");

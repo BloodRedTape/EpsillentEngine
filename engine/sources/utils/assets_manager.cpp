@@ -1,5 +1,6 @@
 #include "utils/assets_manager.hpp"
 #include <SFML/Graphics.hpp>
+#include "utils/debug.hpp"
 
 std::unordered_map<std::string, sf::Texture> AssetsManager::sm_textures;
 std::unordered_map<std::string, sf::Font> AssetsManager::sm_fonts;
@@ -25,4 +26,10 @@ sf::Font &AssetsManager::get_font(const char* filename){
         font.loadFromFile(filename);
         return font;
     }
+}
+
+void AssetsManager::clear() {
+    sm_fonts.clear();
+    sm_fonts.clear();
+    Info("AssetsManager: resources are cleared");
 }
