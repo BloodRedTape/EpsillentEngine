@@ -29,11 +29,9 @@
     <ClInclude Include="sources\core\instance.hpp" />
     <ClInclude Include="sources\core\layer.hpp" />
     <ClInclude Include="sources\core\layer_stack.hpp" />
-    <ClInclude Include="sources\core\mainframe.hpp" />
     <ClInclude Include="sources\core\math\math.hpp" />
     <ClInclude Include="sources\core\math\random.hpp" />
     <ClInclude Include="sources\core\os\time.hpp" />
-    <ClInclude Include="sources\core\processor.hpp" />
     <ClInclude Include="sources\core\typedefs.hpp" />
     <ClInclude Include="sources\engine.hpp" />
     <ClInclude Include="sources\physics\collider2d.hpp" />
@@ -191,11 +189,9 @@
     <ClCompile Include="sources\core\component.cpp" />
     <ClCompile Include="sources\core\instance.cpp" />
     <ClCompile Include="sources\core\layer_stack.cpp" />
-    <ClCompile Include="sources\core\mainframe.cpp" />
     <ClCompile Include="sources\core\math\math.cpp" />
     <ClCompile Include="sources\core\math\random.cpp" />
     <ClCompile Include="sources\core\os\time.cpp" />
-    <ClCompile Include="sources\core\processor.cpp" />
     <ClCompile Include="sources\engine.cpp" />
     <ClCompile Include="sources\physics\collider_2d.cpp" />
     <ClCompile Include="sources\physics\physics_engine.cpp" />

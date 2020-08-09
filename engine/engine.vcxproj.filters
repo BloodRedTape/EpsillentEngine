@@ -336,12 +336,6 @@
     <ClInclude Include="sources\core\layer_stack.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sources\core\mainframe.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sources\core\processor.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="sources\core\typedefs.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -379,9 +373,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sources\servers\display_server.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sources\utils\assets_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sources\utils\debug.hpp">
@@ -497,12 +488,6 @@
     <ClCompile Include="sources\core\layer_stack.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sources\core\mainframe.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sources\core\processor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="sources\physics\physics_engine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -549,9 +534,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sources\ui\ui_layer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sources\ui\widget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sources\scenes\scene_cluster.cpp">

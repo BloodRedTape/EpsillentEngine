@@ -1,5 +1,4 @@
 #include "scenes/scene.hpp"
-#include "core/mainframe.hpp"
 #include "utils/debug.hpp"
 BaseScene::BaseScene():
     scene_graph(this)

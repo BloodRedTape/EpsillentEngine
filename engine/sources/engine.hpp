@@ -9,7 +9,6 @@
 #include "servers/display_server.hpp"
 #include "utils/debug.hpp"
 #include "scenes/scene_manager.hpp"
-#include "core/mainframe.hpp"
 #include "core/layer_stack.hpp"
 #include "render/draw_call.hpp"
 #include "platform/input.hpp"
@@ -41,7 +40,6 @@ class ENGINE_API Engine{
     private:
         static std::atomic<bool> running;
         static std::mutex mutex;
-        static Mainframe* mainframe;
         static DrawCallInterface* draw_call_interface;
         static Input* input;
         static UILayer* ui;

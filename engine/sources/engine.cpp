@@ -7,7 +7,6 @@
 #include "utils/assets_manager.hpp"
 std::atomic<bool> Engine::running;
 std::mutex Engine::mutex;
-Mainframe* Engine::mainframe = nullptr;
 DrawCallInterface* Engine::draw_call_interface = nullptr;
 Input *Engine::input = nullptr;
 UILayer *Engine::ui = nullptr;
@@ -58,7 +57,6 @@ void Engine::init(const EngineProperties& props){
     
 
 
-    mainframe = new Mainframe();
 
     DisplayServer::initialize(&mutex, props.mode, props.window_title.toAnsiString().c_str(), props.window_style);
         
@@ -88,7 +86,6 @@ void Engine::shutdown(){
     delete draw_call_interface;
     AssetsManager::clear();
     DisplayServer::finalize();
-    delete mainframe;
     Info("Engine: shuted down");
 }
 
