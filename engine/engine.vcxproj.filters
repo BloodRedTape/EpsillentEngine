@@ -423,6 +423,15 @@
     <ClInclude Include="sources\components\trigger_2d.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="sources\utils\assets_manager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\ui\ui.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\ui\text_view.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="thirdparty\include\SFML\Audio\SoundFileFactory.inl">
@@ -492,9 +501,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sources\core\processor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sources\physics\collider2d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sources\physics\physics_engine.cpp">
@@ -567,6 +573,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sources\components\trigger_2d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\ui\text_view.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\ui\view.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

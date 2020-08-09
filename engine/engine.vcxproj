@@ -52,10 +52,12 @@
     <ClInclude Include="sources\scenes\sprite.hpp" />
     <ClInclude Include="sources\servers\display_server.hpp" />
     <ClInclude Include="sources\ui\button.hpp" />
+    <ClInclude Include="sources\ui\text_view.hpp" />
+    <ClInclude Include="sources\ui\ui.hpp" />
     <ClInclude Include="sources\ui\ui_controller.hpp" />
     <ClInclude Include="sources\ui\ui_layer.hpp" />
     <ClInclude Include="sources\ui\view.hpp" />
-    <ClInclude Include="sources\utils\assets_manager.h" />
+    <ClInclude Include="sources\utils\assets_manager.hpp" />
     <ClInclude Include="sources\utils\debug.hpp" />
     <ClInclude Include="thirdparty\include\SFML\Audio.hpp" />
     <ClInclude Include="thirdparty\include\SFML\Audio\AlResource.hpp" />
@@ -210,9 +212,10 @@
     <ClCompile Include="sources\scenes\sprite.cpp" />
     <ClCompile Include="sources\servers\display_server.cpp" />
     <ClCompile Include="sources\ui\button.cpp" />
+    <ClCompile Include="sources\ui\text_view.cpp" />
     <ClCompile Include="sources\ui\ui_controller.cpp" />
     <ClCompile Include="sources\ui\ui_layer.cpp" />
-    <ClCompile Include="sources\ui\widget.cpp" />
+    <ClCompile Include="sources\ui\view.cpp" />
     <ClCompile Include="sources\utils\assets_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
