@@ -1,5 +1,5 @@
-#ifndef WIDGET_H
-#define WIDGET_H
+#ifndef VIEW_H
+#define VIEW_H
 
 #include <vector>
 #include <queue>
@@ -15,7 +15,7 @@ public:
     virtual ~View(){};
 
     virtual void on_render()=0;
-    virtual void on_update(float dt)=0;
+    virtual void on_update(float dt){};
 };
 
 
