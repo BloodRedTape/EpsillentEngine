@@ -6,8 +6,10 @@ sf::RenderWindow* DisplayServer::mp_display_target = nullptr;
 
 void DisplayServer::initialize(std::mutex *sync_mutex,sf::VideoMode mode, const char* p_title, uint32 style){
     p_sync_mutex = sync_mutex;
+    Info("DisplayServer: inited");
     mp_display_target = new RenderWindow(mode,p_title,style); 
-    Info("DisplayServer: inited"); 
+    Info("DisplayServer: created window in "+ std::string((style == sf::Style::Fullscreen) ? "Fullscreen mode": "Normal mode"));
+    Info("DisplayServer: window width: "+ std::to_string(mode.width) + "px height: " + std::to_string(mode.height) + "px");
 } 
 void DisplayServer::finalize() {
     delete mp_display_target;
