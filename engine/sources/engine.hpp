@@ -48,16 +48,9 @@ class ENGINE_API Engine{
         static Engine *smp_singleton;
         static sf::Clock time;
         static bool _show_fps;
-        class RenderLoop{
-            public:
-                void operator()();
-        };
-
-        class UpdateLoop{
-            public:
-                void operator()();
-        };
-
+    private:
+        static void RenderLoop();
+        static void UpdateLoop();
         void handle_events(sf::RenderWindow& window);
 
     public:

@@ -90,12 +90,12 @@ void Engine::shutdown(){
 }
 
 
-void Engine::UpdateLoop::operator()(){
+void Engine::UpdateLoop(){
     sf::Clock n;
     float frame_time = 0;
     float fps;
     while(running){
-        Random::seed(time.getElapsedTime().asMilliseconds()*reinterpret_cast<unsigned long long>(this));
+        Random::seed(time.getElapsedTime().asMilliseconds()*reinterpret_cast<unsigned long long>(SceneManager::get_current_scene()));
 
         for(auto itr = layer_stack->begin(); itr!=layer_stack->end();itr++){
             (*itr)->on_update(frame_time);
@@ -109,7 +109,7 @@ void Engine::UpdateLoop::operator()(){
     }
     
 }
-void Engine::RenderLoop::operator()(){
+void Engine::RenderLoop(){
     sf::Clock n;
     float fps = 0;
     float frame_time = 0;
@@ -150,10 +150,9 @@ void Engine::RenderLoop::operator()(){
 void Engine::start(){
     running = true;
     ASSERT_ERROR(SceneManager::get_current_scene(),"Engine:Create a scene and apply it via Engine::set_entry_scene(BaseScene* p_scene, const char* name)")
-    std::thread update{UpdateLoop()};
+    std::thread update(&Engine::UpdateLoop);
     update.detach();
-    RenderLoop render;
-    render();
+    RenderLoop();
 }
 
 void Engine::stop(){
