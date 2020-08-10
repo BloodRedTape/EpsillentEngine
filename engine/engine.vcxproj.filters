@@ -423,6 +423,15 @@
     <ClInclude Include="sources\ui\text_view.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="sources\network\client.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\network\protocol.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\network\server.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="thirdparty\include\SFML\Audio\SoundFileFactory.inl">
@@ -561,6 +570,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sources\ui\view.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\network\client.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\network\protocol.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

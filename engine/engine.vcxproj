@@ -34,6 +34,9 @@
     <ClInclude Include="sources\core\os\time.hpp" />
     <ClInclude Include="sources\core\typedefs.hpp" />
     <ClInclude Include="sources\engine.hpp" />
+    <ClInclude Include="sources\network\client.hpp" />
+    <ClInclude Include="sources\network\protocol.hpp" />
+    <ClInclude Include="sources\network\server.hpp" />
     <ClInclude Include="sources\physics\collider2d.hpp" />
     <ClInclude Include="sources\physics\collider_2d.hpp" />
     <ClInclude Include="sources\physics\physics_engine.hpp" />
@@ -193,6 +196,8 @@
     <ClCompile Include="sources\core\math\random.cpp" />
     <ClCompile Include="sources\core\os\time.cpp" />
     <ClCompile Include="sources\engine.cpp" />
+    <ClCompile Include="sources\network\client.cpp" />
+    <ClCompile Include="sources\network\protocol.cpp" />
     <ClCompile Include="sources\physics\collider_2d.cpp" />
     <ClCompile Include="sources\physics\physics_engine.cpp" />
     <ClCompile Include="sources\platform\input.cpp" />
