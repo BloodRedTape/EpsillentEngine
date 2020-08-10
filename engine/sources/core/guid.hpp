@@ -18,12 +18,11 @@ public:
     bool operator==(const GUID &other) const;
     bool operator!=(const GUID &other) const;
 
+    operator std::string()const;
 
     const std::array<unsigned char, 16>& bytes() const;
 
     void clear();
-
-    bool is_valid()const;
 
 };
 
