@@ -14,6 +14,6 @@
 	#define ENGINE_API ENGINE_API_IMPORT
 #endif
 
-
+#define DATAGRAM_DATA_SIZE 32
 
 #endif

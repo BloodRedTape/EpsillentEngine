@@ -4,7 +4,7 @@
 #include "SFML/Network/IpAddress.hpp"
 #include "SFML/Network/UdpSocket.hpp"
 
-#include "network/protocol.hpp"
+#include "core/net/protocol.hpp"
 
 class Client{
 private:
@@ -13,7 +13,11 @@ private:
 public:
     Client();
     void connect(const Host& server);
-    void send(const NetworkEvent &e);
+
+    void send(const Datagram &d);
+    void send(const Event &e);
+    void send(const Request &r);
+    
     void disconnect();
 };
 #endif

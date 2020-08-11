@@ -8,9 +8,9 @@ OUT := $(ENGINE_PATH)/out
 SRC := $(wildcard *.cpp)
 OBJ := $(SRC:.cpp=.o)
 
-.PHONY: all math os
+.PHONY: all math os net
 
-all: $(OBJ) math os
+all: $(OBJ) math os net
 
 %.o: %.cpp 
 	$(MAKE) $(ENGINE_PATH)/out/$*.o 
@@ -25,3 +25,5 @@ math:
 
 os:
 	(cd os; $(MAKE) CC=$(CC) CFLAGS="$(CFLAGS)" ENGINE_PATH=$(ENGINE_PATH))
+net:
+	(cd net; $(MAKE) CC=$(CC) CFLAGS="$(CFLAGS)" ENGINE_PATH=$(ENGINE_PATH))

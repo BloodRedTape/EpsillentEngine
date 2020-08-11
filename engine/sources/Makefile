@@ -7,17 +7,15 @@ OUT := $(ENGINE_PATH)/out
 
 
 
-.PHONY: all components core network physics platform render scenes servers ui utils
+.PHONY: all components core physics platform render scenes servers ui utils
 
-all: components core network physics platform render scenes servers ui utils $(OUT)/engine.o
+all: components core physics platform render scenes servers ui utils $(OUT)/engine.o
 
 
 components:
 	@(cd components; $(MAKE) CC=$(CC) CFLAGS="$(CFLAGS)" ENGINE_PATH=$(ENGINE_PATH))
 core:
 	@(cd core; $(MAKE) CC=$(CC) CFLAGS="$(CFLAGS)" ENGINE_PATH=$(ENGINE_PATH))
-network:
-	@(cd network; $(MAKE) CC=$(CC) CFLAGS="$(CFLAGS)" ENGINE_PATH=$(ENGINE_PATH))
 physics:
 	@(cd physics; $(MAKE) CC=$(CC) CFLAGS="$(CFLAGS)" ENGINE_PATH=$(ENGINE_PATH))
 platform:
