@@ -2,14 +2,15 @@
 #define SERVER_H
 
 #include <unordered_map>
+#include <functional>
 #include "SFML/Network/UdpSocket.hpp"
 #include "core/net/protocol.hpp"
 #include "utils/debug.hpp"
 
-
+#define ServerHandler(function_pointer) std::bind(function_pointer,this,std::placeholders::_1,std::placeholders::_2)
 //if you want for something to happen when client connected or disconnected
 //you should do it in ClientData constructor
-template <typename ClientData, typename Derived>
+template <typename ClientData>
 class Server{
 public:
     struct ClientTraits{
@@ -19,7 +20,7 @@ public:
             host(h)
         {}
     };
-    using Handler = void (Derived::*)(const Event &e, ClientTraits &sender);
+    using Handler = std::function<void(const Event &, ClientTraits &)>;
 
 private:
     sf::UdpSocket m_socket_in;
@@ -48,8 +49,8 @@ private:
 };
 
 
-template <typename ClientData, typename Derived>
-Server<ClientData,Derived>::Server(sf::Uint16 port)
+template <typename ClientData>
+Server<ClientData>::Server(sf::Uint16 port)
 {
     if(m_socket_in.bind(port)==sf::Socket::Status::Error)
         Error("Server: can't bind to port " + std::to_string(port));
@@ -59,25 +60,25 @@ Server<ClientData,Derived>::Server(sf::Uint16 port)
 }
 
 
-template <typename ClientData, typename Derived>
-_ALWAYS_INLINE_ void Server<ClientData,Derived>::send(const Host& client, const Datagram &d){
+template <typename ClientData>
+_ALWAYS_INLINE_ void Server<ClientData>::send(const Host& client, const Datagram &d){
     if(m_socket_in.send(&d,sizeof(Datagram),client.ip,client.port)!=sf::Socket::Done)
         Info("Server: can't send to " + client.ip.toString()+":"+std::to_string(client.port));
 }
 
-template <typename ClientData, typename Derived>
-_ALWAYS_INLINE_ void Server<ClientData,Derived>::send(const Host& client, const Response &r){
+template <typename ClientData>
+_ALWAYS_INLINE_ void Server<ClientData>::send(const Host& client, const Response &r){
     if(m_socket_in.send(&r,sizeof(Response),client.ip,client.port)!=sf::Socket::Done)
         Info("Server: can't send to " + client.ip.toString()+":"+std::to_string(client.port));
 }
-template <typename ClientData, typename Derived>
-_ALWAYS_INLINE_ void Server<ClientData,Derived>::send(const Host& client, const Event &e){
+template <typename ClientData>
+_ALWAYS_INLINE_ void Server<ClientData>::send(const Host& client, const Event &e){
     if(m_socket_in.send(&e,sizeof(Event),client.ip,client.port)!=sf::Socket::Done)
         Info("Server: can't send to " + client.ip.toString()+":"+std::to_string(client.port));
 }
 
-template <typename ClientData, typename Derived>
-void Server<ClientData,Derived>::serve(){
+template <typename ClientData>
+void Server<ClientData>::serve(){
     Datagram datagram;
     Host source;
     size_t resived_size;
@@ -88,15 +89,15 @@ void Server<ClientData,Derived>::serve(){
         datagram.clear();
     }
 }
-template <typename ClientData, typename Derived>
-void Server<ClientData,Derived>::event_handler_add(protocol::EventCode code, Handler func){
+template <typename ClientData>
+void Server<ClientData>::event_handler_add(protocol::EventCode code, Handler func){
     m_event_dispatch_table.emplace(code,func);
 }
 
 
 
-template <typename ClientData, typename Derived>
-void Server<ClientData,Derived>::process(const Datagram &datagram, const Host &host){
+template <typename ClientData>
+void Server<ClientData>::process(const Datagram &datagram, const Host &host){
     switch (datagram.type)
     {
     case protocol::DatagramType::Request:
@@ -111,8 +112,8 @@ void Server<ClientData,Derived>::process(const Datagram &datagram, const Host &h
     }
 }
 
-template <typename ClientData, typename Derived>
-void Server<ClientData,Derived>::handle_request(const Request &request, const Host &host){
+template <typename ClientData>
+void Server<ClientData>::handle_request(const Request &request, const Host &host){
     switch (request.code.request)
     {
     case protocol::RequestCode::Connect:
@@ -127,20 +128,20 @@ void Server<ClientData,Derived>::handle_request(const Request &request, const Ho
     }
 }
 
-template <typename ClientData, typename Derived>
-void Server<ClientData,Derived>::handle_event(const Event &event, const Host &host){
+template <typename ClientData>
+void Server<ClientData>::handle_event(const Event &event, const Host &host){
     auto handler = m_event_dispatch_table.find(event.code.event);
     if(handler != m_event_dispatch_table.end()){
         auto &client = m_clients.find(htoi(host))->second;
-        (static_cast<Derived*>(this)->*handler->second)(event,client);
+        handler->second(event,client);
     }else{
         Info("Server: no dispatcher for event code " + std::to_string(event.code.event));
     }
 }
 
 
-template <typename ClientData, typename Derived>
-_ALWAYS_INLINE_ void Server<ClientData,Derived>::connect(const Host &host){
+template <typename ClientData>
+_ALWAYS_INLINE_ void Server<ClientData>::connect(const Host &host){
     Info("Server: Connect request form " + host.to_string());
     m_clients.emplace(htoi(host),host); //implicit conversion of host to client traits to avoid messy object creation
 
@@ -148,8 +149,8 @@ _ALWAYS_INLINE_ void Server<ClientData,Derived>::connect(const Host &host){
     Info("Server: " + host.to_string() + " connected");
     Info("Server: " + std::to_string(m_clients.size()) + " connections");
 }
-template <typename ClientData, typename Derived>
-_ALWAYS_INLINE_ void Server<ClientData,Derived>::disconnect(const Host &host){
+template <typename ClientData>
+_ALWAYS_INLINE_ void Server<ClientData>::disconnect(const Host &host){
     Info("Server: Disconnect request form " + host.to_string());
 
     typename std::unordered_map<sf::Uint64,ClientTraits>::iterator itr = m_clients.find(htoi(host));
