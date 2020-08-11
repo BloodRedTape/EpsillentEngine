@@ -28,7 +28,9 @@ private:
     std::unordered_map<protocol::EventCode,Handler> m_event_dispatch_table;
 public:
     Server(sf::Uint16 port);
+    virtual ~Server() = default;
 
+    std::size_t clients();
 
     void send(const Host& client, const Datagram &d);
     void send(const Host& client, const Event &e);
@@ -59,6 +61,10 @@ Server<ClientData>::Server(sf::Uint16 port)
     m_socket_in.setBlocking(false);
 }
 
+template <typename ClientData>
+_ALWAYS_INLINE_ std::size_t Server<ClientData>::clients(){
+    return m_clients.size();
+}
 
 template <typename ClientData>
 _ALWAYS_INLINE_ void Server<ClientData>::send(const Host& client, const Datagram &d){
