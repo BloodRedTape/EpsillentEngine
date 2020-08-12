@@ -46,7 +46,7 @@ void GameObject::set_tag(const std::string& tag){
     m_tag = tag;
 }
 
-void GameObject::child_add(GameObject* p_node){
+GameObject* GameObject::child_add(GameObject* p_node){
     m_child_nodes.push_back(p_node);
     p_node->mp_parent=this;
     p_node->mp_scene=mp_scene;
@@ -56,6 +56,7 @@ void GameObject::child_add(GameObject* p_node){
         p_node->on_introduce();
         p_node->m_introduced=true;
     }
+    return p_node;
 }
 void GameObject::children_destroy(){
     for(GameObject* node: m_child_nodes){

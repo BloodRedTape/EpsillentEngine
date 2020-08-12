@@ -66,7 +66,7 @@ public:
     const std::string& tag(){return m_tag;}
     void set_tag(const std::string&);
 
-    void child_add(GameObject*);
+    GameObject* child_add(GameObject*);
     void children_destroy();
 
     void object_introduce(GameObject*, const sf::Vector2f& relative_pos = sf::Vector2f(0,0));
