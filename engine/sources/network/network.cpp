@@ -37,7 +37,7 @@ void Network::finalize(){
 }
 
 GameClient *Network::client(){
-    if(m_client)
+    if(m_client!=nullptr)
         return m_client;
     else
         Error("Network: is not initialized");

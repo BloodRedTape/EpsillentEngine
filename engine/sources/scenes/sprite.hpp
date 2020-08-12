@@ -11,7 +11,6 @@ public:
     void update()override;
     void render()override;
 
-    virtual void on_init()override;
     virtual void on_update(float dt)override;
    
     virtual void on_start()override;

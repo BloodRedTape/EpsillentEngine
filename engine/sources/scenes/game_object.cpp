@@ -52,7 +52,8 @@ GameObject* GameObject::child_add(GameObject* p_node){
     p_node->mp_scene=mp_scene;
     p_node->m_transform.m_dirty=true;
     p_node->m_self = std::prev(m_child_nodes.end());
-    if(!p_node->m_introduced){
+    if(p_node->m_introduced==false){
+        p_node->_on_introduce();
         p_node->on_introduce();
         p_node->m_introduced=true;
     }
@@ -82,6 +83,7 @@ void GameObject::render(){
 void GameObject::destroy(){
     if(!m_garbage){
         on_destroy();
+        _on_destroy();
         mp_scene->mark_garbage(this);
         m_garbage=true;
         for(GameObject* child: m_child_nodes){

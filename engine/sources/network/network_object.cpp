@@ -9,11 +9,23 @@ NetworkObjectsDB::ObjectCreator NetworkObjectsDB::creator(const std::string &cla
 }
 
 
+void NetworkObject::_on_introduce(){
+    
+    if(originator){
+        Network::client()->obj_create(this);
+        Info(network_class()+"::_on_introduce()");
+    }
+}
+void NetworkObject::_on_destroy(){
+    Network::client()->obj_destory(this);
+    Info(network_class()+"::_on_destroy()");
+}
+
 NetworkObject::NetworkObject():
     m_guid(),
     originator(true)
 { 
-    Network::client()->obj_create(this);
+    
 }
 
 NetworkObject::NetworkObject(const GUID &guid):
@@ -21,11 +33,7 @@ NetworkObject::NetworkObject(const GUID &guid):
     originator(false)
 { }
 
-NetworkObject::~NetworkObject()
-{
-    //if(introduced())
-    Network::client()->obj_destory(this);
-}
+
 std::string NetworkObject::static_network_class(){  
     return std::string("NetworkObject");              
 }                                           

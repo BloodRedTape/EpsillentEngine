@@ -44,6 +44,8 @@ private:
 protected:
     virtual void update();
     virtual void render();
+    virtual void _on_introduce(){};
+    virtual void _on_destroy(){};
 public:
     GameObject();
     virtual ~GameObject();
@@ -92,7 +94,8 @@ public:
     sf::Transform global_transform();
     const sf::Transform& local_transform();
 
-
+    _ALWAYS_INLINE_ bool garbage(){return m_garbage;}
+    _ALWAYS_INLINE_ bool introduced(){return m_introduced;}
 
 };
 

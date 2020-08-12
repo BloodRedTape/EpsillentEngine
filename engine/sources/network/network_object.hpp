@@ -31,10 +31,12 @@ private:
     friend class GameClient;
 private:
     friend class BaseScene;
+    void _on_introduce()override;
+    void _on_destroy()override;
 public:
     NetworkObject();
     explicit NetworkObject(const GUID &guid);
-    virtual ~NetworkObject();
+    virtual ~NetworkObject() = default;
 
     NetworkObject *set_guid(const GUID &);
 
@@ -52,9 +54,7 @@ private:
 public:
     template <typename T>
     static NetworkObject* _obj_creator(BaseScene *scene, const GUID &guid){
-        NetworkObject *obj = new T(guid);
-        scene->object_introduce(obj);
-        return obj;
+        return (NetworkObject*)scene->object_introduce(new T(guid));
     }
     template <typename T>
     static void register_object(){

@@ -22,6 +22,7 @@ void BaseScene::render(){
 GameObject* BaseScene::object_introduce(GameObject* node){
     ASSERT_ERROR(node->mp_scene=this,"OwnershipFault, object " + node->m_tag + " was created on a different scene and can't be updated by this");
     node->on_introduce();
+    node->_on_introduce();
     node->m_introduced = true;
     scene_graph.add_to_root(node);
     return node;

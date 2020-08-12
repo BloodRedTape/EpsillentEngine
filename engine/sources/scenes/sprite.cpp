@@ -11,9 +11,6 @@ void Sprite::render(){
     DrawCallInterface::draw(m_shape, global_transform());
 }
 
-void Sprite::on_init(){
-
-}
 void Sprite::on_destroy(){
 
 }
