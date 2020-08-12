@@ -3,23 +3,24 @@
 #include "utils/debug.hpp"
 
 
-UIController::UIController():
-    root(nullptr)
+UIController::UIController()
 {
     on_init();
 }
 UIController::~UIController(){
     on_destroy();
-    ASSERT_ERROR(root, "UIController has to provide a root View in order to display ui");
-    delete root;
+    for(View *v: root){
+        delete v;
+    }
 }
 
 void UIController::update(float dt){
-    ASSERT_ERROR(root,"UIController has to provide a root View in order to display ui"); 
-    root->update(dt);
+    for(View *v: root)
+        v->update(dt);
     on_update(dt);
 }
 
 void UIController::render(){
-    root->render();
+    for(View *v: root)
+        v->render();
 }

@@ -2,12 +2,12 @@
 #define CONTROLLER_H
 
 #include "ui/view.hpp"
-
+#include <vector>
 class UILayer;
 
 class UIController{
 protected:
-    View* root;
+    std::vector<View*> root;
     friend class UILayer;
 private:
     void update(float dt);
