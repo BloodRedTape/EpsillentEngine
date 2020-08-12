@@ -13,7 +13,7 @@ Particle::Particle(const sf::Vector2f& position,const ParticleSystemProperties& 
 }
 
 
-void Particle::on_init(){
+void Particle::on_introduce(){
     sprite = component_add<Sprite2D>();
     sprite->set_color(color_begin);
     //sprite->set_color(sf::Color(color_begin.r + (color_begin.r-color_end.r)*(1-scale),color_begin.g + (color_begin.g-color_end.g)*(1-scale),color_begin.b + (color_begin.b-color_end.b)*(1-scale),255));

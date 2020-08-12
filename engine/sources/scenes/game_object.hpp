@@ -23,8 +23,8 @@ private:
     std::list<GameObject*>::iterator m_self;
     BaseScene *mp_scene;
     GameObject *mp_parent;
-    bool garbage;
-    bool inited;
+    bool m_garbage : 1;
+    bool m_introduced : 1;
     std::list<Component*> m_components;
     std::string m_tag;
 private:        
@@ -75,8 +75,8 @@ public:
 
     //called every loop cycle
     virtual void on_update(const float delta_time){};
-    // called on object initialization
-    virtual void on_init(){};
+    // called on object introduction
+    virtual void on_introduce(){};
     // called after scene context switch
     virtual void on_start(){};
     // called before destroying;
@@ -91,7 +91,7 @@ public:
 
     sf::Transform global_transform();
     const sf::Transform& local_transform();
-    
+
 
 
 };

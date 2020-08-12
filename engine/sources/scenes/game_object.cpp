@@ -7,8 +7,8 @@ GameObject::GameObject():
     m_transform(this),
     mp_scene(SceneManager::get_current_scene()),
     mp_parent(nullptr),
-    garbage(false),
-    inited(false),
+    m_garbage(false),
+    m_introduced(false),
     m_tag("unknown")
 {
     m_components.push_back(&m_transform);
@@ -52,9 +52,9 @@ void GameObject::child_add(GameObject* p_node){
     p_node->mp_scene=mp_scene;
     p_node->m_transform.m_dirty=true;
     p_node->m_self = std::prev(m_child_nodes.end());
-    if(!p_node->inited){
-        p_node->on_init();
-        p_node->inited=true;
+    if(!p_node->m_introduced){
+        p_node->on_introduce();
+        p_node->m_introduced=true;
     }
 }
 void GameObject::children_destroy(){
@@ -79,10 +79,10 @@ void GameObject::render(){
 }
 
 void GameObject::destroy(){
-    if(!garbage){
+    if(!m_garbage){
         on_destroy();
         mp_scene->mark_garbage(this);
-        garbage=true;
+        m_garbage=true;
         for(GameObject* child: m_child_nodes){
             child->destroy();
         }

@@ -12,10 +12,6 @@ public:
         mp_parent=nullptr;
         mp_scene=scene;
     }
-    void on_init()override{};
-    void on_start()override{};
-    void on_destroy()override{};
-    void on_update(const float)override{};
 };
 
 class ENGINE_API SceneGraph{

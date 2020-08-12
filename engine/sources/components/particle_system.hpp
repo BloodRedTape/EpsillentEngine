@@ -45,7 +45,7 @@ private:
 public:
     Particle(const sf::Vector2f&,const ParticleSystemProperties&);
 
-    void on_init()override;
+    void on_introduce()override;
     void on_update(float dt)override;
 };
 
