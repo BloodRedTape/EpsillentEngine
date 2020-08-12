@@ -8,8 +8,11 @@ class ENGINE_API GameLayer: public Layer{
 private:
 
 public:
+    GameLayer();
+    ~GameLayer();
     void on_render()override;
     void on_update(float dt)override;
+    void on_detach()override;
 };
 
 #endif

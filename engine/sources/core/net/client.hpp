@@ -7,9 +7,10 @@
 #include "core/net/protocol.hpp"
 
 class Client{
-private:
+protected:
     Host server;
     sf::UdpSocket socket;
+    bool m_is_connected;
 public:
     Client();
     void connect(const Host& server);
@@ -18,6 +19,8 @@ public:
     void send(const Event &e);
     void send(const Request &r);
     
+    bool is_connected();
+
     void disconnect();
 };
 #endif

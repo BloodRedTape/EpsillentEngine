@@ -19,6 +19,7 @@
 #include "SFML/Window/WindowStyle.hpp"
 #include "ui/ui_controller.hpp"
 #include "ui/ui_layer.hpp"
+#include "network/game_client.hpp"
 
 
 

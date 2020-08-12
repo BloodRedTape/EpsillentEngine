@@ -83,8 +83,8 @@ sf::Uint64 htoi(const Host &host){
     return res;
 }
 Host itoh(sf::Uint64 i){
-    Host res;
-    res.ip = sf::IpAddress(i);
-    res.port = i>>48;
-    return res;
+    //Host res;
+    //res.ip = sf::IpAddress(i);
+    //res.port = i>>48;
+    return Host(sf::IpAddress(i),i>>48);
 }

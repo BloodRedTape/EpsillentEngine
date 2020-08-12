@@ -2,13 +2,14 @@
 #include "utils/debug.hpp"
 
 Client::Client():
-    server()
+    server(),
+    m_is_connected(false)
 {
 
 }
 
 void Client::connect(const Host &serv){
-    if(server.port)
+    if(m_is_connected)
         disconnect();
     Info("Client: connecting to " + serv.to_string() + " server");
 
@@ -23,6 +24,8 @@ void Client::connect(const Host &serv){
 
     if(response.code.response == protocol::ResponseCode::Success){
         Info("Client: connected to " + server.to_string());
+        m_is_connected = true;
+        socket.setBlocking(false);
     }else{
         server.ip = sf::IpAddress(0u);
         server.port = 0;
@@ -48,6 +51,10 @@ void Client::send(const Request &request){
         Info("Client: can't send a Request");
 }
 
+bool Client::is_connected(){
+    return m_is_connected;
+}
+
 void Client::disconnect(){
     Info("Client: disconnecting from " + server.to_string() + " server");
     send(Request(protocol::RequestCode::Disconnect));
@@ -60,6 +67,7 @@ void Client::disconnect(){
 
     if(response.code.response == protocol::ResponseCode::Success){
         Info("Client: disconnected from " + server.to_string());
+        m_is_connected = false;
     }else{
         Warning("Client: operation failed");
         disconnect();

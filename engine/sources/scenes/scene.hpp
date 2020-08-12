@@ -50,6 +50,8 @@ public:
 
     SceneCluster& cluster(){return scene_cluster;}
 
+    void clear(){scene_graph.clear();}
+
 };
 
 #endif

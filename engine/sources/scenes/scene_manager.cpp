@@ -13,6 +13,8 @@ void SceneManager::initialize(std::mutex *p_sync){
 void SceneManager::finalize(){
     for(auto itr = scenes.begin(); itr!= scenes.end(); itr++){
         itr->second->on_destroy();
+        itr->second->clear();
+        itr->second->clear_garbage();
         delete itr->second;
         Info("SceneManager: deleted \""+ itr->first + "\" scene");
     }

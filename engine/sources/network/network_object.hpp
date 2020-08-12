@@ -5,31 +5,56 @@
 #include <unordered_map>
 #include "config/config.hpp"
 #include "core/guid.hpp"
+#include "core/net/protocol.hpp"
 #include "scenes/scene.hpp"
 #include "utils/debug.hpp"
 
-class NetworkObject;
+class BaseScene;
+class GameClient;
 
 #define NETWORK_CLASS(Name,Inherited)           \
 public:                                         \
     static std::string static_network_class(){  \
         return std::string(#Name);              \
     }                                           \
-    virtual std::string network_class(){        \
+    virtual std::string network_class()override{\
         return std::string(#Name);              \
     }                                           \
     Name(const GUID& guid): Inherited(guid) {}  \
 private:
 
+
+class NetworkObject: public GameObject{
+private:
+    bool originator;
+    GUID m_guid;
+    friend class GameClient;
+private:
+    friend class BaseScene;
+public:
+    NetworkObject();
+    explicit NetworkObject(const GUID &guid);
+    virtual ~NetworkObject();
+
+    NetworkObject *set_guid(const GUID &);
+
+
+    static std::string static_network_class();               
+    virtual std::string network_class();
+    const GUID &guid()const;                                          
+};
+
 class NetworkObjectsDB{
 private:
-    typedef void (*ObjectCreator)(BaseScene*,const GUID &);
+    typedef NetworkObject* (*ObjectCreator)(BaseScene*,const GUID &);
     static std::unordered_map<std::string,ObjectCreator> m_objects;
 
 public:
     template <typename T>
-    static void _obj_creator(BaseScene *scene, const GUID &guid){
-        scene->object_introduce(new T(guid));
+    static NetworkObject* _obj_creator(BaseScene *scene, const GUID &guid){
+        NetworkObject *obj = new T(guid);
+        scene->object_introduce(obj);
+        return obj;
     }
     template <typename T>
     static void register_object(){
@@ -39,22 +64,6 @@ public:
 };
 
 
-class NetworkObject: public GameObject{
-private:
-    bool originator;
-    GUID m_guid;
-public:
-    NetworkObject();
-    NetworkObject(const GUID &guid);
-    virtual ~NetworkObject();
 
-    NetworkObject *set_guid(const GUID &);
-    static std::string static_network_class(){  
-        return std::string("NetworkObject");              
-    }                                           
-    virtual std::string network_class(){        
-        return std::string("NetworkObject");              
-    }                                          
-};
 
 #endif
