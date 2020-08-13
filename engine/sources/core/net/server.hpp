@@ -36,6 +36,9 @@ public:
     void send(const Host& client, const Event &e);
     void send(const Host& client, const Response &r);
 
+    virtual void on_connect(ClientTraits &){};
+    virtual void on_disconnect(ClientTraits &){};
+
     void serve();
 
     void event_handler_add(protocol::EventCode code, Handler func);
@@ -169,9 +172,9 @@ void Server<ClientData>::handle_event(const Event &event, const Host &host){
 template <typename ClientData>
 _ALWAYS_INLINE_ void Server<ClientData>::connect(const Host &host){
     Info("Server: Connect request form " + host.to_string());
-    m_clients.emplace(htoi(host),host); //implicit conversion of host to client traits to avoid messy object creation
-
     send(host,Response(protocol::ResponseCode::Success));
+    on_connect(m_clients.emplace(htoi(host),host).first->second); //implicit conversion of host to client traits to avoid messy object creation
+
     Info("Server: " + host.to_string() + " connected");
     Info("Server: " + std::to_string(m_clients.size()) + " connections");
 }
@@ -184,8 +187,9 @@ _ALWAYS_INLINE_ void Server<ClientData>::disconnect(const Host &host){
         Info("Server: " + host.to_string() + " was not connected");
         return;
     }
-    m_clients.erase(htoi(host));
     send(host,Response(protocol::ResponseCode::Success));
+    on_disconnect(m_clients.find(htoi(host))->second);
+    m_clients.erase(htoi(host));
     Info("Server: " + host.to_string() + " disconnected");
     Info("Server: " + std::to_string(m_clients.size()) + " connections");
 }

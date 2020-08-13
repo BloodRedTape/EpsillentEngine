@@ -24,7 +24,6 @@ void NetworkScene::fetch(){
     Host sender;
     std::size_t size;
     if(socket.receive(&datagram,sizeof(Datagram),size,sender.ip,sender.port)==sf::Socket::Done){
-        Info("Network: got data");
         if(datagram.type == protocol::DatagramType::Event){
             handle_event((Event)datagram);
         }else{
@@ -64,7 +63,7 @@ void NetworkScene::handle_event(const Event &e){
 void NetworkScene::object_new(NetworkObject *object){
     Event e(EventCode(Events::ObjectNew));
     *(GUID*)e.data = object->m_guid;
-    *(sf::Vector2f*)&e.data[sizeof(GUID)] = object->global_position();
+    *(sf::Vector2f*)&e.data[sizeof(GUID)] = object->local_position();
     std::string name = object->network_class();
     memcpy(&e.data[sizeof(GUID)+sizeof(sf::Vector2f)],name.c_str(),name.size()+1);
     Info("Network: new object " + name + " size " + std::to_string(name.size()));
@@ -82,9 +81,9 @@ void NetworkScene::object_delete(NetworkObject *object){
     objects.erase(object->m_guid);
 }
 void NetworkScene::on_object_new(const GUID &guid,const sf::Vector2f &position, const std::string &class_name){
-    Info("Network: Event: new remote object " + class_name + " " + std::string(guid));
+    Info("Network: Event: new remote object " + class_name + " " + std::string(guid) + ARG_VEC("POsition",position));
     NetworkObject *object = (*NetworkObjectsDB::creator(class_name))(this,guid);
-    object->translate(position);
+    object->set_local_position(position);
     objects.emplace(guid,object);
 }
 void NetworkScene::on_object_delete(const GUID &guid){
