@@ -71,6 +71,9 @@ struct Host{
     Host();
     Host(const sf::IpAddress& i, sf::Uint16 p);
     std::string to_string()const;
+
+    bool operator==(const Host &other)const;
+    bool operator!=(const Host &other)const;
 };
 
 sf::Uint64 htoi(const Host &host);

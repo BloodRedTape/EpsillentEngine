@@ -5,7 +5,6 @@
 #include "core/math/random.hpp"
 #include "utils/debug.hpp"
 #include "utils/assets_manager.hpp"
-#include "network/network.hpp"
 std::atomic<bool> Engine::running;
 std::mutex Engine::mutex;
 DrawCallInterface* Engine::draw_call_interface = nullptr;
@@ -98,7 +97,7 @@ void Engine::UpdateLoop(){
     while(running){
         Random::seed(time.getElapsedTime().asMilliseconds()*reinterpret_cast<unsigned long long>(SceneManager::get_current_scene()));
 
-        Network::update();
+
         for(auto itr = layer_stack->begin(); itr!=layer_stack->end();itr++){
             (*itr)->on_update(frame_time);
         }
@@ -111,7 +110,6 @@ void Engine::UpdateLoop(){
     }
     while(!layer_stack->empty())
         layer_stack->pop_layer();
-    Network::finalize();
     
 }
 void Engine::RenderLoop(){

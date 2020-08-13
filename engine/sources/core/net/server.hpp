@@ -39,6 +39,10 @@ public:
     void serve();
 
     void event_handler_add(protocol::EventCode code, Handler func);
+
+    void send_all(const Event &e);
+
+    void send_except(const Event &e, const Host &exception);
 private:
     void process(const Datagram &datagram, const Host &host);
 
@@ -54,7 +58,7 @@ private:
 template <typename ClientData>
 Server<ClientData>::Server(sf::Uint16 port)
 {
-    if(m_socket_in.bind(port)==sf::Socket::Status::Error)
+    if(m_socket_in.bind(port)!=sf::Socket::Status::Done)
         Error("Server: can't bind to port " + std::to_string(port));
     Info("Server: trying to bind to :" + std::to_string(port));
     //Info("Server: working on :" + std::to_string(m_socket_in.getLocalPort()));
@@ -100,7 +104,23 @@ void Server<ClientData>::event_handler_add(protocol::EventCode code, Handler fun
     m_event_dispatch_table.emplace(code,func);
 }
 
+template <typename ClientData>
+void Server<ClientData>::send_all(const Event &e){
+    for(auto &c : m_clients){
+        send(c.second.host,e);
+    }
+}
 
+template <typename ClientData>
+void Server<ClientData>::send_except(const Event &e, const Host &exception){
+    Info("Server: send all except");
+    for(auto &c : m_clients){
+        if(c.second.host!=exception){
+            send(c.second.host,e);
+            Info("Server: send to " + c.second.host.to_string());
+        }
+    }
+}
 
 template <typename ClientData>
 void Server<ClientData>::process(const Datagram &datagram, const Host &host){

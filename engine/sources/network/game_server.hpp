@@ -19,13 +19,13 @@ public:
     GameServer(sf::Uint16 port);
     virtual ~GameServer() = default;
 
-    void send_all(const Event &e);
-    void func();
-    void send_except(const Event &e, const Host &exception);
-private:
 
+private:
+    void bind_handlers();
     void on_object_create(const Event &e, ClientTraits &client);
     void on_object_destroy(const Event &e, ClientTraits &client);
+    void on_object_var(const Event &e, ClientTraits &client);
+    void on_object_translate(const Event &e, ClientTraits &client);
 };
 
 #endif

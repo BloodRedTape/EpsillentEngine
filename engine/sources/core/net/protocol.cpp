@@ -75,6 +75,12 @@ std::string Host::to_string()const{
     return ip.toString()+":"+std::to_string(port);
 }
 
+bool Host::operator==(const Host &other)const{
+    return (other.ip == ip) && (other.port == port);
+}
+bool Host::operator!=(const Host &other)const{
+    return (other.ip != ip) || (other.port != port);
+}
 
 sf::Uint64 htoi(const Host &host){
     sf::Uint64 res = host.port;

@@ -1,38 +1,63 @@
 #include "network/network_object.hpp"
-#include "network/network.hpp"
 #include "network/objects_protocol.hpp"
-
+#include "network/network_scene.hpp"
 std::unordered_map<std::string,NetworkObjectsDB::ObjectCreator> NetworkObjectsDB::m_objects;
 
 NetworkObjectsDB::ObjectCreator NetworkObjectsDB::creator(const std::string &class_name){
+    ASSERT_ERROR(m_objects.find(class_name)!=m_objects.end(),"NetworkObjectDB: unregistered object: " + class_name);
     return m_objects.find(class_name)->second;
 }
 
 
 void NetworkObject::_on_introduce(){
-    
-    if(originator){
-        Network::client()->obj_create(this);
-        Info(network_class()+"::_on_introduce()");
+    if(m_originator){
+        static_cast<NetworkScene*>(scene())->object_new(this);
     }
 }
 void NetworkObject::_on_destroy(){
-    Network::client()->obj_destory(this);
-    Info(network_class()+"::_on_destroy()");
+    static_cast<NetworkScene*>(scene())->object_delete(this);
+}
+
+void NetworkObject::on_network_variable(const Event &e){
+
+}
+void NetworkObject::on_network_translate(const Event &e){
+    translate(*(sf::Vector2f*)&e.data[sizeof(GUID)]);
 }
 
 NetworkObject::NetworkObject():
     m_guid(),
-    originator(true)
+    m_originator(true)
 { 
     
 }
 
 NetworkObject::NetworkObject(const GUID &guid):
     m_guid(guid),
-    originator(false)
-{ }
+    m_originator(false)
+{ 
+}
 
+
+void NetworkObject::network_translate(const sf::Vector2f &offset){
+    translate(offset);
+    Event e(EventCode(Events::ObjectTranslate));
+    *(GUID*)e.data=m_guid;
+    *(sf::Vector2f*)&e.data[sizeof(GUID)]=offset;
+    network_event(e);
+}
+void NetworkObject::network_translate(float x_offset, float y_offset){
+    network_translate(sf::Vector2f(x_offset,y_offset));
+}
+
+
+void NetworkObject::on_network_event(const Event &e){
+    Warning("NetworkObject: recieved unknown event: " + std::to_string(e.code.event));
+}
+void NetworkObject::network_event(Event &e){
+    *(GUID*)e.data=m_guid;
+    static_cast<NetworkScene*>(scene())->event(e);
+}
 
 std::string NetworkObject::static_network_class(){  
     return std::string("NetworkObject");              
@@ -40,11 +65,15 @@ std::string NetworkObject::static_network_class(){
 std::string NetworkObject::network_class(){        
     return std::string("NetworkObject");              
 }
-const GUID &NetworkObject::guid()const{
-    return m_guid;
+
+bool NetworkObject::originator(){
+    return m_originator;
 }
 
 NetworkObject *NetworkObject::set_guid(const GUID &guid){
     m_guid = guid;
     return this;
+}
+const GUID &NetworkObject::guid()const{
+    return m_guid;
 }

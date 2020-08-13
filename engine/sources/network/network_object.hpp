@@ -8,9 +8,11 @@
 #include "core/net/protocol.hpp"
 #include "scenes/scene.hpp"
 #include "utils/debug.hpp"
-
+#include "network/objects_protocol.hpp"
 class BaseScene;
+class NetworkScene;
 class GameClient;
+class NetworkObjectsDB;
 
 #define NETWORK_CLASS(Name,Inherited)           \
 public:                                         \
@@ -20,29 +22,46 @@ public:                                         \
     virtual std::string network_class()override{\
         return std::string(#Name);              \
     }                                           \
-    Name(const GUID& guid): Inherited(guid) {}  \
+    explicit Name(const GUID& guid): Inherited(guid) {}\
 private:
 
+struct NetworkVariable{
+    std::size_t size;
+    void *variable;
+};
 
 class NetworkObject: public GameObject{
 private:
-    bool originator;
+    bool m_originator;
     GUID m_guid;
+    std::vector<NetworkVariable> m_net_variables;
     friend class GameClient;
+    friend class NetworkScene;
+    friend class NetworkObjectsDB;
 private:
     friend class BaseScene;
     void _on_introduce()override;
     void _on_destroy()override;
+    void on_network_variable(const Event &e);
+    void on_network_translate(const Event &e);
 public:
     NetworkObject();
     explicit NetworkObject(const GUID &guid);
     virtual ~NetworkObject() = default;
 
-    NetworkObject *set_guid(const GUID &);
+    void network_translate(const sf::Vector2f &offset);
+    void network_translate(float x_offset, float y_offset);
 
+
+    virtual void on_network_event(const Event &); // event from scene 
+    void network_event(Event &);
+
+    bool originator();
 
     static std::string static_network_class();               
     virtual std::string network_class();
+
+    NetworkObject *set_guid(const GUID &);
     const GUID &guid()const;                                          
 };
 
@@ -54,13 +73,13 @@ private:
 public:
     template <typename T>
     static NetworkObject* _obj_creator(BaseScene *scene, const GUID &guid){
-        return (NetworkObject*)scene->object_introduce(new T(guid));
+        return (NetworkObject*)(scene->object_introduce(new T(guid)));
     }
     template <typename T>
     static void register_object(){
         m_objects.emplace(T::static_network_class(),&NetworkObjectsDB::_obj_creator<T>);
     }
-    ObjectCreator creator(const std::string &class_name);
+    static ObjectCreator creator(const std::string &class_name);
 };
 
 
