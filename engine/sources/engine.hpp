@@ -47,6 +47,7 @@ class ENGINE_API Engine{
         static const sf::VideoMode k_video_mode;  //better window creation
         static Engine *smp_singleton;
         static sf::Clock time;
+        static float dt;
         static bool _show_fps;
     private:
         static void RenderLoop();
@@ -66,7 +67,7 @@ class ENGINE_API Engine{
 
         void set_ui_controller(UIController*);
 
-
+        float delta_time();
 };
 
 

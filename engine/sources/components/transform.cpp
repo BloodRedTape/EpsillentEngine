@@ -31,6 +31,14 @@ sf::Vector2f Transform::global_position(){
     return m_global_position;
 }
 
+const sf::Vector2f& Transform::local_position(){
+    return m_local_position;
+}
+
+void Transform::set_local_position(const sf::Vector2f &position){
+    m_local_position=position;
+}
+
 sf::Transform Transform::global_transform(){
     return sf::Transform().rotate(rotation).translate(global_position());
 }

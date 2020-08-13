@@ -123,6 +123,13 @@ void GameObject::rotate(const float angle){
 sf::Vector2f GameObject::global_position(){
     return m_transform.global_position();
 }
+const sf::Vector2f& GameObject::local_position(){
+    return m_transform.local_position();
+}
+
+void GameObject::set_local_position(const sf::Vector2f &position){
+    m_transform.set_local_position(position);
+}
 
 sf::Transform GameObject::global_transform(){
     return m_transform.global_transform();

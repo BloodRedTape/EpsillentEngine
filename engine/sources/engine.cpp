@@ -15,7 +15,7 @@ LayerStack* Engine::layer_stack = nullptr;
 sf::Clock Engine::time;
 
 bool Engine::_show_fps = false;
-
+float Engine::dt = 0;
 
 const sf::VideoMode Engine::k_video_mode = sf::VideoMode(1280,720);  //better window creation
 
@@ -92,21 +92,20 @@ void Engine::shutdown(){
 
 void Engine::UpdateLoop(){
     sf::Clock n;
-    float frame_time = 0;
     float fps;
     while(running){
         Random::seed(time.getElapsedTime().asMilliseconds()*reinterpret_cast<unsigned long long>(SceneManager::get_current_scene()));
 
 
         for(auto itr = layer_stack->begin(); itr!=layer_stack->end();itr++){
-            (*itr)->on_update(frame_time);
+            (*itr)->on_update(dt);
         }
 
-        frame_time=n.getElapsedTime().asSeconds();
-        fps = 1/frame_time;
+        dt=n.getElapsedTime().asSeconds();
+        fps = 1/dt;
         n.restart();
 
-        Profiling(std::string("UpdateLoop :")+std::to_string(frame_time)+" ms \t\t| fps:" + std::to_string(fps));
+        Profiling(std::string("UpdateLoop :")+std::to_string(dt)+" ms \t\t| fps:" + std::to_string(fps));
     }
     while(!layer_stack->empty())
         layer_stack->pop_layer();
@@ -173,5 +172,8 @@ void Engine::set_ui_controller(UIController* c){
         layer_stack->push_layer(ui);
     }
     ui->set_controller(c);
+}
+float Engine::delta_time(){
+    return dt;
 }
 

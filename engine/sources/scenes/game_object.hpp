@@ -90,6 +90,9 @@ public:
     //void set_origin();
 
     sf::Vector2f global_position();
+    const sf::Vector2f& local_position();
+
+    void set_local_position(const sf::Vector2f &position);
 
     sf::Transform global_transform();
     const sf::Transform& local_transform();

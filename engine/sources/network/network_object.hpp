@@ -9,9 +9,8 @@
 #include "scenes/scene.hpp"
 #include "utils/debug.hpp"
 #include "network/objects_protocol.hpp"
-class BaseScene;
+
 class NetworkScene;
-class GameClient;
 class NetworkObjectsDB;
 
 #define NETWORK_CLASS(Name,Inherited)           \
@@ -25,21 +24,21 @@ public:                                         \
     explicit Name(const GUID& guid): Inherited(guid) {}\
 private:
 
-struct NetworkVariable{
+struct NetworkVariableTraits{
     std::size_t size;
     void *variable;
+    explicit NetworkVariableTraits(std::size_t size,void* data);
 };
 
 class NetworkObject: public GameObject{
 private:
     bool m_originator;
     GUID m_guid;
-    std::vector<NetworkVariable> m_net_variables;
-    friend class GameClient;
+    std::vector<NetworkVariableTraits> m_net_variables;
+    float m_delay;
     friend class NetworkScene;
     friend class NetworkObjectsDB;
 private:
-    friend class BaseScene;
     void _on_introduce()override;
     void _on_destroy()override;
     void on_network_variable(const Event &e);
