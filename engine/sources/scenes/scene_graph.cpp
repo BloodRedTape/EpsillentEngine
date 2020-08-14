@@ -16,7 +16,7 @@ void SceneGraph::render(){
     while (!traverse_order.empty())
     {
         traverse_order.front()->render_traverse(traverse_order);
-        traverse_order.front()->render();
+        //traverse_order.front()->render();
         traverse_order.pop();
     };
 }

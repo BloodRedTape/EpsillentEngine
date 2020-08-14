@@ -42,8 +42,7 @@ private:
     // detach children node
     void child_detach(GameObject*);
 protected:
-    virtual void update();
-    virtual void render();
+    virtual void _on_update(float dt){};
     virtual void _on_introduce(){};
     virtual void _on_destroy(){};
 public:

@@ -27,7 +27,7 @@ private:
 
     void on_object_new(const GUID &guid,const sf::Vector2f &position, const std::string &class_name);
     void on_object_delete(const GUID &guid);
-    void on_object_event(const GUID &guid, const Event &e);
+    void on_object_originator_event(const Event &e);
     void on_object_var(const GUID &guid, const Event &e);
     void on_object_translate(const GUID &guid, const Event &e);
     friend class NetworkObject;

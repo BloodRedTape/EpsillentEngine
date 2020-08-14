@@ -32,9 +32,7 @@ public:
 
     std::size_t clients();
 
-    void send(const Host& client, const Datagram &d);
-    void send(const Host& client, const Event &e);
-    void send(const Host& client, const Response &r);
+    void send(const Host& client,const void *data, std::size_t size);
 
     virtual void on_connect(ClientTraits &){};
     virtual void on_disconnect(ClientTraits &){};
@@ -43,9 +41,9 @@ public:
 
     void event_handler_add(protocol::EventCode code, Handler func);
 
-    void send_all(const Event &e);
+    void send_all(const void *data, std::size_t size);
 
-    void send_except(const Event &e, const Host &exception);
+    void send_except(const void *data, std::size_t size, const Host &exception);
 private:
     void process(const Datagram &datagram, const Host &host);
 
@@ -74,20 +72,9 @@ _ALWAYS_INLINE_ std::size_t Server<ClientData>::clients(){
 }
 
 template <typename ClientData>
-_ALWAYS_INLINE_ void Server<ClientData>::send(const Host& client, const Datagram &d){
-    if(m_socket_in.send(&d,sizeof(Datagram),client.ip,client.port)!=sf::Socket::Done)
-        Info("Server: can't send to " + client.ip.toString()+":"+std::to_string(client.port));
-}
-
-template <typename ClientData>
-_ALWAYS_INLINE_ void Server<ClientData>::send(const Host& client, const Response &r){
-    if(m_socket_in.send(&r,sizeof(Response),client.ip,client.port)!=sf::Socket::Done)
-        Info("Server: can't send to " + client.ip.toString()+":"+std::to_string(client.port));
-}
-template <typename ClientData>
-_ALWAYS_INLINE_ void Server<ClientData>::send(const Host& client, const Event &e){
-    if(m_socket_in.send(&e,sizeof(Event),client.ip,client.port)!=sf::Socket::Done)
-        Info("Server: can't send to " + client.ip.toString()+":"+std::to_string(client.port));
+_ALWAYS_INLINE_ void Server<ClientData>::send(const Host& client,const void *data, std::size_t size){
+    if(m_socket_in.send(data,size,client.ip,client.port)!=sf::Socket::Done)
+        Info("Server: can't send to " + client.to_string());
 }
 
 template <typename ClientData>
@@ -108,19 +95,17 @@ void Server<ClientData>::event_handler_add(protocol::EventCode code, Handler fun
 }
 
 template <typename ClientData>
-void Server<ClientData>::send_all(const Event &e){
+void Server<ClientData>::send_all(const void *data, std::size_t size){
     for(auto &c : m_clients){
-        send(c.second.host,e);
+        send(c.second.host,data,size);
     }
 }
 
 template <typename ClientData>
-void Server<ClientData>::send_except(const Event &e, const Host &exception){
-    Info("Server: send all except");
+void Server<ClientData>::send_except(const void *data, std::size_t size, const Host &exception){
     for(auto &c : m_clients){
         if(c.second.host!=exception){
-            send(c.second.host,e);
-            Info("Server: send to " + c.second.host.to_string());
+            send(c.second.host,data,size);
         }
     }
 }
@@ -172,7 +157,10 @@ void Server<ClientData>::handle_event(const Event &event, const Host &host){
 template <typename ClientData>
 _ALWAYS_INLINE_ void Server<ClientData>::connect(const Host &host){
     Info("Server: Connect request form " + host.to_string());
-    send(host,Response(protocol::ResponseCode::Success));
+    Response r;
+    r.type = protocol::DatagramType::Response;
+    r.code.response = protocol::ResponseCode::Success;
+    send(host,&r,sizeof(Response));
     on_connect(m_clients.emplace(htoi(host),host).first->second); //implicit conversion of host to client traits to avoid messy object creation
 
     Info("Server: " + host.to_string() + " connected");
@@ -187,7 +175,10 @@ _ALWAYS_INLINE_ void Server<ClientData>::disconnect(const Host &host){
         Info("Server: " + host.to_string() + " was not connected");
         return;
     }
-    send(host,Response(protocol::ResponseCode::Success));
+    Response r;
+    r.type = protocol::DatagramType::Response;
+    r.code.response = protocol::ResponseCode::Success;
+    send(host,&r,sizeof(Response));
     on_disconnect(m_clients.find(htoi(host))->second);
     m_clients.erase(htoi(host));
     Info("Server: " + host.to_string() + " disconnected");

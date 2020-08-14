@@ -31,8 +31,13 @@ struct NetworkVariableTraits{
 };
 
 class NetworkObject: public GameObject{
+public:
+    enum Type : uint8{
+        Originator,
+        Imitator
+    };
 private:
-    bool m_originator;
+    Type m_type;
     GUID m_guid;
     std::vector<NetworkVariableTraits> m_net_variables;
     float m_delay;
@@ -52,10 +57,14 @@ public:
     void network_translate(float x_offset, float y_offset);
 
 
-    virtual void on_network_event(const Event &); // event from scene 
-    void network_event(Event &);
+    //anything you want to send into network
+    void network_event(const Event &);
 
-    bool originator();
+    //send an event to imitator objects
+    void originator_event(const OriginatorEvent &);
+    //handle an event from originator object
+    virtual void on_originator_event(const OriginatorEvent &);
+    Type type();
 
     static std::string static_network_class();               
     virtual std::string network_class();

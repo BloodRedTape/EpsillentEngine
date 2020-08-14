@@ -15,9 +15,7 @@ public:
     Client();
     void connect(const Host& server);
 
-    void send(const Datagram &d);
-    void send(const Event &e);
-    void send(const Request &r);
+    void send(const void *data, std::size_t size);
     
     bool is_connected();
 

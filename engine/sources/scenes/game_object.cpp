@@ -21,7 +21,7 @@ GameObject::~GameObject()
 
 void GameObject::update_traverse(const float dt){
     for(GameObject* node: m_child_nodes){
-        node->update();
+        node->_on_update(dt);
         node->on_update(dt);
         /*if(node->m_dirty || dirty){
             node->m_global_transform = m_global_transform*node->m_transform;
@@ -70,15 +70,6 @@ void GameObject::object_introduce(GameObject* object,const sf::Vector2f& relativ
     mp_scene->object_introduce(object);
 }
 
-
-
-void GameObject::update(){
-
-}
-
-void GameObject::render(){
-
-}
 
 void GameObject::destroy(){
     if(!m_garbage){

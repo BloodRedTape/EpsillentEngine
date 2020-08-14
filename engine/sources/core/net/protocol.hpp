@@ -25,7 +25,7 @@ namespace protocol{
         Success         = 1,
         Fail            = 2
     };
-    enum EventCode: uint16{
+    enum EventCode: uint8{
         NullEvent   = 0
     };
 

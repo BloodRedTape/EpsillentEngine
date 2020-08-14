@@ -14,7 +14,7 @@ NetworkVariableTraits::NetworkVariableTraits(std::size_t s,void* d):
 {}
 
 void NetworkObject::_on_introduce(){
-    if(m_originator){
+    if(m_type == Type::Originator){
         static_cast<NetworkScene*>(scene())->object_new(this);
     }
 }
@@ -26,12 +26,12 @@ void NetworkObject::on_network_variable(const Event &e){
 
 }
 void NetworkObject::on_network_translate(const Event &e){
-    set_local_position(*(sf::Vector2f*)&e.data[sizeof(GUID)]);
+    set_local_position((*(EventObjectTranslate*)&e).position);
 }
 
 NetworkObject::NetworkObject():
     m_guid(),
-    m_originator(true),
+    m_type(Type::Originator),
     m_delay(0)
 { 
     
@@ -39,7 +39,7 @@ NetworkObject::NetworkObject():
 
 NetworkObject::NetworkObject(const GUID &guid):
     m_guid(guid),
-    m_originator(false)
+    m_type(Type::Imitator)
 { 
 }
 
@@ -50,10 +50,10 @@ void NetworkObject::network_translate(const sf::Vector2f &offset){
     m_delay+=Engine::get_singleton()->delta_time();
     if(m_delay>=delay){
         m_delay-=delay;
-        Event e(EventCode(Events::ObjectTranslate));
-        *(GUID*)e.data=m_guid;
-        *(sf::Vector2f*)&e.data[sizeof(GUID)]=local_position();
-        network_event(e);
+        EventObjectTranslate e;
+        e.guid=m_guid;
+        e.position=local_position();
+        static_cast<NetworkScene*>(scene())->send(&e,sizeof(e));
     }
 }
 void NetworkObject::network_translate(float x_offset, float y_offset){
@@ -61,12 +61,20 @@ void NetworkObject::network_translate(float x_offset, float y_offset){
 }
 
 
-void NetworkObject::on_network_event(const Event &e){
-    Warning("NetworkObject: recieved unknown event: " + std::to_string(e.code.event));
-}
-void NetworkObject::network_event(Event &e){
-    *(GUID*)e.data=m_guid;
+void NetworkObject::network_event(const Event &e){
     static_cast<NetworkScene*>(scene())->event(e);
+}
+
+void NetworkObject::originator_event(const OriginatorEvent &e){
+    EventObjectOriginator event;
+    event.type = protocol::DatagramType::Event;
+    event.code.event = EventCode(Events::ObjectOriginatorEvent);
+    event.guid = m_guid;
+    event.content = e;
+    static_cast<NetworkScene*>(scene())->send(&event,sizeof(EventObjectOriginator));
+}
+void NetworkObject::on_originator_event(const OriginatorEvent &e){
+
 }
 
 std::string NetworkObject::static_network_class(){  
@@ -76,8 +84,8 @@ std::string NetworkObject::network_class(){
     return std::string("NetworkObject");              
 }
 
-bool NetworkObject::originator(){
-    return m_originator;
+NetworkObject::Type NetworkObject::type(){
+    return m_type;
 }
 
 NetworkObject *NetworkObject::set_guid(const GUID &guid){

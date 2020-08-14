@@ -32,6 +32,7 @@ private:
     void on_object_destroy(const Event &e, ClientTraits &client);
     void on_object_var(const Event &e, ClientTraits &client);
     void on_object_translate(const Event &e, ClientTraits &client);
+    void on_object_originator(const Event &e, ClientTraits &client);
 
     void on_connect(ClientTraits &)override;
     void on_disconnect(ClientTraits &)override;
