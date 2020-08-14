@@ -369,9 +369,6 @@
     <ClInclude Include="sources\scenes\scene_manager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sources\scenes\sprite.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="sources\servers\display_server.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -421,15 +418,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sources\ui\text_view.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sources\network\client.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sources\network\protocol.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sources\network\server.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sources\core\guid.hpp">
@@ -551,9 +539,6 @@
     <ClCompile Include="sources\scenes\scene_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sources\scenes\sprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="sources\servers\display_server.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -599,12 +584,6 @@
     <ClCompile Include="sources\ui\view.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sources\network\client.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sources\network\protocol.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="sources\core\guid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -632,26 +611,16 @@
     <Library Include="thirdparty\lib\windows\freetype.lib" />
     <Library Include="thirdparty\lib\windows\ogg.lib" />
     <Library Include="thirdparty\lib\windows\openal32.lib" />
-    <Library Include="thirdparty\lib\windows\sfml-audio.lib" />
-    <Library Include="thirdparty\lib\windows\sfml-audio-d.lib" />
     <Library Include="thirdparty\lib\windows\sfml-audio-s.lib" />
     <Library Include="thirdparty\lib\windows\sfml-audio-s-d.lib" />
-    <Library Include="thirdparty\lib\windows\sfml-graphics.lib" />
-    <Library Include="thirdparty\lib\windows\sfml-graphics-d.lib" />
     <Library Include="thirdparty\lib\windows\sfml-graphics-s.lib" />
     <Library Include="thirdparty\lib\windows\sfml-graphics-s-d.lib" />
     <Library Include="thirdparty\lib\windows\sfml-main.lib" />
     <Library Include="thirdparty\lib\windows\sfml-main-d.lib" />
-    <Library Include="thirdparty\lib\windows\sfml-network.lib" />
-    <Library Include="thirdparty\lib\windows\sfml-network-d.lib" />
     <Library Include="thirdparty\lib\windows\sfml-network-s.lib" />
     <Library Include="thirdparty\lib\windows\sfml-network-s-d.lib" />
-    <Library Include="thirdparty\lib\windows\sfml-system.lib" />
-    <Library Include="thirdparty\lib\windows\sfml-system-d.lib" />
     <Library Include="thirdparty\lib\windows\sfml-system-s.lib" />
     <Library Include="thirdparty\lib\windows\sfml-system-s-d.lib" />
-    <Library Include="thirdparty\lib\windows\sfml-window.lib" />
-    <Library Include="thirdparty\lib\windows\sfml-window-d.lib" />
     <Library Include="thirdparty\lib\windows\sfml-window-s.lib" />
     <Library Include="thirdparty\lib\windows\sfml-window-s-d.lib" />
     <Library Include="thirdparty\lib\windows\vorbis.lib" />

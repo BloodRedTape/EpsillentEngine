@@ -233,28 +233,18 @@
     <Library Include="thirdparty\lib\windows\freetype.lib" />
     <Library Include="thirdparty\lib\windows\ogg.lib" />
     <Library Include="thirdparty\lib\windows\openal32.lib" />
-    <Library Include="thirdparty\lib\windows\sfml-audio-d.lib" />
     <Library Include="thirdparty\lib\windows\sfml-audio-s-d.lib" />
     <Library Include="thirdparty\lib\windows\sfml-audio-s.lib" />
-    <Library Include="thirdparty\lib\windows\sfml-audio.lib" />
-    <Library Include="thirdparty\lib\windows\sfml-graphics-d.lib" />
     <Library Include="thirdparty\lib\windows\sfml-graphics-s-d.lib" />
     <Library Include="thirdparty\lib\windows\sfml-graphics-s.lib" />
-    <Library Include="thirdparty\lib\windows\sfml-graphics.lib" />
     <Library Include="thirdparty\lib\windows\sfml-main-d.lib" />
     <Library Include="thirdparty\lib\windows\sfml-main.lib" />
-    <Library Include="thirdparty\lib\windows\sfml-network-d.lib" />
     <Library Include="thirdparty\lib\windows\sfml-network-s-d.lib" />
     <Library Include="thirdparty\lib\windows\sfml-network-s.lib" />
-    <Library Include="thirdparty\lib\windows\sfml-network.lib" />
-    <Library Include="thirdparty\lib\windows\sfml-system-d.lib" />
     <Library Include="thirdparty\lib\windows\sfml-system-s-d.lib" />
     <Library Include="thirdparty\lib\windows\sfml-system-s.lib" />
-    <Library Include="thirdparty\lib\windows\sfml-system.lib" />
-    <Library Include="thirdparty\lib\windows\sfml-window-d.lib" />
     <Library Include="thirdparty\lib\windows\sfml-window-s-d.lib" />
     <Library Include="thirdparty\lib\windows\sfml-window-s.lib" />
-    <Library Include="thirdparty\lib\windows\sfml-window.lib" />
     <Library Include="thirdparty\lib\windows\vorbis.lib" />
     <Library Include="thirdparty\lib\windows\vorbisenc.lib" />
     <Library Include="thirdparty\lib\windows\vorbisfile.lib" />
@@ -364,7 +354,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>SFML_STATIC;ENGINE_API_STATIC</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);SFML_STATIC;ENGINE_API_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(SolutionDir)\engine\sources;$(SolutionDir)\engine\thirdparty\include</AdditionalIncludeDirectories>
@@ -415,9 +405,10 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>SFML_STATIC;ENGINE_API_STATIC</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);SFML_STATIC;ENGINE_API_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)\engine\sources;$(SolutionDir)\engine\thirdparty\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -427,7 +418,7 @@
       <EnableUAC>false</EnableUAC>
     </Link>
     <Lib>
-      <AdditionalDependencies>sfml-system-s-d.lib;sfml-window-s-d.lib;sfml-graphics-s-d.lib;sfml-network-s-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-system-s.lib;sfml-window-s.lib;sfml-graphics-s.lib;sfml-network-s.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)engine\thirdparty\lib\windows\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
