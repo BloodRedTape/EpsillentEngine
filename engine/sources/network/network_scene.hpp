@@ -28,7 +28,6 @@ private:
     void on_object_new(const sf::Packet &packet);
     void on_object_delete(const sf::Packet &packet);
     void on_object_originator_event(const sf::Packet& packet);
-    void on_object_var(const sf::Packet& packet);
     void on_object_translate(const sf::Packet& packet);
     friend class NetworkObject;
 };

@@ -441,9 +441,6 @@
     <ClInclude Include="sources\network\network_scene.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sources\network\network_variable.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="sources\network\objects_protocol.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>

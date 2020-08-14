@@ -10,8 +10,7 @@ enum Events : uint64{
     ObjectNew               = 1,
     ObjectDelete            = 2,
     ObjectOriginatorEvent   = 3,
-    ObjectVar               = 4,
-    ObjectTranslate         = 5,
+    ObjectTranslate         = 4,
     EngineCodesCount
 };
 
@@ -46,6 +45,5 @@ struct EventObjectOriginator: public protocol::Header{
     GUID guid;
     OriginatorEvent content;
 };
-
 
 #endif

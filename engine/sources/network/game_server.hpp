@@ -28,11 +28,12 @@ public:
 
 private:
     void bind_handlers();
-    void on_object_create(const Event &e, ClientTraits &client);
-    void on_object_destroy(const Event &e, ClientTraits &client);
-    void on_object_var(const Event &e, ClientTraits &client);
-    void on_object_translate(const Event &e, ClientTraits &client);
-    void on_object_originator(const Event &e, ClientTraits &client);
+    void on_object_create(const sf::Packet &e, ClientTraits &client);
+    void on_object_destroy(const sf::Packet &e, ClientTraits &client);
+    void on_object_var_init(const sf::Packet &e, ClientTraits &client);
+    void on_object_var_changed(const sf::Packet &e, ClientTraits &client);
+    void on_object_translate(const sf::Packet &e, ClientTraits &client);
+    void on_object_originator(const sf::Packet &e, ClientTraits &client);
 
     void on_connect(ClientTraits &)override;
     void on_disconnect(ClientTraits &)override;

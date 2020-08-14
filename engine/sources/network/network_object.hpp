@@ -24,11 +24,6 @@ public:                                         \
     explicit Name(const GUID& guid): Inherited(guid) {}\
 private:
 
-struct NetworkVariableTraits{
-    std::size_t size;
-    void *variable;
-    explicit NetworkVariableTraits(std::size_t size,void* data);
-};
 
 class NetworkObject: public GameObject{
 public:
@@ -39,14 +34,12 @@ public:
 private:
     Type m_type;
     GUID m_guid;
-    std::vector<NetworkVariableTraits> m_net_variables;
     float m_delay;
     friend class NetworkScene;
     friend class NetworkObjectsDB;
 private:
     void _on_introduce()override;
     void _on_destroy()override;
-    void on_network_variable(const Event &e);
     void on_network_translate(const EventObjectTranslate &e);
 public:
     NetworkObject();

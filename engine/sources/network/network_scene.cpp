@@ -20,22 +20,20 @@ void NetworkScene::event(const Event &e){
     ASSERT_WARRNING(is_connected(),"Netowork: Can not send and Event: Scene is not connected");
     send(const_cast<Event*>(&e),sizeof(e));
 }
-void NetworkScene::fetch(){
+void NetworkScene::fetch() {
     sf::Packet datagram;
     Host sender;
     std::size_t size;
     auto status = socket.receive(datagram, sender.ip, sender.port);
-    if(status == sf::Socket::Status::Done || status == sf::Socket::Status::Partial){
-        if(*(protocol::DatagramType*)datagram.getData() == protocol::DatagramType::Event){
+    if (status == sf::Socket::Status::Done || status == sf::Socket::Status::Partial) {
+        if (*(protocol::DatagramType*)datagram.getData() == protocol::DatagramType::Event) {
             handle_event(datagram);
-        }else{
+        }
+        else {
             Info("Network: unintended datagram recieved");
         }
-    }else {
-        Info("Network:Crap");
     }
 }
-
 //event handling based on a switch because it is stupid
 //to use dispatch table for three fucking options
 //probably there will be one but only if we have 
@@ -52,9 +50,6 @@ void NetworkScene::handle_event(const sf::Packet &packet){
         break;
     case Events::ObjectDelete:
         on_object_delete(packet);
-        break;
-    case Events::ObjectVar:
-        on_object_var(packet);
         break;
     case Events::ObjectTranslate:
         on_object_translate(packet);
@@ -112,9 +107,7 @@ void NetworkScene::on_object_originator_event(const sf::Packet &packet){
     objects.find(event.guid)->second->on_originator_event(event.content);
 }
 
-void NetworkScene::on_object_var(const sf::Packet &packet){
-    Info("Network: OnObjectVar don't have an implementation");
-}
+
 void NetworkScene::on_object_translate(const sf::Packet &packet){
     EventObjectTranslate& event = *(EventObjectTranslate*)packet.getData();
     auto object = objects.find(event.guid);

@@ -9,9 +9,6 @@ NetworkObjectsDB::ObjectCreator NetworkObjectsDB::creator(const std::string &cla
     return m_objects.find(class_name)->second;
 }
 
-NetworkVariableTraits::NetworkVariableTraits(std::size_t s,void* d):
-    size(s), variable(d)
-{}
 
 void NetworkObject::_on_introduce(){
     if(m_type == Type::Originator){
@@ -22,16 +19,13 @@ void NetworkObject::_on_destroy(){
     static_cast<NetworkScene*>(scene())->object_delete(this);
 }
 
-void NetworkObject::on_network_variable(const Event &e){
-
-}
 void NetworkObject::on_network_translate(const EventObjectTranslate &e){
     set_local_position(e.position);
 }
 
 NetworkObject::NetworkObject():
     m_guid(),
-    m_type(Type::Originator),
+    m_type(NetworkObject::Type::Originator),
     m_delay(0)
 { 
     
@@ -39,7 +33,7 @@ NetworkObject::NetworkObject():
 
 NetworkObject::NetworkObject(const GUID &guid):
     m_guid(guid),
-    m_type(Type::Imitator)
+    m_type(NetworkObject::Type::Imitator)
 { 
 }
 
@@ -74,7 +68,7 @@ void NetworkObject::originator_event(const OriginatorEvent &e){
     static_cast<NetworkScene*>(scene())->send(&event,sizeof(EventObjectOriginator));
 }
 void NetworkObject::on_originator_event(const OriginatorEvent &e){
-
+    Info("NetworkObject: originator event callback is not implemented");
 }
 
 std::string NetworkObject::static_network_class(){  

@@ -23,3 +23,4 @@ OriginatorEvent::OriginatorEvent(uint16 code){
     memset(this,0,sizeof(OriginatorEvent));
     event_code = code;
 }
+

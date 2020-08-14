@@ -19,39 +19,42 @@ GameServer::GameServer(sf::Uint16 port):
 void GameServer::bind_handlers(){
     event_handler_add(EventCode(Events::ObjectNew),ServerHandler(&GameServer::on_object_create));
     event_handler_add(EventCode(Events::ObjectDelete),ServerHandler(&GameServer::on_object_destroy));
-    event_handler_add(EventCode(Events::ObjectVar),ServerHandler(&GameServer::on_object_var));
     event_handler_add(EventCode(Events::ObjectOriginatorEvent),ServerHandler(&GameServer::on_object_originator));
     event_handler_add(EventCode(Events::ObjectTranslate),ServerHandler(&GameServer::on_object_translate));
     Info("GameServer: handler are bound");
 }
 
-void GameServer::on_object_create(const Event &e, ClientTraits &client){
-    EventObjectNew &event = *(EventObjectNew*)&e;
+void GameServer::on_object_create(const sf::Packet &packet, ClientTraits &client){
+    EventObjectNew &event = *(EventObjectNew*)packet.getData();
     Info("GameServer: client " + client.host.to_string() + " created object " + std::string(event.guid) + " Named " + std::string(event.class_name));
     m_objects.emplace(event.guid,NetworkObjectTraits(event.class_name,event.position));
-    send_except(&event,sizeof(event),client.host);
+    send_except(packet.getData(),packet.getDataSize(),client.host);
 }
-void GameServer::on_object_destroy(const Event &e, ClientTraits &client){
-    EventObjectDelete &event = *(EventObjectDelete*)&e;
+void GameServer::on_object_destroy(const sf::Packet &packet, ClientTraits &client){
+    EventObjectDelete &event = *(EventObjectDelete*)packet.getData();
     Info("GameServer: client " + client.host.to_string() + " deleted object " + std::string(event.guid));
     m_objects.erase(event.guid);
-    send_except(&event,sizeof(event),client.host);
+    send_except(packet.getData(),packet.getDataSize(),client.host);   
 }
 
-void GameServer::on_object_var(const Event &e, ClientTraits &client){
-    Info("GameServer: client changed variable");
-    send_except(const_cast<Event*>(&e),sizeof(e),client.host);
+void GameServer::on_object_var_init(const sf::Packet &packet, ClientTraits &client){
+    send_except(packet.getData(),packet.getDataSize(),client.host);
+    Info("GameServer: inited variable");
+}
+void GameServer::on_object_var_changed(const sf::Packet &packet, ClientTraits &client){
+    Info("GameServer: variable changed");
+    send_except(packet.getData(),packet.getDataSize(),client.host);
 }
 
-void GameServer::on_object_translate(const Event &e, ClientTraits &client){
-    EventObjectTranslate &event = *(EventObjectTranslate*)&e;
+void GameServer::on_object_translate(const sf::Packet &packet, ClientTraits &client){
+    EventObjectTranslate &event = *(EventObjectTranslate*)packet.getData();
     m_objects.find(event.guid)->second.local_transform = event.position;
-    send_except(&event,sizeof(event),client.host);
+    send_except(packet.getData(),packet.getDataSize(),client.host);
 }
-void GameServer::on_object_originator(const Event &e, ClientTraits &client){
-    EventObjectOriginator &event = *(EventObjectOriginator*)&e;
+void GameServer::on_object_originator(const sf::Packet &packet, ClientTraits &client){
+    EventObjectOriginator &event = *(EventObjectOriginator*)packet.getData();
     Info("GameServer: "+std::string(event.guid)+" originator event");
-    send_except(&event,sizeof(event),client.host);
+    send_except(packet.getData(),packet.getDataSize(),client.host);
 }
 
 void GameServer::on_connect(ClientTraits &c){

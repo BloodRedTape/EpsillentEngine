@@ -41,7 +41,6 @@
     <ClInclude Include="sources\network\game_server.hpp" />
     <ClInclude Include="sources\network\network_object.hpp" />
     <ClInclude Include="sources\network\network_scene.hpp" />
-    <ClInclude Include="sources\network\network_variable.hpp" />
     <ClInclude Include="sources\network\objects_protocol.hpp" />
     <ClInclude Include="sources\physics\collider2d.hpp" />
     <ClInclude Include="sources\physics\collider_2d.hpp" />

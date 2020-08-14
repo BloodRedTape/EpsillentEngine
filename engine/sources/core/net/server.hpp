@@ -21,7 +21,7 @@ public:
             host(h)
         {}
     };
-    using Handler = std::function<void(const Event &, ClientTraits &)>;
+    using Handler = std::function<void(const sf::Packet &, ClientTraits &)>;
 
 private:
     sf::UdpSocket m_socket_in;
@@ -49,7 +49,7 @@ private:
     void process(const sf::Packet &, const Host &host);
 
     void handle_request(const Request &request, const Host &host);
-    void handle_event(const Event &event, const Host &host);
+    void handle_event(const sf::Packet &event, const Host &host);
 
     void connect(const Host &host);
     void disconnect(const Host &host);
@@ -116,15 +116,14 @@ void Server<ClientData>::send_except(const void *data, std::size_t size, const H
 
 template <typename ClientData>
 void Server<ClientData>::process(const sf::Packet &packet, const Host &host){
-    Datagram datagram;
-    memcpy(&datagram, packet.getData(), packet.getDataSize());
+    Datagram &datagram = *(Datagram*)packet.getData();
     switch (datagram.type)
     {
     case protocol::DatagramType::Request:
         handle_request(Request(datagram.code.request),host);
         break;
     case protocol::DatagramType::Event:
-        handle_event(*(Event*)&datagram,host);
+        handle_event(packet,host);
         break;
     default:
         Info("Server: Wrong Datagram from " + host.to_string());
@@ -149,11 +148,12 @@ void Server<ClientData>::handle_request(const Request &request, const Host &host
 }
 
 template <typename ClientData>
-void Server<ClientData>::handle_event(const Event &event, const Host &host){
+void Server<ClientData>::handle_event(const sf::Packet &packet, const Host &host){
+    Event& event = *(Event*)packet.getData();
     auto handler = m_event_dispatch_table.find(event.code.event);
     if(handler != m_event_dispatch_table.end()){
         auto &client = m_clients.find(htoi(host))->second;
-        handler->second(event,client);
+        handler->second(packet,client);
     }else{
         Info("Server: no dispatcher for event code " + std::to_string(event.code.event));
     }
