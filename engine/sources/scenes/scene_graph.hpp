@@ -21,7 +21,6 @@ public:
     SceneGraph(BaseScene*);
 
     void update(const float);
-    void render();
     _ALWAYS_INLINE_ void add_to_root(GameObject* p_node){
         m_root.child_add(p_node);
     }

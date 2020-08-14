@@ -36,12 +36,6 @@ void GameObject::update_traverse(const float dt){
     }
 }
 
-void GameObject::render_traverse(std::queue<GameObject*>& traverse_queue){
-    for(std::list<GameObject*>::iterator itr = m_child_nodes.begin(); itr!=m_child_nodes.end();itr++){
-        traverse_queue.push(*itr);
-    }
-}
-
 void GameObject::set_tag(const std::string& tag){
     m_tag = tag;
 }

@@ -35,7 +35,6 @@ private:
     //add children in update queue
     // apply parent transfrom to self
     void update_traverse(const float dt);
-    void render_traverse(std::queue<GameObject*>& r_queue);
     // detach node from parent
     // it will NOT be deleted until you mark_garbage() it
     void detach();
