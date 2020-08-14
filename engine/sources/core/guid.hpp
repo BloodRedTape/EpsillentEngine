@@ -13,7 +13,7 @@ public:
     GUID(const GUID &other) = default;
     GUID &operator=(const GUID &other) = default;
     GUID(GUID &&other) = default;
-    GUID &operator=(GUID &other)=default;
+    GUID &operator=(GUID &&other)=default;
     
     bool operator==(const GUID &other) const;
     bool operator!=(const GUID &other) const;
