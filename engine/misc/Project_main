@@ -9,7 +9,7 @@ struct Explosion: public GameObject{
         time(0), lifetime(0.2f)
     {}
 
-    void on_init()override{
+    void on_introduce()override{
         ParticleSystemProperties props;
         props.color_begin = sf::Color::Yellow;
         props.color_end = sf::Color::Red;
@@ -36,7 +36,7 @@ struct Bullet: public GameObject{
         lifetime(1.0f)
     {}
 
-    void on_init()override{
+    void on_introduce()override{
         ParticleSystemProperties props;
         props.color_begin = sf::Color::Yellow;
         props.color_end = sf::Color::Red;
@@ -68,7 +68,7 @@ struct Player: public GameObject{
         spawn_rate(0.01f)
     {}
 
-    void on_init()override{
+    void on_introduce()override{
 
         sprite = component_add<Sprite2D>();
         sprite->set_color(sf::Color::Green);
