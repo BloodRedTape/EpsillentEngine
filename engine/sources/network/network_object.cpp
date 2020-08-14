@@ -25,8 +25,8 @@ void NetworkObject::_on_destroy(){
 void NetworkObject::on_network_variable(const Event &e){
 
 }
-void NetworkObject::on_network_translate(const Event &e){
-    set_local_position((*(EventObjectTranslate*)&e).position);
+void NetworkObject::on_network_translate(const EventObjectTranslate &e){
+    set_local_position(e.position);
 }
 
 NetworkObject::NetworkObject():

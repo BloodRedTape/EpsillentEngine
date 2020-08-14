@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <functional>
 #include "SFML/Network/UdpSocket.hpp"
+#include "SFML/Network/Packet.hpp"
 #include "core/net/protocol.hpp"
 #include "utils/debug.hpp"
 
@@ -45,7 +46,7 @@ public:
 
     void send_except(const void *data, std::size_t size, const Host &exception);
 private:
-    void process(const Datagram &datagram, const Host &host);
+    void process(const sf::Packet &, const Host &host);
 
     void handle_request(const Request &request, const Host &host);
     void handle_event(const Event &event, const Host &host);
@@ -79,12 +80,15 @@ _ALWAYS_INLINE_ void Server<ClientData>::send(const Host& client,const void *dat
 
 template <typename ClientData>
 void Server<ClientData>::serve(){
-    Datagram datagram;
+    sf::Packet datagram;
     Host source;
     size_t resived_size;
     m_socket_in.setBlocking(true);
     for(;;){
-        m_socket_in.receive(&datagram,sizeof(Datagram),resived_size,source.ip,source.port);
+        if (m_socket_in.receive(datagram, source.ip, source.port) != sf::Socket::Status::Done) {
+            Info("Server: can't receive data");
+            continue;
+        }
         process(datagram,source);
         datagram.clear();
     }
@@ -111,14 +115,16 @@ void Server<ClientData>::send_except(const void *data, std::size_t size, const H
 }
 
 template <typename ClientData>
-void Server<ClientData>::process(const Datagram &datagram, const Host &host){
+void Server<ClientData>::process(const sf::Packet &packet, const Host &host){
+    Datagram datagram;
+    memcpy(&datagram, packet.getData(), packet.getDataSize());
     switch (datagram.type)
     {
     case protocol::DatagramType::Request:
         handle_request(Request(datagram.code.request),host);
         break;
     case protocol::DatagramType::Event:
-        handle_event(Event(datagram),host);
+        handle_event(*(Event*)&datagram,host);
         break;
     default:
         Info("Server: Wrong Datagram from " + host.to_string());

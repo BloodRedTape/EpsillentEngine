@@ -6,7 +6,7 @@
 #include "scenes/scene.hpp"
 #include "core/net/client.hpp"
 #include "network/network_object.hpp"
-
+#include "SFML/Network/Packet.hpp"
 class NetworkScene: public BaseScene, public Client{
 private:
     std::unordered_map<GUID,NetworkObject*> objects;
@@ -20,16 +20,16 @@ public:
 
 private:
     void fetch();
-    void handle_event(const Event &e);
+    void handle_event(const sf::Packet &e);
 
     void object_new(NetworkObject *object);
     void object_delete(NetworkObject *object);
 
-    void on_object_new(const GUID &guid,const sf::Vector2f &position, const std::string &class_name);
-    void on_object_delete(const GUID &guid);
-    void on_object_originator_event(const Event &e);
-    void on_object_var(const GUID &guid, const Event &e);
-    void on_object_translate(const GUID &guid, const Event &e);
+    void on_object_new(const sf::Packet &packet);
+    void on_object_delete(const sf::Packet &packet);
+    void on_object_originator_event(const sf::Packet& packet);
+    void on_object_var(const sf::Packet& packet);
+    void on_object_translate(const sf::Packet& packet);
     friend class NetworkObject;
 };
 

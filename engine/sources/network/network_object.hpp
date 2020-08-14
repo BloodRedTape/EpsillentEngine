@@ -47,7 +47,7 @@ private:
     void _on_introduce()override;
     void _on_destroy()override;
     void on_network_variable(const Event &e);
-    void on_network_translate(const Event &e);
+    void on_network_translate(const EventObjectTranslate &e);
 public:
     NetworkObject();
     explicit NetworkObject(const GUID &guid);

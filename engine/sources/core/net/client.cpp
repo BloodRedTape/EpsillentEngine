@@ -21,7 +21,12 @@ void Client::connect(const Host &serv){
 
     Response response;
     std::size_t size;
-    socket.receive(&response,sizeof(Response),size,server.ip,server.port);
+    if (socket.receive(&response, sizeof(Response), size, server.ip, server.port) == sf::Socket::Status::Done) {
+        Info("Client: socket returned success");
+    }
+    else {
+        Warning("Client: socket returned fail");
+    }
 
     if(response.code.response == protocol::ResponseCode::Success){
         Info("Client: connected to " + server.to_string());
