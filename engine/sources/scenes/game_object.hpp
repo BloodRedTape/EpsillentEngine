@@ -54,14 +54,11 @@ public:
     void component_remove(Component *component){
         component->finalize();
         m_components.remove(component);
-        delete component;
     }
 
     void components_remove(){
-        for(Component *c: m_components)
-        {
+        for(Component *c: m_components){
             c->finalize();
-            delete c;
         }
         m_components.clear();
     }
