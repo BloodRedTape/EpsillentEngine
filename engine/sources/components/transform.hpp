@@ -24,6 +24,8 @@ public:
     void translate(const float x_offset,const float y_offset);
     void rotate(const float angle);
 
+    _ALWAYS_INLINE_ void dirtify(){m_dirty = true;}
+
     sf::Vector2f global_position();
     const sf::Vector2f& local_position();
 

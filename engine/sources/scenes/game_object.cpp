@@ -20,6 +20,18 @@ GameObject::~GameObject()
     }
 }
 
+
+void GameObject::component_remove(Component *component){
+    component->finalize();
+    m_components.remove(component);
+}
+
+void GameObject::components_remove(){
+    for(Component *c: m_components){
+        c->finalize();
+    }
+    m_components.clear();
+}
 void GameObject::update_traverse(const float dt){
     for(GameObject* node: m_child_nodes){
         node->_on_update(dt);

@@ -51,17 +51,8 @@ public:
         return t;
     }
 
-    void component_remove(Component *component){
-        component->finalize();
-        m_components.remove(component);
-    }
-
-    void components_remove(){
-        for(Component *c: m_components){
-            c->finalize();
-        }
-        m_components.clear();
-    }
+    void component_remove(Component *component);
+    void components_remove();
 
     _ALWAYS_INLINE_ BaseScene* scene(){return mp_scene;};
     _ALWAYS_INLINE_ GameObject* parent(){return mp_parent;}
