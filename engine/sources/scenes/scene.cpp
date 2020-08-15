@@ -39,18 +39,10 @@ void BaseScene::garbage_add(GameObject* p_candidate){
 }
 
 void BaseScene::clear_garbage(){
-    if(!garbage.empty()){
-        Info("Scene: deleted " + std::to_string(garbage.size()) + " objects");
-        for(GameObject* candidate: garbage){
-            for(Component *component: candidate->m_components){
-                component->finalize();
-            }
-        }
-        while(!garbage.empty()){
-            garbage.back()->detach();
-            delete garbage.back();
-            garbage.pop_back();
-        }
+    while(!garbage.empty()){
+        garbage.back()->detach();
+        delete garbage.back();
+        garbage.pop_back();
     }
 }
 

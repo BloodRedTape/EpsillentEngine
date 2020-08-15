@@ -28,14 +28,12 @@ private:
     std::string m_tag;
 private:        
     friend class RootNode;
-    friend class BaseScene;
     friend class SceneGraph;
     //add children in update queue
     // apply parent transfrom to self
     void update_traverse(const float dt);
-    // detach node from parent
-    // it will NOT be deleted until you mark_garbage() it
-    void detach();
+
+
     // detach children node
     void child_detach(GameObject*);
 protected:
@@ -80,6 +78,9 @@ public:
     void object_introduce(GameObject*, const sf::Vector2f& relative_pos = sf::Vector2f(0,0));
 
     void destroy();
+    // detach node from parent
+    // it will NOT be deleted until you mark_garbage() it
+    void detach();
 
     //called every loop cycle
     virtual void on_update(const float delta_time){};

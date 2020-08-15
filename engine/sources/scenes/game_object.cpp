@@ -15,7 +15,9 @@ GameObject::GameObject():
 
 GameObject::~GameObject()
 {
-
+    for(Component *component: m_components){
+        component->finalize();
+    }
 }
 
 void GameObject::update_traverse(const float dt){
