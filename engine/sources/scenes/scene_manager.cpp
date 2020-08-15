@@ -35,11 +35,11 @@ void SceneManager::clean_scene_garbage(){
 }
 
 
-void SceneManager::introduce_scene(const std::string& scene_name, BaseScene* p_scene, bool is_displayable = false){
+void SceneManager::introduce_scene(const std::string& scene_name, BaseScene* p_scene, bool set){
     ASSERT_ERROR(p_sync_mutex,"SceneManager: has not been inited");
     std::lock_guard<std::mutex> lock(*p_sync_mutex);
     scenes.insert(std::pair<std::string, std::unique_ptr<BaseScene>>(scene_name,p_scene)); 
-    if(is_displayable){
+    if(set){
         p_current_scene=p_scene;
         p_scene->on_init();
         p_scene->on_start();
@@ -52,24 +52,20 @@ void SceneManager::substract_scene(const std::string& name){
     ASSERT_ERROR(p_sync_mutex,"SceneManager: has not been inited");
     std::lock_guard<std::mutex> lock(*p_sync_mutex);
     std::unordered_map<std::string, std::unique_ptr<BaseScene>>::iterator map_itr = scenes.find(name);
-    if(map_itr==scenes.end()){
-        Error("SceneManager: trying to substract scene that wasn't introuduced or doesn't exist");
-    }else if(map_itr->second.get()==p_current_scene){
-        Error("SceneManager: trying to substract current scene (Possible processor-cluster pipeline corruption)");
-    }else{
-        scenes.erase(map_itr);
-    }
+
+    ASSERT_ERROR(map_itr!=scenes.end(),"SceneManager: trying to substract scene that wasn't introuduced or doesn't exist");
+    ASSERT_ERROR(map_itr->second.get()!=p_current_scene,"SceneManager: trying to substract current scene");
+    
+    scenes.erase(map_itr);
+
 }
 
 BaseScene* SceneManager::get_scene(const std::string& name){
     ASSERT_ERROR(p_sync_mutex,"SceneManager: has not been inited");
     std::unordered_map<std::string, std::unique_ptr<BaseScene>>::iterator map_itr = scenes.find(name);
-    if(map_itr==scenes.end()){
-        Error("SceneManager: trying to get scene that wasn't introuduced or doesn't exist");
-        return nullptr; // it won't be returned Error() terminates runtime
-    }else{
-        return map_itr->second.get();
-    }
+    ASSERT_ERROR(map_itr!=scenes.end(),"SceneManager: trying to substract scene that wasn't introuduced or doesn't exist");
+    
+    return map_itr->second.get();
 }
 
 //IMPLEMENT TO ASSIGN CLUSTERS TO COMPONENTS INSTEAD OF INF FETCH
@@ -77,23 +73,16 @@ void SceneManager::set_scene(const std::string& name){
     ASSERT_ERROR(p_sync_mutex,"SceneManager: has not been inited");
     std::lock_guard<std::mutex> lock(*p_sync_mutex);
     std::unordered_map<std::string, std::unique_ptr<BaseScene>>::iterator map_itr = scenes.find(name);
-    if(map_itr==scenes.end()){
-        Error("SceneManager: trying to set scene that wasn't introuduced or doesn't exist");
-    }else if(map_itr->second.get()==p_current_scene){
-        Warning("SceneManager: trying to set already established scene");
-    }else{
-        p_current_scene = map_itr->second.get();
-        p_current_scene->on_start();
-    }
+    ASSERT_ERROR(map_itr!=scenes.end(),"SceneManager: trying to substract scene that wasn't introuduced or doesn't exist");
+    ASSERT_WARRNING(map_itr->second.get()!=p_current_scene,"SceneManager: trying to set already established scene");
 
+    p_current_scene = map_itr->second.get();
+    p_current_scene->on_start();
 }
 
 
 BaseScene* SceneManager::get_current_scene(){
-    if(p_sync_mutex){
-        return p_current_scene;
-    }else{
-        Error("SceneManager: has not been inited");
-        return nullptr;
-    }
+    ASSERT_ERROR(p_sync_mutex,"SceneManager: has not been inited");
+    
+    return p_current_scene;
 }

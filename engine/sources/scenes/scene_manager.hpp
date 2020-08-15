@@ -33,7 +33,7 @@ public:
     
 
     static BaseScene* get_scene(const std::string& );
-    static void introduce_scene(const std::string&, BaseScene*, bool);
+    static void introduce_scene(const std::string&, BaseScene*, bool set = true);
     static void set_scene(const std::string&);
     static void substract_scene(const std::string&);
     static BaseScene* get_current_scene();
