@@ -23,6 +23,8 @@ public:
     Sprite2D* sprite_new(GameObject*);
     void sprite_delete(Sprite2D*);
 
+    std::size_t stats();
+
 };
 
 

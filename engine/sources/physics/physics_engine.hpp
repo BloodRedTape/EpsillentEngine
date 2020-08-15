@@ -26,6 +26,8 @@ public:
 
     Rigidbody2D* rigidbody_2d_new(GameObject*);
     void rigidbody_2d_delete(Rigidbody2D*);
+
+    std::size_t stats();
 };
 
 

@@ -20,4 +20,7 @@ void GameLayer::on_update(float dt){
 void GameLayer::on_detach(){
     SceneManager::get_current_scene()->clear();
     SceneManager::clean_scene_garbage();
+    Info("SceneStats: Render " + std::to_string(SceneManager::get_current_scene()->cluster().renderer2d.stats()));
+    Info("SceneStats: physics " +std::to_string(SceneManager::get_current_scene()->cluster().physics.stats()));
+    Info("SceneStats: cluster " +std::to_string(SceneManager::get_current_scene()->cluster().stats()));
 }

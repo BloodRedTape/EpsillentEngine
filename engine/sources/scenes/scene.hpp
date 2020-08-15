@@ -19,9 +19,6 @@ protected:
     SceneGraph scene_graph;
     std::list<GameObject*> garbage;
     SceneCluster scene_cluster;
-    sf::Clock clock;
-    BaseScene();
-    virtual ~BaseScene();
 private:
     friend class GameObject;
     friend class SceneManager;
@@ -31,6 +28,8 @@ private:
     bool has_grabage(){return !garbage.empty();}
     void clear_garbage();
 public:
+    BaseScene();
+    virtual ~BaseScene();
     //Engine purpose function
     //Override only if you REALLY understand what is going ond
     virtual void update(const float);

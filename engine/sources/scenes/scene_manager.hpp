@@ -3,6 +3,7 @@
 
 #include <unordered_map>
 #include <string>
+#include <memory>
 #include "config/config.hpp"
 #include "core/typedefs.hpp"
 #include "scenes/scene.hpp"
@@ -15,7 +16,7 @@ class ENGINE_API SceneManager{
 private:
     static std::mutex *p_sync_mutex;
     static BaseScene *p_current_scene;
-    static std::unordered_map<std::string, BaseScene *> scenes;
+    static std::unordered_map<std::string, std::unique_ptr<BaseScene>> scenes;
 private:
     friend class Engine;
     friend class GameLayer;

@@ -7,7 +7,10 @@ BaseScene::BaseScene():
 }
 
 BaseScene::~BaseScene(){
-
+    on_destroy();
+    clear();
+    clear_garbage();
+    Info("Scene: deleted scene");
 }
 
 void BaseScene::update(const float dt){
@@ -32,18 +35,19 @@ GameObject* BaseScene::object_introduce(GameObject* node,const sf::Vector2f& pos
 
 
 void BaseScene::mark_garbage(GameObject* p_candidate){
+    p_candidate->m_garbage = true;
     garbage.push_front(p_candidate);
 }
 
 void BaseScene::clear_garbage(){
     if(!garbage.empty()){
         for(GameObject* candidate: garbage){
-            candidate->detach();
             for(Component *component: candidate->m_components){
                 component->finalize();
             }
         }
         while(!garbage.empty()){
+            garbage.back()->detach();
             delete garbage.back();
             garbage.pop_back();
         }

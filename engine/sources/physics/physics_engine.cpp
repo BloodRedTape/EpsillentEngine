@@ -70,3 +70,8 @@ Rigidbody2D *PhysicsEngine::rigidbody_2d_new(GameObject* owner){
 void PhysicsEngine::rigidbody_2d_delete(Rigidbody2D* rb){
     rigidbodies.erase(rb->m_self);
 }
+
+
+std::size_t PhysicsEngine::stats(){
+    return rigidbodies.size() + colliders.size() + triggers.size();
+}

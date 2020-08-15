@@ -1,6 +1,7 @@
 #ifndef PARTICLE_SYSTEM_H
 #define PARTICLE_SYSTEM_H
 
+#include <memory>
 #include "config/config.hpp"
 #include "core/component.hpp"
 #include "scenes/game_object.hpp"
@@ -52,7 +53,7 @@ public:
 
 class ENGINE_API ParticleSystem: public Component{
 private:
-    std::list<Component*>::iterator m_self;
+    std::list<std::unique_ptr<Component>>::iterator m_self;
     ParticleSystemProperties m_properties;
     double time;
 public:

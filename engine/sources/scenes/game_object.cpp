@@ -8,7 +8,6 @@ GameObject::GameObject():
     mp_scene(SceneManager::get_current_scene()),
     mp_parent(nullptr),
     m_garbage(false),
-    m_introduced(false),
     m_tag("unknown")
 {
     m_components.push_back(&m_transform);
@@ -23,16 +22,7 @@ void GameObject::update_traverse(const float dt){
     for(GameObject* node: m_child_nodes){
         node->_on_update(dt);
         node->on_update(dt);
-        /*if(node->m_dirty || dirty){
-            node->m_global_transform = m_global_transform*node->m_transform;
-            node->m_dirty = false;
-            node->update_traverse(dt, true);
-        }else{
-            node->update_traverse(dt,false);
-        }*/
         node->update_traverse(dt);
-
-        
     }
 }
 
@@ -46,11 +36,8 @@ GameObject* GameObject::child_add(GameObject* p_node){
     p_node->mp_scene=mp_scene;
     p_node->m_transform.m_dirty=true;
     p_node->m_self = std::prev(m_child_nodes.end());
-    if(p_node->m_introduced==false){
-        p_node->_on_introduce();
-        p_node->on_introduce();
-        p_node->m_introduced=true;
-    }
+    p_node->_on_introduce();
+    p_node->on_introduce();
     return p_node;
 }
 void GameObject::children_destroy(){
@@ -66,15 +53,11 @@ void GameObject::object_introduce(GameObject* object,const sf::Vector2f& relativ
 
 
 void GameObject::destroy(){
-    if(!m_garbage){
-        on_destroy();
-        _on_destroy();
-        mp_scene->mark_garbage(this);
-        m_garbage=true;
-        for(GameObject* child: m_child_nodes){
-            child->destroy();
-        }
-    }
+    ASSERT_ERROR(!m_garbage,"GameObject: trying to destroy " + m_tag + " objecet twice");
+    on_destroy();
+    _on_destroy();
+    mp_scene->mark_garbage(this);
+    children_destroy();
 }
 
 void GameObject::detach(){

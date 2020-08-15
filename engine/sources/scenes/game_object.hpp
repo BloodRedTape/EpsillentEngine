@@ -24,7 +24,6 @@ private:
     BaseScene *mp_scene;
     GameObject *mp_parent;
     bool m_garbage : 1;
-    bool m_introduced : 1;
     std::list<Component*> m_components;
     std::string m_tag;
 private:        
@@ -58,6 +57,16 @@ public:
     void component_remove(Component *component){
         component->finalize();
         m_components.remove(component);
+        delete component;
+    }
+
+    void components_remove(){
+        for(Component *c: m_components)
+        {
+            c->finalize();
+            delete c;
+        }
+        m_components.clear();
     }
 
     BaseScene* scene(){return mp_scene;};
@@ -96,7 +105,6 @@ public:
     const sf::Transform& local_transform();
 
     _ALWAYS_INLINE_ bool garbage(){return m_garbage;}
-    _ALWAYS_INLINE_ bool introduced(){return m_introduced;}
 
 };
 
