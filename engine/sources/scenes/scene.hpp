@@ -25,7 +25,7 @@ private:
     //WARNNING!
     //mark as garbage an ALREADY "destroy()-ed" object
     void garbage_add(GameObject*);
-    bool has_grabage(){return !garbage.empty();}
+    _ALWAYS_INLINE_ bool has_grabage(){return !garbage.empty();}
     void clear_garbage();
 public:
     BaseScene();
@@ -47,9 +47,9 @@ public:
     GameObject* object_introduce(GameObject*);
     GameObject* object_introduce(GameObject*,const sf::Vector2f& pos);
 
-    SceneCluster& cluster(){return scene_cluster;}
+    _ALWAYS_INLINE_ SceneCluster& cluster(){return scene_cluster;}
 
-    void clear(){scene_graph.clear();}
+    _ALWAYS_INLINE_ void clear(){scene_graph.clear();}
 
 };
 
