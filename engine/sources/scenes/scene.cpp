@@ -22,17 +22,12 @@ void BaseScene::render(){
 }
 
 
-GameObject* BaseScene::object_introduce(GameObject* node){
+GameObject* BaseScene::object_introduce(GameObject* node,const sf::Vector2f& parent_offset){
     ASSERT_ERROR(node->scene()==this,"OwnershipFault, object " + node->tag() + " was created on a different scene and can't be updated by this");
+    node->translate(parent_offset);
     scene_graph.add_to_root(node);
     return node;
 }
-GameObject* BaseScene::object_introduce(GameObject* node,const sf::Vector2f& pos){
-    node->translate(pos);
-    object_introduce(node);
-    return node;
-}
-
 
 void BaseScene::garbage_add(GameObject* p_candidate){
     garbage.push_front(p_candidate);

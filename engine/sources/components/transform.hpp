@@ -5,6 +5,7 @@
 #include <string>
 #include "core/component.hpp"
 #include "SFML/Graphics/Transform.hpp"
+#include "core/typedefs.hpp"
 
 class ENGINE_API Transform: public Component{
 private:

@@ -44,8 +44,7 @@ public:
     virtual void on_destroy(){};
 
 
-    GameObject* object_introduce(GameObject*);
-    GameObject* object_introduce(GameObject*,const sf::Vector2f& pos);
+    GameObject* object_introduce(GameObject*,const sf::Vector2f& parent_offset = sf::Vector2f(0,0));
 
     _ALWAYS_INLINE_ SceneCluster& cluster(){return scene_cluster;}
 
