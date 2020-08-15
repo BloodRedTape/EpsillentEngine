@@ -54,9 +54,10 @@ void GameObject::object_introduce(GameObject* object,const sf::Vector2f& relativ
 
 void GameObject::destroy(){
     ASSERT_ERROR(!m_garbage,"GameObject: trying to destroy " + m_tag + " objecet twice");
+    m_garbage = true;
     on_destroy();
     _on_destroy();
-    mp_scene->mark_garbage(this);
+    mp_scene->garbage_add(this);
     children_destroy();
 }
 

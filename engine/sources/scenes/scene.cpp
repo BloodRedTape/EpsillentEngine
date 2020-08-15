@@ -23,7 +23,7 @@ void BaseScene::render(){
 
 
 GameObject* BaseScene::object_introduce(GameObject* node){
-    ASSERT_ERROR(node->mp_scene=this,"OwnershipFault, object " + node->m_tag + " was created on a different scene and can't be updated by this");
+    ASSERT_ERROR(node->scene()==this,"OwnershipFault, object " + node->tag() + " was created on a different scene and can't be updated by this");
     scene_graph.add_to_root(node);
     return node;
 }
@@ -34,13 +34,13 @@ GameObject* BaseScene::object_introduce(GameObject* node,const sf::Vector2f& pos
 }
 
 
-void BaseScene::mark_garbage(GameObject* p_candidate){
-    p_candidate->m_garbage = true;
+void BaseScene::garbage_add(GameObject* p_candidate){
     garbage.push_front(p_candidate);
 }
 
 void BaseScene::clear_garbage(){
     if(!garbage.empty()){
+        Info("Scene: deleted " + std::to_string(garbage.size()) + " objects");
         for(GameObject* candidate: garbage){
             for(Component *component: candidate->m_components){
                 component->finalize();

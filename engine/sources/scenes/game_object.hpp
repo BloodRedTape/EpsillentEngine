@@ -30,7 +30,6 @@ private:
     friend class RootNode;
     friend class BaseScene;
     friend class SceneGraph;
-    friend class Transform;
     //add children in update queue
     // apply parent transfrom to self
     void update_traverse(const float dt);
@@ -69,8 +68,8 @@ public:
         m_components.clear();
     }
 
-    BaseScene* scene(){return mp_scene;};
-    GameObject* parent(){return mp_parent;}
+    _ALWAYS_INLINE_ BaseScene* scene(){return mp_scene;};
+    _ALWAYS_INLINE_ GameObject* parent(){return mp_parent;}
 
     const std::string& tag(){return m_tag;}
     void set_tag(const std::string&);

@@ -26,7 +26,7 @@ void Transform::rotate(const float angle){
 
 sf::Vector2f Transform::global_position(){
     if(m_dirty){
-        m_global_position=mp_owner->mp_parent->global_position()+m_local_position;
+        m_global_position=mp_owner->parent()->global_position()+m_local_position;
     }
     return m_global_position;
 }

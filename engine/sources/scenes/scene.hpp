@@ -24,7 +24,7 @@ private:
     friend class SceneManager;
     //WARNNING!
     //mark as garbage an ALREADY "destroy()-ed" object
-    void mark_garbage(GameObject*);
+    void garbage_add(GameObject*);
     bool has_grabage(){return !garbage.empty();}
     void clear_garbage();
 public:
