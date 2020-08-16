@@ -5,7 +5,7 @@
 #include "config/config.hpp"
 #include "SFML/Graphics.hpp"
 #include "core/component.hpp"
-
+#include "core/typedefs.hpp"
 class Renderer2D;
 
 class ENGINE_API Sprite2D: public Component{
