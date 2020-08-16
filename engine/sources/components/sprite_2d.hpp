@@ -16,15 +16,17 @@ private:
 public:
     Sprite2D(GameObject* owner);
 
-    void set_size(float,float);
-    void set_size(const sf::Vector2f&);
-    void set_position(float,float);
-    void set_position(const sf::Vector2f&);
-    void set_rotation(float);
-    void rotate(float);
-    void set_origin(const sf::Vector2f&);
-    void set_color(const sf::Color&);
-    void set_texture(sf::Texture*);
+    Sprite2D &set_size(float,float);
+    Sprite2D &set_size(const sf::Vector2f&);
+    Sprite2D &set_position(float,float);
+    Sprite2D &set_position(const sf::Vector2f&);
+    Sprite2D &set_rotation(float);
+    Sprite2D &rotate(float);
+    Sprite2D &set_origin(const sf::Vector2f&);
+    Sprite2D &set_color(const sf::Color&);
+    Sprite2D &set_texture(sf::Texture*);
+
+    _ALWAYS_INLINE_ sf::RectangleShape &shape(){return m_shape;}
 
     float rotation();
 

@@ -9,34 +9,43 @@ Sprite2D::Sprite2D(GameObject* owner):
 
 }
 
-void Sprite2D::set_size(float x, float y){
+Sprite2D &Sprite2D::set_size(float x, float y){
     set_size(sf::Vector2f(x,y));
+    return *this;
 }
-void Sprite2D::set_size(const sf::Vector2f& size){
+Sprite2D &Sprite2D::set_size(const sf::Vector2f& size){
     m_shape.setSize(size);
+    return *this;
 }
-void Sprite2D::set_position(const sf::Vector2f& pos){
+Sprite2D &Sprite2D::set_position(const sf::Vector2f& pos){
     m_shape.setPosition(pos);
+    return *this;
 }
-void Sprite2D::set_position(float x, float y){
+Sprite2D &Sprite2D::set_position(float x, float y){
     set_position(sf::Vector2f(x,y));
+    return *this;
 }
-void Sprite2D::set_rotation(float angle){
+Sprite2D &Sprite2D::set_rotation(float angle){
     m_shape.setRotation(angle);
+    return *this;
 }
-void Sprite2D::rotate(float angle){
+Sprite2D &Sprite2D::rotate(float angle){
     m_shape.rotate(angle);
+    return *this;
 }
-void Sprite2D::set_origin(const sf::Vector2f& o){
+Sprite2D &Sprite2D::set_origin(const sf::Vector2f& o){
     m_shape.setOrigin(o);
+    return *this;
 }
 
-void Sprite2D::set_color(const sf::Color& color){
+Sprite2D &Sprite2D::set_color(const sf::Color& color){
     m_shape.setFillColor(color);
+    return *this;
 }
 
-void Sprite2D::set_texture(sf::Texture* texture){
+Sprite2D &Sprite2D::set_texture(sf::Texture* texture){
     m_shape.setTexture(texture);
+    return *this;
 }
 
 
