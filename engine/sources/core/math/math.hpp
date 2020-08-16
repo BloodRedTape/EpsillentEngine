@@ -9,8 +9,9 @@
 #define abs(x) ((x)>0?(x):(x)*-1)
 
 namespace Math{
-
+//in radians
 float angle(const sf::Vector2f&);
+//in radians
 float unsigned_angle(const sf::Vector2f&);
 
 _FORCE_INLINE_ sf::Vector2f points_to_vector(const sf::Vector2f& begin,const sf::Vector2f& end){
