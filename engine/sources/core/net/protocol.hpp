@@ -40,6 +40,18 @@ namespace protocol{
 
 }; // end of protocol::
 
+namespace std
+{
+
+	template <>
+	struct hash<protocol::EventCode>
+	{
+		std::size_t operator()(protocol::EventCode const &code) const
+		{
+			return code;
+		}
+	};
+}
 struct Datagram: public protocol::Header{
     byte data[DATAGRAM_DATA_SIZE];
     Datagram();
