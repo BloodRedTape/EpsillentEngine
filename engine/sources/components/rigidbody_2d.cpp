@@ -3,6 +3,8 @@
 #include "scenes/scene_manager.hpp"
 #include "physics/collider_2d.hpp"
 
+#include "config/config.hpp"
+
 Rigidbody2DProperties::Rigidbody2DProperties():
     mass(1),
     gravity(0,9.8f),
@@ -34,6 +36,14 @@ void Rigidbody2D::bounce(){
 }
 
 void Rigidbody2D::collider_add(const sf::Vector2f& size, const sf::Vector2f& position){
+#ifdef DEBUG_MODE
+    Info("Collider " + ARG_VEC("size",size));
+    auto &shape = mp_owner->component_add<Sprite2D>()->set_size(size.x-6,size.y-6).shape();
+    shape.setPosition(position.x+3,position.y+3);
+    shape.setFillColor(sf::Color(0,0,0,0));
+    shape.setOutlineThickness(3);
+    shape.setOutlineColor(sf::Color::Magenta);
+#endif
     m_colliders.push_back(mp_owner->scene()->cluster().physics.collider_2d_new(this));
     m_colliders.back()->m_size=sf::FloatRect(position,size);
 }
