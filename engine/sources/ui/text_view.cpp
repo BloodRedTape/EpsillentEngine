@@ -5,6 +5,9 @@ TextView::TextView():
 {
 
 }
+TextView::TextView(const sf::String &string,const sf::Font &font,const sf::Color &color = sf::Color::White,uint32 font_size = 30u){
+    set_text(string,font,color,font_size);
+}
 
 
 void TextView::on_render(){

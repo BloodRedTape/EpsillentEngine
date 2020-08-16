@@ -12,6 +12,7 @@ protected:
     sf::Text m_text;
 public:
     TextView();
+    TextView(const sf::String &string,const sf::Font &font,const sf::Color &color = sf::Color::White,uint32 font_size = 30u);
 
     void on_render()override;
 
