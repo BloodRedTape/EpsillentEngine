@@ -37,8 +37,9 @@ void BaseScene::garbage_add(GameObject* p_candidate){
 }
 
 void BaseScene::clear_garbage(){
+    for(GameObject *o: garbage)
+        o->detach();
     while(!garbage.empty()){
-        garbage.back()->detach();
         delete garbage.back();
         garbage.pop_back();
     }
