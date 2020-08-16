@@ -9,7 +9,6 @@ std::atomic<bool> Engine::running;
 std::mutex Engine::mutex;
 DrawCallInterface* Engine::draw_call_interface = nullptr;
 Input *Engine::input = nullptr;
-UILayer *Engine::ui = nullptr;
 
 LayerStack* Engine::layer_stack = nullptr;
 sf::Clock Engine::time;
@@ -73,6 +72,7 @@ void Engine::init(const EngineProperties& props){
     layer_stack = new LayerStack();
 
     layer_stack->push_layer(new GameLayer);
+    layer_stack->push_layer(new UILayer);
 
 
     Random::seed(time.getElapsedTime().asMilliseconds());
@@ -165,14 +165,6 @@ void Engine::set_entry_scene(BaseScene* p_scene, const char* name){
     SceneManager::introduce_scene(name,p_scene,true);
 }
 
-
-void Engine::set_ui_controller(UIController* c){
-    if(!ui){
-        ui = new UILayer;
-        layer_stack->push_layer(ui);
-    }
-    ui->set_controller(c);
-}
 float Engine::delta_time(){
     return dt;
 }

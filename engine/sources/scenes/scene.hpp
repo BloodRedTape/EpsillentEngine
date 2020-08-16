@@ -4,7 +4,7 @@
 #include "config/config.hpp"
 #include "core/component.hpp"
 #include "scenes/scene_cluster.hpp"
-//temp
+#include "ui/ui_controller.hpp"
 #include "scenes/scene_graph.hpp"
 
 // to achieve at least something in MY word
@@ -19,6 +19,7 @@ protected:
     SceneGraph scene_graph;
     std::list<GameObject*> garbage;
     SceneCluster scene_cluster;
+    UIController *p_ui_controller;
 private:
     friend class GameObject;
     friend class SceneManager;
@@ -42,6 +43,9 @@ public:
     // ALL PROCESSORS INITIALIZATIONS SHOULD BE DONE HERE
     virtual void on_start(){};
     virtual void on_destroy(){};
+
+    void set_ui_controller(UIController *controller);
+    _ALWAYS_INLINE_ UIController *ui_controller(){return p_ui_controller;};
 
 
     GameObject* object_introduce(GameObject*,const sf::Vector2f& parent_offset = sf::Vector2f(0,0));

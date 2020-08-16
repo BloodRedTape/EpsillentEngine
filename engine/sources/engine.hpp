@@ -42,7 +42,6 @@ class ENGINE_API Engine{
         static std::mutex mutex;
         static DrawCallInterface* draw_call_interface;
         static Input* input;
-        static UILayer* ui;
         static LayerStack* layer_stack;
         static const sf::VideoMode k_video_mode;  //better window creation
         static Engine *smp_singleton;
@@ -64,8 +63,6 @@ class ENGINE_API Engine{
         void start();
         void stop();
         void set_entry_scene(BaseScene*, const char* name);
-
-        void set_ui_controller(UIController*);
 
         float delta_time();
 };

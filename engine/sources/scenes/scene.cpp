@@ -1,7 +1,8 @@
 #include "scenes/scene.hpp"
 #include "utils/debug.hpp"
 BaseScene::BaseScene():
-    scene_graph(this)
+    scene_graph(this),
+    p_ui_controller(nullptr)
 {
 
 }
@@ -20,7 +21,9 @@ void BaseScene::update(const float dt){
 void BaseScene::render(){
     scene_cluster.render();
 }
-
+void BaseScene::set_ui_controller(UIController *controller){
+    p_ui_controller=controller;
+}
 
 GameObject* BaseScene::object_introduce(GameObject* node,const sf::Vector2f& parent_offset){
     ASSERT_ERROR(node->scene()==this,"OwnershipFault, object " + node->tag() + " was created on a different scene and can't be updated by this");
