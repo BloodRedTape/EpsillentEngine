@@ -8,16 +8,17 @@
 #include "SFML/Graphics/Text.hpp"
 
 class TextView: public View{
-private:
+protected:
     sf::Text m_text;
 public:
-    TextView(const sf::String &text, const sf::Font &font, const sf::Color &color = sf::Color::White, uint32 font_size = 30);
+    TextView();
 
     void on_render()override;
 
-    void set_text(const sf::String &text);
+    void set_text(const sf::String &string,const sf::Font &font,const sf::Color &color = sf::Color::White,uint32 font_size = 30u);
+    void set_string(const sf::String &string);
+    void set_font(const sf::Font &font, uint32 font_size = 30u);
     void set_color(const sf::Color &color);
-    void set_font(const sf::Font &font);
 };
 
 #endif

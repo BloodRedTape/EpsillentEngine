@@ -23,6 +23,7 @@ private:
     std::list<GameObject*>::iterator m_self;
     BaseScene *mp_scene;
     GameObject *mp_parent;
+    //just to be sure that object is not going to be deleted twice
     bool m_garbage : 1;
     std::list<Component*> m_components;
     std::string m_tag;

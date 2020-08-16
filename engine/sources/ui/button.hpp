@@ -3,11 +3,13 @@
 
 #include <functional>
 #include "ui/view.hpp"
+#include "ui/text_view.hpp"
 #include "SFML/Graphics/RectangleShape.hpp"
 
 using callback = std::function<void(void)>;
 
-class Button: public View{
+
+class Button: public TextView{
 private:
     sf::RectangleShape m_shape;
     callback m_callback;
