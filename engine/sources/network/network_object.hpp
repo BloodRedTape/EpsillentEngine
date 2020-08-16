@@ -76,9 +76,13 @@ public:
     static NetworkObject* _obj_creator(BaseScene *scene, const GUID &guid){
         return (NetworkObject*)(scene->object_introduce(new T(guid)));
     }
-    template <typename T>
+    template <typename Object>
     static void register_object(){
-        m_objects.emplace(T::static_network_class(),&NetworkObjectsDB::_obj_creator<T>);
+        m_objects.emplace(Object::static_network_class(),&NetworkObjectsDB::_obj_creator<Object>);
+    }
+    template <typename Object, typename Representation>
+    static void register_object_representation(){
+        m_objects.emplace(Object::static_network_class(),&NetworkObjectsDB::_obj_creator<Representation>);
     }
     static ObjectCreator creator(const std::string &class_name);
 };
