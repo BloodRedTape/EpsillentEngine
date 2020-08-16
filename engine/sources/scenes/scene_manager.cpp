@@ -41,7 +41,7 @@ void SceneManager::introduce_scene(const std::string& scene_name, BaseScene* p_s
     scenes.insert(std::pair<std::string, std::unique_ptr<BaseScene>>(scene_name,p_scene)); 
     if(set){
         p_current_scene=p_scene;
-        p_scene->on_init();
+        p_scene->on_introduce();
         p_scene->on_start();
     }
 }

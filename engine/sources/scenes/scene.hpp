@@ -39,7 +39,7 @@ public:
     virtual void render();
     
     virtual void on_update(const float){};
-    virtual void on_init(){};
+    virtual void on_introduce(){};
     // ALL PROCESSORS INITIALIZATIONS SHOULD BE DONE HERE
     virtual void on_start(){};
     virtual void on_destroy(){};
