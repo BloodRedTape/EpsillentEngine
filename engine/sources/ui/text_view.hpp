@@ -19,6 +19,9 @@ public:
     void set_string(const sf::String &string);
     void set_font(const sf::Font &font, uint32 font_size = 30u);
     void set_color(const sf::Color &color);
+    void set_position(const sf::Vector2f &position);
+
+    sf::Vector2f size();
 };
 
 #endif

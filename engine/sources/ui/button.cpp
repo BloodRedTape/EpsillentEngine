@@ -13,10 +13,20 @@ Button::Button(const sf::Vector2f& size, const sf::Color& color):
     m_shape.setFillColor(color);
 }
 
+void Button::center_text(){
+    const sf::Vector2f &size = m_shape.getSize();
+    sf::Vector2f text_size = m_text.size();
+    m_text.set_position(m_shape.getPosition()+sf::Vector2f(size.x/2-text_size.x/2,size.y/2-text_size.y/2));
+}
 
 void Button::on_render(){
     DrawCallInterface::draw(m_shape); 
-    DrawCallInterface::draw(m_text);
+    m_text.on_render();
+}
+
+void Button::set_position(const sf::Vector2f &position){
+    m_shape.setPosition(position);
+    center_text();
 }
 
 void Button::on_update(float dt){
@@ -33,4 +43,10 @@ void Button::on_update(float dt){
 void Button::set_callback(const callback& func){
     m_callback = func;
 }
+
+void Button::set_text(const sf::String &text,const sf::Font &font,const sf::Color &color,uint32 font_size){
+    m_text.set_text(text,font,color,font_size);
+    center_text();
+}
+
 

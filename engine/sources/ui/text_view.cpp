@@ -30,3 +30,11 @@ void TextView::set_font(const sf::Font &font, uint32 font_size){
 void TextView::set_color(const sf::Color &color){
     m_text.setFillColor(color);
 }
+
+void TextView::set_position(const sf::Vector2f &position){
+    m_text.setPosition(position);
+}
+
+sf::Vector2f TextView::size(){
+    return sf::Vector2f(m_text.getLocalBounds().width,m_text.getLocalBounds().height);
+}
