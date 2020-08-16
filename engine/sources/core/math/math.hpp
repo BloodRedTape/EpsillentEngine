@@ -10,7 +10,8 @@
 
 namespace Math{
 
-double vector_angle(const sf::Vector2f&);
+float angle(const sf::Vector2f&);
+float unsigned_angle(const sf::Vector2f&);
 
 _FORCE_INLINE_ sf::Vector2f points_to_vector(const sf::Vector2f& begin,const sf::Vector2f& end){
     return sf::Vector2f(end.x-begin.x, end.y-begin.y);

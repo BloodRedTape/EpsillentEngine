@@ -3,16 +3,13 @@
 namespace Math{
 
 
-double vector_angle(const sf::Vector2f& vec){
-    if(vec.x>=0 && vec.y >=0){
-        return std::atan(vec.y/vec.x)/PI*180;
-    }else if(vec.y>= 0 && vec.x<0){
-        return std::atan(vec.y/vec.x)/PI*180.f+180;
-    }else if(vec.x >= 0&& vec.y <0){
-        return 360.f+std::atan(vec.y/vec.x)/PI*180.f;
-    }else{
-        return 180.f+std::atan(vec.y/vec.x)/PI*180.f;
-    }
+float angle(const sf::Vector2f& vec){
+    return Math::degree(atan2f(vec.y,vec.x));
+}
+
+float unsigned_angle(const sf::Vector2f& vec){
+    float angle = Math::degree(atan2f(vec.y,vec.x));
+    return angle < 0 ? 360 + angle : angle;
 }
 
 }; // end of Math::
