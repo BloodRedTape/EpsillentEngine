@@ -20,9 +20,9 @@ public:
     Button(const sf::Vector2f &size, const sf::Color& color);
     void on_update(float dt)override;
     void on_render()override;
-    void set_position(const sf::Vector2f &position);
-    void set_callback(const callback& func);
-    void set_text(const sf::String &string,const sf::Font &font,const sf::Color &color = sf::Color::White,uint32 font_size = 30u);
+    Button& set_position(const sf::Vector2f &position);
+    Button& set_callback(const callback& func);
+    Button& set_text(const sf::String &string,const sf::Font &font,const sf::Color &color = sf::Color::White,uint32 font_size = 30u);
 
 };
 

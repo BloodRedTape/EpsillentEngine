@@ -15,11 +15,11 @@ public:
 
     void on_render()override;
 
-    void set_text(const sf::String &string,const sf::Font &font,const sf::Color &color = sf::Color::White,uint32 font_size = 30u);
-    void set_string(const sf::String &string);
-    void set_font(const sf::Font &font, uint32 font_size = 30u);
-    void set_color(const sf::Color &color);
-    void set_position(const sf::Vector2f &position);
+    TextView &set_text(const sf::String &string,const sf::Font &font,const sf::Color &color = sf::Color::White,uint32 font_size = 30u);
+    TextView &set_string(const sf::String &string);
+    TextView &set_font(const sf::Font &font, uint32 font_size = 30u);
+    TextView &set_color(const sf::Color &color);
+    TextView &set_position(const sf::Vector2f &position);
 
     sf::Vector2f size();
 };

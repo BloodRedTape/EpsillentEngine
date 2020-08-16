@@ -24,9 +24,10 @@ void Button::on_render(){
     m_text.on_render();
 }
 
-void Button::set_position(const sf::Vector2f &position){
+Button &Button::set_position(const sf::Vector2f &position){
     m_shape.setPosition(position);
     center_text();
+    return *this;
 }
 
 void Button::on_update(float dt){
@@ -40,13 +41,15 @@ void Button::on_update(float dt){
     }
 }
 
-void Button::set_callback(const callback& func){
+Button &Button::set_callback(const callback& func){
     m_callback = func;
+    return *this;
 }
 
-void Button::set_text(const sf::String &text,const sf::Font &font,const sf::Color &color,uint32 font_size){
+Button &Button::set_text(const sf::String &text,const sf::Font &font,const sf::Color &color,uint32 font_size){
     m_text.set_text(text,font,color,font_size);
     center_text();
+    return *this;
 }
 
 

@@ -12,27 +12,32 @@ void TextView::on_render(){
 }
 
 
-void TextView::set_text(const sf::String &text,const sf::Font &font,const sf::Color &color,uint32 font_size){
+TextView &TextView::set_text(const sf::String &text,const sf::Font &font,const sf::Color &color,uint32 font_size){
     m_text.setString(text);
     m_text.setFont(font);
     m_text.setFillColor(color);
     m_text.setCharacterSize(font_size);
+    return *this;
 }
 
-void TextView::set_string(const sf::String &string){
+TextView &TextView::set_string(const sf::String &string){
     m_text.setString(string);
+    return *this;
 }
-void TextView::set_font(const sf::Font &font, uint32 font_size){
+TextView &TextView::set_font(const sf::Font &font, uint32 font_size){
     m_text.setFont(font);
     m_text.setCharacterSize(font_size); 
+    return *this;
 }
 
-void TextView::set_color(const sf::Color &color){
+TextView &TextView::set_color(const sf::Color &color){
     m_text.setFillColor(color);
+    return *this;
 }
 
-void TextView::set_position(const sf::Vector2f &position){
+TextView &TextView::set_position(const sf::Vector2f &position){
     m_text.setPosition(position);
+    return *this;
 }
 
 sf::Vector2f TextView::size(){
