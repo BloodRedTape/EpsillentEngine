@@ -16,7 +16,7 @@ LD_LINUX := ld
 
 CC_MACOS := g++
 CFLAGS_MACOS := -dynamiclib -std=c++11 
-LINKER_MACOS := $(ENGINE_PATH)/thirdparty/lib/Darwin/libsfml-graphics.dylib $(ENGINE_PATH)/thirdparty/lib/Darwin/libsfml-system.dylib /$(ENGINE_PATH)/thirdparty/lib/Darwin/libsfml-window.dylib
+LINKER_MACOS := $(ENGINE_PATH)/thirdparty/lib/Darwin/libsfml-graphics.dylib $(ENGINE_PATH)/thirdparty/lib/Darwin/libsfml-system.dylib /$(ENGINE_PATH)/thirdparty/lib/Darwin/libsfml-window.dylib /$(ENGINE_PATH)/thirdparty/lib/Darwin/libsfml-network.dylib
 
 
 .PHONY: all Linux Darwin
