@@ -87,8 +87,6 @@ void Engine::init(const EngineProperties& props){
 
 void Engine::shutdown(){
     sync();
-    while(!layer_stack->empty())
-        layer_stack->pop_layer();
     ASSERT_WARRNING(smp_singleton==this,"Engine: can't shut down from non-creator instance");
     delete layer_stack;
     SceneManager::finalize();

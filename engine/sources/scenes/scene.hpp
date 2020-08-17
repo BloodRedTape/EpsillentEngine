@@ -13,6 +13,7 @@
 #include "SFML/System.hpp"
 
 class SceneManager;
+class NetworkScene;
 
 class ENGINE_API BaseScene{
 protected:
@@ -23,6 +24,8 @@ protected:
 private:
     friend class GameObject;
     friend class SceneManager;
+    //because it is still a scene which needs all of the cool handles
+    friend class NetworkScene;
     //WARNNING!
     //mark as garbage an ALREADY "destroy()-ed" object
     void garbage_add(GameObject*);

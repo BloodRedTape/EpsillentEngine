@@ -1,10 +1,13 @@
 #include "network/network_scene.hpp"
 #include "string.h"
 #include "SFML/Network/Packet.hpp"
+#include "scenes/scene_manager.hpp"
 NetworkScene::NetworkScene(){
 
 }
 NetworkScene::~NetworkScene(){
+    scene_graph.clear();
+    clear_garbage();
     if(is_connected())
         disconnect();
 }
