@@ -3,10 +3,11 @@
 #include "scenes/game_object.hpp"
 #include "scenes/scene.hpp"
 #include <cstring>
+#include "core/math/math.hpp"
 
 Particle::Particle(const sf::Vector2f& position,const ParticleSystemProperties& prop):
     time(0.0f),
-    direction(rand()%(prop.speed*2)-prop.speed,rand()%(2*prop.speed)-prop.speed)
+    direction(Random::integer(-prop.speed+1,prop.speed),Random::integer(-prop.speed+1,prop.speed))
 {
     translate(position);
     memcpy(&size.x,&prop.size.x,sizeof(prop)-16);
@@ -17,9 +18,10 @@ void Particle::on_introduce(){
     set_tag("Engine::Particle");
     sprite = component_add<Sprite2D>();
     sprite->set_color(color_begin);
+    sprite->set_position(size*-0.5f);
     //sprite->set_color(sf::Color(color_begin.r - (color_begin.r-color_end.r)*(1-scale),color_begin.g - (color_begin.g-color_end.g)*(1-scale),color_begin.b - (color_begin.b-color_end.b)*(1-scale),color_begin.a - (color_begin.a-color_end.a)*(1-scale)));
     sprite->set_size(size);
-    translate(rand()%dispersion.x-dispersion.x/2,rand()%dispersion.y-dispersion.y/2);
+    translate(Random::integer(-dispersion.x/2,dispersion.x/2),Random::integer(-dispersion.y/2,dispersion.y/2));
 }
 
 void Particle::on_update(float dt){
