@@ -79,7 +79,7 @@ void NetworkScene::object_delete(NetworkObject *object){
         EventObjectDelete e;
         e.guid = object->m_guid;
         send(&e,sizeof(e));
-        Info("Network: new object " + object->network_class());
+        Info("Network: deleted object " + object->network_class());
     }
     objects.erase(object->m_guid);
 }
