@@ -41,7 +41,7 @@ void Engine::handle_events(sf::RenderWindow &window){
         switch (event.type)
         {
         case sf::Event::Closed:
-            running.exchange(false);
+            stop();
             break;
         default:
             break;
