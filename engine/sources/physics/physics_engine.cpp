@@ -42,9 +42,9 @@ void PhysicsEngine::update(float dt){
             rb.mp_owner->translate(rb.m_translation);
             rb.m_translation=sf::Vector2f(0,0);
             rb.force_add(rb.m_force*-intertion);
-            rb.force_add(rb.m_force*intertion);
+            rb.force_add_y(rb.m_force.y*intertion);
             rb.force_add_y(rb.m_props.gravity*rb.m_props.mass);
-            rb.force_add_y(rb.m_props.gravity*(1.f+intertion)*rb.m_props.mass);
+            //rb.force_add_y(rb.m_props.gravity*(1.f+intertion)*rb.m_props.mass);
         }
     }
 }
