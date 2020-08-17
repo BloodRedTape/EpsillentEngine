@@ -124,7 +124,7 @@ struct Player: public GameObject{
 class Scene: public BaseScene{
 private:
 public:
-    void on_init()override{
+    void on_introduce()override{
         
         object_introduce(new Player);
     }
