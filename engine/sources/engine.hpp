@@ -39,6 +39,7 @@ struct EngineProperties{
 class ENGINE_API Engine{
     private:
         static std::atomic<bool> running;
+        static std::atomic<bool> working;
         static std::mutex mutex;
         static DrawCallInterface* draw_call_interface;
         static Input* input;
@@ -52,7 +53,7 @@ class ENGINE_API Engine{
         static void RenderLoop();
         static void UpdateLoop();
         void handle_events(sf::RenderWindow& window);
-
+        void sync();
     public:
         Engine();
         ~Engine();

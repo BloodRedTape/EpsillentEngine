@@ -5,10 +5,8 @@ LayerStack::LayerStack(){
 }
 
 LayerStack::~LayerStack(){
-    for(auto itr = begin(); itr !=end(); itr++){
-        (*itr)->on_detach();
-        delete *itr;
-    }
+    while(!layers.empty())
+        pop_layer();
 }
 
 void LayerStack::push_layer(Layer* layer){

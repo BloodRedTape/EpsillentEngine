@@ -12,7 +12,6 @@ public:
     ~GameLayer();
     void on_render()override;
     void on_update(float dt)override;
-    void on_detach()override;
 };
 
 #endif

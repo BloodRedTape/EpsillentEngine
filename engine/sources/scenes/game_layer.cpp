@@ -16,8 +16,3 @@ void GameLayer::on_update(float dt){
     SceneManager::update_scene(dt);
     SceneManager::clean_scene_garbage();
 }
-
-void GameLayer::on_detach(){
-    SceneManager::get_current_scene()->clear();
-    SceneManager::clean_scene_garbage();
-}
