@@ -31,5 +31,9 @@ _FORCE_INLINE_ float rad(float degree){
     return degree/180*PI;
 }
 
+_FORCE_INLINE_ float length(const sf::Vector2f &vector){
+    return sqrtf(vector.x*vector.x+vector.y*vector.y);
+}
+
 }; // end of Math::
 #endif
