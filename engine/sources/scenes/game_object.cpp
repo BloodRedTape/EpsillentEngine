@@ -74,7 +74,7 @@ void GameObject::destroy(){
         mp_scene->garbage_add(this);
         children_destroy();
     }else{
-        Warning("GameObject: trying to destroy " + m_tag + " objecet twice");
+        Warning("GameObject: trying to destroy " + m_tag + " objecet twice \nthis will most probably cause a segmantation fault so fix this shit up right NOW");
     }
 }
 
