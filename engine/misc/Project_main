@@ -149,10 +149,10 @@ int main(){
     props.frame_rate_limit = 60;
 
     // we have to init engine with certain properties
-    engine->init(props);
+    engine->initialize(props);
     // and propvide it with a scene (inherited from a BaseScene)
     engine->set_entry_scene(new Scene,"MainScene");
     // now lets start your game!
     engine->start();
-    engine->shutdown();
+    engine->finalize();
 }

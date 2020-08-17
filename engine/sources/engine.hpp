@@ -57,9 +57,8 @@ class ENGINE_API Engine{
         Engine();
         ~Engine();
         static _ALWAYS_INLINE_ Engine* get_singleton(){return smp_singleton;}
-        void init(const EngineProperties& props);
-        void shutdown();
-        // TODO engine set window config
+        void initialize(const EngineProperties& props);
+        void finalize();
         void start();
         void stop();
         void set_entry_scene(BaseScene*, const char* name);

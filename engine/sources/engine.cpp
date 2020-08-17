@@ -51,7 +51,7 @@ void Engine::handle_events(sf::RenderWindow &window){
 }
 
 
-void Engine::init(const EngineProperties& props){
+void Engine::initialize(const EngineProperties& props){
     time.restart();
     ASSERT_WARRNING(smp_singleton==this,"Engine: can't init from non-creator instance");
     Platform::init();
@@ -81,7 +81,7 @@ void Engine::init(const EngineProperties& props){
     Info("Engine: init took " + ARG(time.getElapsedTime().asSeconds()) + " seconds");
 }
 
-void Engine::shutdown(){
+void Engine::finalize(){
     update_thread->join();
     Info("Engine: threads are synched");
     delete update_thread;
