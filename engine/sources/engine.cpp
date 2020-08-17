@@ -6,7 +6,7 @@
 #include "utils/debug.hpp"
 #include "utils/assets_manager.hpp"
 std::atomic<bool> Engine::running;
-std::atomic<bool> Engine::working;
+std::thread *Engine::update_thread = nullptr;
 std::mutex Engine::mutex;
 DrawCallInterface* Engine::draw_call_interface = nullptr;
 Input *Engine::input = nullptr;
@@ -49,11 +49,7 @@ void Engine::handle_events(sf::RenderWindow &window){
     }
 
 }
-void Engine::sync(){
-    while(working){
-        Info("waiting for Update thread to finish");
-    }
-}
+
 
 void Engine::init(const EngineProperties& props){
     time.restart();
@@ -86,7 +82,9 @@ void Engine::init(const EngineProperties& props){
 }
 
 void Engine::shutdown(){
-    sync();
+    update_thread->join();
+    Info("Engine: threads are synched");
+    delete update_thread;
     ASSERT_WARRNING(smp_singleton==this,"Engine: can't shut down from non-creator instance");
     delete layer_stack;
     SceneManager::finalize();
@@ -114,7 +112,6 @@ void Engine::UpdateLoop(){
 
         Profiling(std::string("UpdateLoop :")+std::to_string(dt)+" ms \t\t| fps:" + std::to_string(fps));
     }
-    working.exchange(false);
 }
 void Engine::RenderLoop(){
     sf::Clock n;
@@ -156,10 +153,8 @@ void Engine::RenderLoop(){
 
 void Engine::start(){
     running = true;
-    working = true;
     ASSERT_ERROR(SceneManager::get_current_scene(),"Engine:Create a scene and apply it via Engine::set_entry_scene(BaseScene* p_scene, const char* name)")
-    std::thread update(&Engine::UpdateLoop);
-    update.detach();
+    update_thread = new std::thread(&Engine::UpdateLoop);
     RenderLoop();
 }
 
