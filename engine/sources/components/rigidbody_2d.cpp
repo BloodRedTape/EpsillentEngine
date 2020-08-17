@@ -2,13 +2,13 @@
 #include "scenes/game_object.hpp"
 #include "scenes/scene_manager.hpp"
 #include "physics/collider_2d.hpp"
-
+#include "engine.hpp"
 #include "config/config.hpp"
 
 Rigidbody2DProperties::Rigidbody2DProperties():
-    mass(1),
-    gravity(0,9.8f),
-    inertia(0.9),
+    mass(10),
+    gravity(0.010f),
+    inertia(1.0f),
     rebound(1)
 {}
 
@@ -16,7 +16,8 @@ Rigidbody2DProperties::Rigidbody2DProperties():
 Rigidbody2D::Rigidbody2D(GameObject* owner, const Rigidbody2DProperties& props):
     Component(owner),
     m_props(props),
-    m_force(0,0)
+    m_force(0,0),
+    m_translation(0,0)
 {
 
 }
@@ -31,6 +32,9 @@ void Rigidbody2D::force_add(const sf::Vector2f& force){
     m_force += force;
 }
 
+void Rigidbody2D::move(const sf::Vector2f &offset){
+    m_translation +=offset; 
+}
 void Rigidbody2D::bounce(){
     m_force += m_force*-2.f;
 }

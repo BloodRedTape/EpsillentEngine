@@ -19,15 +19,23 @@ void Collider2D::collide(Collider2D& collider){
         if(collision >= tr && collision <tl){
             if(collider.m_body->force().y<= 0)
                 collider.m_body->force_add_y(abs(collider.m_body->force().y)*collider.m_body->props().rebound);
+            if(collider.m_body->translation().y<= 0)
+                collider.m_body->move_y(abs(collider.m_body->translation().y));
         }else if(collision >= tl && collision < dl){
             if(collider.m_body->force().x>= 0)
                 collider.m_body->force_add_x(abs(collider.m_body->force().x)*-1.f*collider.m_body->props().rebound);
+            if(collider.m_body->translation().x>= 0)
+                collider.m_body->move_x(abs(collider.m_body->translation().x)*-1.f);
         }else if(collision >= dl && collision < dr){
             if(collider.m_body->force().y>= 0)
                 collider.m_body->force_add_y(abs(collider.m_body->force().y)*-1.f*collider.m_body->props().rebound);
+            if(collider.m_body->translation().y>= 0)
+                collider.m_body->move_y(abs(collider.m_body->translation().y)*-1.f);
         }else{
             if(collider.m_body->force().x<= 0)
                 collider.m_body->force_add_x(abs(collider.m_body->force().x)*collider.m_body->props().rebound);
+            if(collider.m_body->translation().x<= 0)
+                collider.m_body->move_x(abs(collider.m_body->translation().x));
         }
     }
 }

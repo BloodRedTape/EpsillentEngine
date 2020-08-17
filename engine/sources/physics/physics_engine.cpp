@@ -1,11 +1,15 @@
 #include "physics/physics_engine.hpp"
 #include "scenes/game_object.hpp"
 
-PhysicsEngine::PhysicsEngine(){
+PhysicsEngine::PhysicsEngine():
+    timer(0)
+{
 
 }
 
 void PhysicsEngine::update(float dt){
+    timer+=dt;
+
     for(Trigger2D& i: triggers){
         for(Trigger2D& j: triggers){
             if(&i!=&j){
@@ -28,14 +32,19 @@ void PhysicsEngine::update(float dt){
                 i.collide(j);
         }
     }
-    for(Rigidbody2D& rb: rigidbodies){
-        //rb.force_add(float(-dt)*rb.m_force/((float)rb.m_props.inertia/100.f));
-        if(rb.m_props.mass){
-            float intertion = (1.f-(0.9f+rb.m_props.inertia/10.f));
-            rb.mp_owner->translate(rb.m_force*rb.m_props.mass*dt);
+
+    float delay = 0.013f;
+    if(timer>=delay){
+        timer-=delay;
+        for(Rigidbody2D& rb: rigidbodies){
+            float intertion = (1.f-rb.m_props.inertia);
+            rb.mp_owner->translate(rb.m_force);
+            rb.mp_owner->translate(rb.m_translation);
+            rb.m_translation=sf::Vector2f(0,0);
             rb.force_add(rb.m_force*-intertion);
-            rb.force_add(rb.m_props.gravity);
-            rb.force_add(rb.m_props.gravity*(1.f+intertion));
+            rb.force_add(rb.m_force*intertion);
+            rb.force_add_y(rb.m_props.gravity*rb.m_props.mass);
+            rb.force_add_y(rb.m_props.gravity*(1.f+intertion)*rb.m_props.mass);
         }
     }
 }

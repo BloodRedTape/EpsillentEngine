@@ -12,6 +12,7 @@ private:
     std::list<Trigger2D> triggers;
     std::list<Collider2D> colliders;
     std::list<Rigidbody2D> rigidbodies;
+    float timer;
 public:
 
     PhysicsEngine();
