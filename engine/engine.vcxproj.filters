@@ -444,6 +444,9 @@
     <ClInclude Include="sources\network\objects_protocol.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="sources\network\network.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="thirdparty\include\SFML\Audio\SoundFileFactory.inl">
