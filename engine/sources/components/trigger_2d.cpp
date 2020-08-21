@@ -36,15 +36,7 @@ void Trigger2D::finalize(){
     mp_owner->scene()->cluster().physics.trigger_2d_delete(this);
 }
 
-
 Trigger2D& Trigger2D::set_properties(const Trigger2DProperties &props){
-#ifdef DEBUG_MODE
-    auto shape = mp_owner->component_add<Sprite2D>()->set_size(props.size.width-6,props.size.height-6).shape();
-    shape.setPosition(3,3);
-    shape.setFillColor(sf::Color(0,0,0,0));
-    shape.setOutlineThickness(3);
-    shape.setOutlineColor(sf::Color::Magenta);
-#endif
     m_callback = props.callback;
     m_size = props.size;
     return *this;
