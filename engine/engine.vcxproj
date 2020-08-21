@@ -39,6 +39,7 @@
     <ClInclude Include="sources\core\typedefs.hpp" />
     <ClInclude Include="sources\engine.hpp" />
     <ClInclude Include="sources\network\game_server.hpp" />
+    <ClInclude Include="sources\network\network.hpp" />
     <ClInclude Include="sources\network\network_object.hpp" />
     <ClInclude Include="sources\network\network_scene.hpp" />
     <ClInclude Include="sources\network\objects_protocol.hpp" />
