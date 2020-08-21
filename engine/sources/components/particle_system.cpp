@@ -18,7 +18,6 @@ void Particle::on_introduce(){
     set_tag("Engine::Particle");
     sprite = component_add<Sprite2D>();
     sprite->set_color(color_begin);
-    sprite->set_position(size*-0.5f);
     //sprite->set_color(sf::Color(color_begin.r - (color_begin.r-color_end.r)*(1-scale),color_begin.g - (color_begin.g-color_end.g)*(1-scale),color_begin.b - (color_begin.b-color_end.b)*(1-scale),color_begin.a - (color_begin.a-color_end.a)*(1-scale)));
     sprite->set_size(size);
     translate(Random::integer(-dispersion.x/2,dispersion.x/2),Random::integer(-dispersion.y/2,dispersion.y/2));
