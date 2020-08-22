@@ -17,6 +17,7 @@ void NetworkScene::update(const float dt){
     scene_cluster.update(dt);
     if(is_connected())
         fetch();
+    clear_garbage();
 }
 
 void NetworkScene::event(const Event &e){
@@ -25,32 +26,37 @@ void NetworkScene::event(const Event &e){
 }
 
 NetworkObject *NetworkScene::network_object_introduce(NetworkObject *object){
+    if(object->m_type == NetworkObject::Type::Originator){
+        EventObjectNew e;
+        std::string name = object->network_class();
+        ASSERT_ERROR(name.size()<=(sizeof(e.class_name)/sizeof(e.class_name[0])),"Network: object class name is too big");
+        Info("Network: new object " + name + " size " + std::to_string(name.size()));
+
+        e.guid = object->m_guid;
+        e.position = object->local_position();
+        memcpy(e.class_name,name.c_str(),name.size()+1);
+
+        send(&e,sizeof(e));
+    }
+
     object_introduce(object);
     objects.emplace(object->guid(),object);
 
-    EventObjectNew e;
-    std::string name = object->network_class();
-    ASSERT_ERROR(name.size()<=(sizeof(e.class_name)/sizeof(e.class_name[0])),"Network: object class name is too big");
-    Info("Network: new object " + name + " size " + std::to_string(name.size()));
 
-    e.guid = object->m_guid;
-    e.position = object->local_position();
-    memcpy(e.class_name,name.c_str(),name.size()+1);
-
-    send(&e,sizeof(e));
-    
     return object;
 }
 void NetworkScene::network_object_substract(NetworkObject *object){
-    object_substract(object);
-    objects.erase(object->m_guid);
-
     if(object->m_type == NetworkObject::Type::Originator){
         EventObjectDelete e;
         e.guid = object->m_guid;
         send(&e,sizeof(e));
-        Info("Network: deleted object " + object->network_class());
+        Info("SubstractedOriginator: " + object->network_class());
+    }else{
+        Info("SubstractedImitator: " + object->network_class());
     }
+    object_substract(object);
+    objects.erase(object->m_guid);
+
 }
 void NetworkScene::fetch() {
     sf::Packet datagram;
@@ -95,11 +101,10 @@ void NetworkScene::handle_event(const sf::Packet &packet){
 void NetworkScene::on_object_new(const sf::Packet &packet){
     EventObjectNew& event = *(EventObjectNew*)packet.getData();
     Info("Network: Event: new remote object " + std::string(event.class_name) + " " + std::string(event.guid) + ARG_VEC("POsition",event.position));
-    NetworkObject *object = (*NetworkObjectsDB::creator(event.class_name))(this,event.guid);
+    NetworkObject *object = (*NetworkObjectsDB::creator(event.class_name))(event.guid);
     object->on_network_translate(event.position);
     
-    objects.emplace(event.guid,object);
-    object_introduce(object);
+    network_object_introduce(object);
 }
 void NetworkScene::on_object_delete(const sf::Packet &packet){
     EventObjectDelete& event = *(EventObjectDelete*)packet.getData();

@@ -75,13 +75,13 @@ public:
 
 class NetworkObjectsDB{
 private:
-    typedef NetworkObject* (*ObjectCreator)(BaseScene*,const GUID &);
+    typedef NetworkObject* (*ObjectCreator)(const GUID &);
     static std::unordered_map<std::string,ObjectCreator> m_objects;
 
 public:
     template <typename T>
-    static NetworkObject* _obj_creator(BaseScene *scene, const GUID &guid){
-        return (NetworkObject*)(scene->object_introduce(new T(guid)));
+    static NetworkObject* _obj_creator(const GUID &guid){
+        return new T(guid);
     }
     template <typename Object>
     static void register_object(){

@@ -11,12 +11,13 @@ BaseScene::~BaseScene(){
     on_destroy();
     clear();
     clear_garbage();
-    Info("Scene: deleted scene");
+    Info("Scene: Destroyed");
 }
 
 void BaseScene::update(const float dt){
     scene_graph.update(dt);
     scene_cluster.update(dt);
+    clear_garbage();
 }
 void BaseScene::render(){
     scene_cluster.render();
