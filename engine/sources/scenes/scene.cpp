@@ -36,7 +36,6 @@ void BaseScene::object_substract(GameObject *object){
     if(!object->m_garbage){
         object->m_garbage = true;
         object->on_destroy();
-        object->_on_destroy();
         garbage_add(object);
         object->children_destroy();
     }else{

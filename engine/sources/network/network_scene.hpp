@@ -17,13 +17,11 @@ public:
     virtual void update(const float dt)override;
 
     void event(const Event &e); // event to an object from the other scenes
-
+    NetworkObject *network_object_introduce(NetworkObject *object);
+    void network_object_substract(NetworkObject *object);
 private:
     void fetch();
     void handle_event(const sf::Packet &e);
-
-    void object_new(NetworkObject *object);
-    void object_delete(NetworkObject *object);
 
     void on_object_new(const sf::Packet &packet);
     void on_object_delete(const sf::Packet &packet);

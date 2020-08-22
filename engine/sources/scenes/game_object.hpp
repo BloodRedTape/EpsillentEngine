@@ -40,8 +40,6 @@ private:
     void child_detach(GameObject*);
 protected:
     virtual void _on_update(float dt){};
-    virtual void _on_introduce(){};
-    virtual void _on_destroy(){};
 public:
     GameObject();
     virtual ~GameObject();
@@ -67,7 +65,7 @@ public:
 
     void object_introduce(GameObject*, const sf::Vector2f& relative_pos = sf::Vector2f(0,0));
 
-    void destroy();
+    virtual void destroy();
     // detach node from parent
     // it will NOT be deleted until you mark_garbage() it
     void detach();

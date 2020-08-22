@@ -11,11 +11,6 @@ NetworkObjectsDB::ObjectCreator NetworkObjectsDB::creator(const std::string &cla
 }
 
 
-void NetworkObject::_on_introduce(){
-    if(m_type == Type::Originator){
-        static_cast<NetworkScene*>(scene())->object_new(this);
-    }
-}
 void NetworkObject::_on_update(float dt){
     m_timer+=dt;
     
@@ -23,11 +18,10 @@ void NetworkObject::_on_update(float dt){
         network_sync_transform();
     }
 }
-void NetworkObject::_on_destroy(){
-    static_cast<NetworkScene*>(scene())->object_delete(this);
-}
+
 
 void NetworkObject::on_network_translate(const sf::Vector2f &local_position){
+    Info("Engine local translate");
     set_local_position(local_position);
 }
 
@@ -35,7 +29,8 @@ NetworkObject::NetworkObject():
     m_guid(),
     m_type(NetworkObject::Type::Originator),
     m_timer(0),
-    m_network_offset(0,0)
+    m_network_offset(0,0),
+    m_network_dirty(false)
 { 
     
 }
@@ -68,6 +63,10 @@ void NetworkObject::network_sync_transform(){
 
 void NetworkObject::network_event(const Event &e){
     static_cast<NetworkScene*>(scene())->event(e);
+}
+
+void NetworkObject::destroy(){
+    static_cast<NetworkScene*>(scene())->network_object_substract(this);
 }
 
 void NetworkObject::originator_event(const OriginatorEvent &e){

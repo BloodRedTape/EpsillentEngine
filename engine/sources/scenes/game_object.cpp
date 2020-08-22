@@ -50,7 +50,6 @@ GameObject* GameObject::child_add(GameObject* p_node){
     p_node->mp_scene=mp_scene;
     p_node->m_transform.m_dirty=true;
     p_node->m_self = std::prev(m_child_nodes.end());
-    p_node->_on_introduce();
     p_node->on_introduce();
     return p_node;
 }

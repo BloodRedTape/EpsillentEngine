@@ -26,7 +26,7 @@ void GameServer::bind_handlers(){
 
 void GameServer::on_object_create(const sf::Packet &packet, ClientTraits &client){
     EventObjectNew &event = *(EventObjectNew*)packet.getData();
-    Info("GameServer: client " + client.host.to_string() + " created object " + std::string(event.guid) + " Named " + std::string(event.class_name));
+    Info("GameServer: client " + client.host.to_string() + " created object " + std::string(event.guid) + " Named " + std::string(event.class_name) + ARG_VEC(" At position ",event.position));
     m_objects.emplace(event.guid,NetworkObjectTraits(event.class_name,event.position));
     send_except(packet.getData(),packet.getDataSize(),client.host);
 }
@@ -49,6 +49,7 @@ void GameServer::on_object_var_changed(const sf::Packet &packet, ClientTraits &c
 void GameServer::on_object_translate(const sf::Packet &packet, ClientTraits &client){
     EventObjectTranslate &event = *(EventObjectTranslate*)packet.getData();
     m_objects.find(event.guid)->second.local_transform = event.position;
+    Info("GameServer: Object " + std::string(event.guid) + ARG_VEC(" Translated to ",event.position));
     send_except(packet.getData(),packet.getDataSize(),client.host);
 }
 void GameServer::on_object_originator(const sf::Packet &packet, ClientTraits &client){

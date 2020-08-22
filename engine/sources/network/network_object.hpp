@@ -40,9 +40,7 @@ private:
     friend class NetworkScene;
     friend class NetworkObjectsDB;
 protected:
-    void _on_introduce()override;
     void _on_update(float dt)override;
-    void _on_destroy()override;
     virtual void on_network_translate(const sf::Vector2f &local_position);
 public:
     NetworkObject();
@@ -56,6 +54,8 @@ public:
     NetworkScene *scene(){return (NetworkScene*)(GameObject::scene());};
     //anything you want to send into network
     void network_event(const Event &);
+
+    void destroy()override;
 
     //send an event to imitator objects
     void originator_event(const OriginatorEvent &);
