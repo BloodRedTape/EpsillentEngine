@@ -32,6 +32,18 @@ GameObject* BaseScene::object_introduce(GameObject* node,const sf::Vector2f& par
     return node;
 }
 
+void BaseScene::object_substract(GameObject *object){
+    if(!object->m_garbage){
+        object->m_garbage = true;
+        object->on_destroy();
+        object->_on_destroy();
+        garbage_add(object);
+        object->children_destroy();
+    }else{
+        Warning("Scene: trying to destroy " + object->m_tag + " objecet twice \nthis will most probably cause a segmantation fault so fix this shit up right NOW");
+    }
+}
+
 void BaseScene::garbage_add(GameObject* p_candidate){
     garbage.push_front(p_candidate);
 }

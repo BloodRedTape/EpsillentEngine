@@ -52,6 +52,7 @@ public:
 
 
     GameObject* object_introduce(GameObject*,const sf::Vector2f& parent_offset = sf::Vector2f(0,0));
+    void object_substract(GameObject *object);
 
     _ALWAYS_INLINE_ SceneCluster& cluster(){return scene_cluster;}
 

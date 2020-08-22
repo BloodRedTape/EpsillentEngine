@@ -30,6 +30,7 @@ private:
 private:        
     friend class RootNode;
     friend class SceneGraph;
+    friend class BaseScene;
     //add children in update queue
     // apply parent transfrom to self
     void update_traverse(const float dt);

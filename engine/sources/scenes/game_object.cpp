@@ -67,15 +67,7 @@ void GameObject::object_introduce(GameObject* object,const sf::Vector2f& relativ
 
 
 void GameObject::destroy(){
-    if(!m_garbage){
-        m_garbage = true;
-        on_destroy();
-        _on_destroy();
-        mp_scene->garbage_add(this);
-        children_destroy();
-    }else{
-        Warning("GameObject: trying to destroy " + m_tag + " objecet twice \nthis will most probably cause a segmantation fault so fix this shit up right NOW");
-    }
+    mp_scene->object_substract(this);
 }
 
 void GameObject::detach(){
