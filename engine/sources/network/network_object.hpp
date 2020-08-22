@@ -37,10 +37,10 @@ private:
     float m_delay;
     friend class NetworkScene;
     friend class NetworkObjectsDB;
-private:
+protected:
     void _on_introduce()override;
     void _on_destroy()override;
-    void on_network_translate(const EventObjectTranslate &e);
+    virtual void on_network_translate(const EventObjectTranslate &e);
 public:
     NetworkObject();
     explicit NetworkObject(const GUID &guid);
@@ -48,8 +48,10 @@ public:
 
     void network_translate(const sf::Vector2f &offset);
     void network_translate(float x_offset, float y_offset);
+    void network_translate_instant(const sf::Vector2f &offset);
+    void network_translate_instant(float x_offset, float y_offset);
 
-
+    NetworkScene *scene(){return static_cast<NetworkScene*>(scene());};
     //anything you want to send into network
     void network_event(const Event &);
 

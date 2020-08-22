@@ -53,7 +53,17 @@ void NetworkObject::network_translate(const sf::Vector2f &offset){
 void NetworkObject::network_translate(float x_offset, float y_offset){
     network_translate(sf::Vector2f(x_offset,y_offset));
 }
-
+void NetworkObject::network_translate_instant(const sf::Vector2f &offset){
+    translate(offset);
+    EventObjectTranslate e;
+    e.guid=m_guid;
+    e.position=local_position();
+    static_cast<NetworkScene*>(scene())->send(&e,sizeof(e));
+    
+}
+void NetworkObject::network_translate_instant(float x_offset, float y_offset){
+    network_translate_instant(sf::Vector2f(x_offset,y_offset));
+}
 
 void NetworkObject::network_event(const Event &e){
     static_cast<NetworkScene*>(scene())->event(e);
