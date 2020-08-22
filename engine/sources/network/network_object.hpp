@@ -34,11 +34,14 @@ public:
 private:
     Type m_type;
     GUID m_guid;
-    float m_delay;
+    float m_timer;
+    sf::Vector2f m_network_offset;
+    bool m_network_dirty;
     friend class NetworkScene;
     friend class NetworkObjectsDB;
 protected:
     void _on_introduce()override;
+    void _on_update(float dt)override;
     void _on_destroy()override;
     virtual void on_network_translate(const EventObjectTranslate &e);
 public:
@@ -48,10 +51,9 @@ public:
 
     void network_translate(const sf::Vector2f &offset);
     void network_translate(float x_offset, float y_offset);
-    void network_translate_instant(const sf::Vector2f &offset);
-    void network_translate_instant(float x_offset, float y_offset);
+    void network_sync_transform();
 
-    NetworkScene *scene(){return static_cast<NetworkScene*>(scene());};
+    NetworkScene *scene(){return (NetworkScene*)(GameObject::scene());};
     //anything you want to send into network
     void network_event(const Event &);
 
@@ -59,6 +61,7 @@ public:
     void originator_event(const OriginatorEvent &);
     //handle an event from originator object
     virtual void on_originator_event(const OriginatorEvent &);
+    //virtual void on_imitator_create(const sf::Vector2f &originator_position);
     Type type();
 
     static std::string static_network_class();               
