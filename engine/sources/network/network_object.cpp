@@ -27,8 +27,8 @@ void NetworkObject::_on_destroy(){
     static_cast<NetworkScene*>(scene())->object_delete(this);
 }
 
-void NetworkObject::on_network_translate(const EventObjectTranslate &e){
-    set_local_position(e.position);
+void NetworkObject::on_network_translate(const sf::Vector2f &local_position){
+    set_local_position(local_position);
 }
 
 NetworkObject::NetworkObject():

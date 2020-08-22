@@ -43,7 +43,7 @@ protected:
     void _on_introduce()override;
     void _on_update(float dt)override;
     void _on_destroy()override;
-    virtual void on_network_translate(const EventObjectTranslate &e);
+    virtual void on_network_translate(const sf::Vector2f &local_position);
 public:
     NetworkObject();
     explicit NetworkObject(const GUID &guid);

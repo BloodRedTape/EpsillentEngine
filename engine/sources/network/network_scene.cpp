@@ -87,7 +87,7 @@ void NetworkScene::on_object_new(const sf::Packet &packet){
     EventObjectNew& event = *(EventObjectNew*)packet.getData();
     Info("Network: Event: new remote object " + std::string(event.class_name) + " " + std::string(event.guid) + ARG_VEC("POsition",event.position));
     NetworkObject *object = (*NetworkObjectsDB::creator(event.class_name))(this,event.guid);
-    object->translate(event.position);
+    object->on_network_translate(event.position);
     objects.emplace(event.guid,object);
 }
 void NetworkScene::on_object_delete(const sf::Packet &packet){
@@ -118,5 +118,5 @@ void NetworkScene::on_object_translate(const sf::Packet &packet){
         Warning("Network: can't find an object" + std::string(event.guid)+" for translate event handling");
         return;
     }
-    objects.find(event.guid)->second->on_network_translate(event);
+    objects.find(event.guid)->second->on_network_translate(event.position);
 }
