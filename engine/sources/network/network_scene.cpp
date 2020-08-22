@@ -97,8 +97,9 @@ void NetworkScene::on_object_new(const sf::Packet &packet){
     Info("Network: Event: new remote object " + std::string(event.class_name) + " " + std::string(event.guid) + ARG_VEC("POsition",event.position));
     NetworkObject *object = (*NetworkObjectsDB::creator(event.class_name))(this,event.guid);
     object->on_network_translate(event.position);
-    object_introduce(object);
+    
     objects.emplace(event.guid,object);
+    object_introduce(object);
 }
 void NetworkScene::on_object_delete(const sf::Packet &packet){
     EventObjectDelete& event = *(EventObjectDelete*)packet.getData();
@@ -108,10 +109,7 @@ void NetworkScene::on_object_delete(const sf::Packet &packet){
         Warning("Network: can not delete " + std::string(event.guid)+ " object does not exits");
         return;
     }
-    Info("destroyed");
-    objects.erase(object->first);
-    object->second->destroy();
-    Info("Erased");
+    network_object_substract(object->second);
 }
 void NetworkScene::on_object_originator_event(const sf::Packet &packet){
     EventObjectOriginator &event = *(EventObjectOriginator*)packet.getData();

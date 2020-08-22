@@ -65,6 +65,11 @@ void NetworkObject::network_event(const Event &e){
     static_cast<NetworkScene*>(scene())->event(e);
 }
 
+NetworkObject *NetworkObject::network_object_introduce(NetworkObject *object){
+    scene()->network_object_introduce(object);
+    return object;
+}
+
 void NetworkObject::destroy(){
     static_cast<NetworkScene*>(scene())->network_object_substract(this);
 }

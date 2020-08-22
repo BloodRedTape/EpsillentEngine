@@ -55,6 +55,8 @@ public:
     //anything you want to send into network
     void network_event(const Event &);
 
+    NetworkObject *network_object_introduce(NetworkObject *object);
+
     void destroy()override;
 
     //send an event to imitator objects
