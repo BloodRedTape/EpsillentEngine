@@ -1,6 +1,6 @@
 #include "core/net/client.hpp"
 #include "utils/debug.hpp"
-
+#include "SFML/System/Clock.hpp"
 Client::Client():
     server(),
     m_is_connected(false)
@@ -16,16 +16,14 @@ void Client::connect(const Host &serv){
     server = serv;
     Request r(protocol::RequestCode::Connect);
     send(&r,sizeof(r));
-    socket.setBlocking(true);
+    socket.setBlocking(false);
     Info("Client: waiting for response");
-
+    sf::Clock response_time;
     Response response;
     std::size_t size;
-    if (socket.receive(&response, sizeof(Response), size, server.ip, server.port) == sf::Socket::Status::Done) {
-        Info("Client: socket returned success");
-    }
-    else {
-        Warning("Client: socket returned fail");
+    while(socket.receive(&response, sizeof(Response), size, server.ip, server.port) != sf::Socket::Status::Done) {
+        if(response_time.getElapsedTime().asSeconds() > 2.f)
+            Error("Client: no response from server");
     }
 
     if(response.code.response == protocol::ResponseCode::Success){
@@ -54,13 +52,20 @@ void Client::disconnect(){
     Info("Client: disconnecting from " + server.to_string() + " server");
     Request r(protocol::RequestCode::Disconnect);
     send(&r,sizeof(r));
-    socket.setBlocking(true);
+    socket.setBlocking(false);
     Info("Client: waiting for response");
+
+    sf::Clock response_time;
 
     Response response;
     std::size_t size;
-    socket.receive(&response,sizeof(Response),size,server.ip,server.port);
 
+    while(socket.receive(&response, sizeof(Response), size, server.ip, server.port) != sf::Socket::Status::Done) {
+        if(response_time.getElapsedTime().asSeconds() > 2.f){
+            Warning("Client: no response from server, Treat is as disconnect");
+            return;
+        }
+    }
     if(response.code.response == protocol::ResponseCode::Success){
         Info("Client: disconnected from " + server.to_string());
         m_is_connected = false;
