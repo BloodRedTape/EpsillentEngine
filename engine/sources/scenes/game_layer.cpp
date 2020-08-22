@@ -14,4 +14,5 @@ void GameLayer::on_render(){
 
 void GameLayer::on_update(float dt){
     SceneManager::update_scene(dt);
+    SceneManager::clean_scene_garbage();
 }

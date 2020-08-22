@@ -17,7 +17,6 @@ BaseScene::~BaseScene(){
 void BaseScene::update(const float dt){
     scene_graph.update(dt);
     scene_cluster.update(dt);
-    clear_garbage();
 }
 void BaseScene::render(){
     scene_cluster.render();
