@@ -49,7 +49,7 @@ void GameServer::on_object_var_changed(const sf::Packet &packet, ClientTraits &c
 void GameServer::on_object_translate(const sf::Packet &packet, ClientTraits &client){
     EventObjectTranslate &event = *(EventObjectTranslate*)packet.getData();
     m_objects.find(event.guid)->second.local_transform = event.position;
-    Info("GameServer: Object " + std::string(event.guid) + ARG_VEC(" Translated to ",event.position));
+    Info("GameServer: " + client.host.to_string() + " Object " + std::string(event.guid) + ARG_VEC(" Translated to ",event.position));
     send_except(packet.getData(),packet.getDataSize(),client.host);
 }
 void GameServer::on_object_originator(const sf::Packet &packet, ClientTraits &client){

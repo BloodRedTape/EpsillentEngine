@@ -52,6 +52,7 @@ void Engine::handle_events(sf::RenderWindow &window){
 
 
 void Engine::initialize(const EngineProperties& props){
+    Info("-----Initialize Begin-----");
     time.restart();
     ASSERT_WARRNING(smp_singleton==this,"Engine: can't init from non-creator instance");
     Platform::init();
@@ -79,9 +80,11 @@ void Engine::initialize(const EngineProperties& props){
 
     Random::seed(time.getElapsedTime().asMilliseconds());
     Info("Engine: init took " + ARG(time.getElapsedTime().asSeconds()) + " seconds");
+    Info("-----Initialize   End-----");
 }
 
 void Engine::finalize(){
+    Info("-----Finalize Begin-----");
     update_thread->join();
     Info("Engine: threads are synched");
     delete update_thread;
@@ -91,7 +94,7 @@ void Engine::finalize(){
     delete draw_call_interface;
     AssetsManager::clear();
     DisplayServer::finalize();
-    Info("Engine: shuted down");
+    Info("-----Finalize   End-----");
 }
 
 

@@ -26,17 +26,20 @@ void NetworkScene::event(const Event &e){
 }
 
 NetworkObject *NetworkScene::network_object_introduce(NetworkObject *object){
+    std::string name = object->network_class();
+
     if(object->m_type == NetworkObject::Type::Originator){
         EventObjectNew e;
-        std::string name = object->network_class();
         ASSERT_ERROR(name.size()<=(sizeof(e.class_name)/sizeof(e.class_name[0])),"Network: object class name is too big");
-        Info("Network: new object " + name + " size " + std::to_string(name.size()));
+        Info("Network: IntroducedOriginator " + name + " " + std::string(object->guid()));
 
         e.guid = object->m_guid;
         e.position = object->local_position();
         memcpy(e.class_name,name.c_str(),name.size()+1);
 
         send(&e,sizeof(e));
+    }else{
+        Info("Network: IntroducedImitator " + name + " " + std::string(object->guid()));
     }
 
     object_introduce(object);
@@ -50,9 +53,9 @@ void NetworkScene::network_object_substract(NetworkObject *object){
         EventObjectDelete e;
         e.guid = object->m_guid;
         send(&e,sizeof(e));
-        Info("SubstractedOriginator: " + object->network_class());
+        Info("SubstractedOriginator: " + object->network_class()+ " " + std::string(object->guid()));
     }else{
-        Info("SubstractedImitator: " + object->network_class());
+        Info("SubstractedImitator: " + object->network_class()+ " " + std::string(object->guid()));
     }
     object_substract(object);
     objects.erase(object->m_guid);
@@ -100,20 +103,20 @@ void NetworkScene::handle_event(const sf::Packet &packet){
 
 void NetworkScene::on_object_new(const sf::Packet &packet){
     EventObjectNew& event = *(EventObjectNew*)packet.getData();
-    Info("Network: Event: new remote object " + std::string(event.class_name) + " " + std::string(event.guid) + ARG_VEC("POsition",event.position));
     NetworkObject *object = (*NetworkObjectsDB::creator(event.class_name))(event.guid);
-    object->on_network_translate(event.position);
+    Info("Network: Event: new remote object " + object->network_class() + " " + std::string(object->guid()) + ARG_VEC("POsition",event.position));
+
     
-    network_object_introduce(object);
+    network_object_introduce(object)->on_network_translate(event.position);
 }
 void NetworkScene::on_object_delete(const sf::Packet &packet){
     EventObjectDelete& event = *(EventObjectDelete*)packet.getData();
-    Info("Network: Event: delete remote object " + std::string(event.guid));
     auto object = objects.find(event.guid);
     if(object==objects.end()){
         Warning("Network: can not delete " + std::string(event.guid)+ " object does not exits");
         return;
     }
+    Info("Network: Event: delete remote object " + object->second->network_class() + " "  + std::string(event.guid));
     network_object_substract(object->second);
 }
 void NetworkScene::on_object_originator_event(const sf::Packet &packet){
@@ -132,6 +135,10 @@ void NetworkScene::on_object_translate(const sf::Packet &packet){
     auto object = objects.find(event.guid);
     if(object==objects.end()){
         Warning("Network: can't find an object" + std::string(event.guid)+" for translate event handling");
+        return;
+    }
+    if(object->second->type()==NetworkObject::Type::Originator){
+        Warning("Network: unintended remote tranlsation of Originator obejct");
         return;
     }
     objects.find(event.guid)->second->on_network_translate(event.position);

@@ -15,13 +15,14 @@ void NetworkObject::_on_update(float dt){
     m_timer+=dt;
     
     if(m_network_dirty && (Math::length(m_network_offset)>10 || m_timer > 0.01f)){
+        ASSERT_ERROR(m_type==NetworkObject::Type::Originator,"Can't sync imitator transform");
         network_sync_transform();
     }
 }
 
 
 void NetworkObject::on_network_translate(const sf::Vector2f &local_position){
-    Info("Engine local translate");
+    ASSERT_ERROR(m_type==NetworkObject::Type::Originator,"Can't transform imitator");
     set_local_position(local_position);
 }
 
@@ -37,7 +38,8 @@ NetworkObject::NetworkObject():
 
 NetworkObject::NetworkObject(const GUID &guid):
     m_guid(guid),
-    m_type(NetworkObject::Type::Imitator)
+    m_type(NetworkObject::Type::Imitator),
+    m_network_dirty(false)
 { 
 }
 
