@@ -19,8 +19,9 @@ public:
     void event(const Event &e); // event to an object from the other scenes
     NetworkObject *network_object_introduce(NetworkObject *object);
     void network_object_substract(NetworkObject *object);
-private:
+
     void fetch();
+private:
     void handle_event(const sf::Packet &e);
 
     void on_object_new(const sf::Packet &packet);
