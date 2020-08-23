@@ -60,7 +60,7 @@ void GameObject::children_destroy(){
 }
 
 void GameObject::object_introduce(GameObject* object,const sf::Vector2f& relative_pos){
-    object->translate(m_transform.m_global_position+relative_pos);
+    object->set_local_position(m_transform.m_global_position+relative_pos);
     mp_scene->object_introduce(object);
 }
 
