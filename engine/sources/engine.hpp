@@ -49,6 +49,7 @@ class ENGINE_API Engine{
         static sf::Clock time;
         static float dt;
         static bool _show_fps;
+        static std::pair<std::string,BaseScene *>entry;
     private:
         static void RenderLoop();
         static void UpdateLoop();

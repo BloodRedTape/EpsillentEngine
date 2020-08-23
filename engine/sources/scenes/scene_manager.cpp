@@ -37,8 +37,12 @@ void SceneManager::clean_scene_garbage(){
 
 void SceneManager::introduce_scene(const std::string& scene_name, BaseScene* p_scene, bool set){
     ASSERT_ERROR(p_sync_mutex,"SceneManager: has not been inited");
-    std::lock_guard<std::mutex> lock(*p_sync_mutex);
+    p_sync_mutex->lock();
     scenes.insert(std::pair<std::string, std::unique_ptr<BaseScene>>(scene_name,p_scene)); 
+    if(set){
+        p_current_scene=p_scene;
+    }
+    p_sync_mutex->unlock();
     if(set){
         p_current_scene=p_scene;
         p_scene->on_introduce();

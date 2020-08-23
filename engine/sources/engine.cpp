@@ -18,7 +18,7 @@ bool Engine::_show_fps = false;
 float Engine::dt = 0;
 
 const sf::VideoMode Engine::k_video_mode = sf::VideoMode(1280,720);  //better window creation
-
+std::pair<std::string,BaseScene *> Engine::entry("",nullptr);
 Engine* Engine::smp_singleton = nullptr;
 
 Engine::Engine(){
@@ -99,6 +99,8 @@ void Engine::finalize(){
 
 
 void Engine::UpdateLoop(){
+    ASSERT_ERROR(entry.second!=nullptr,"Engine: entry scene was not provided\nuse Engine::get_singleton()->set_entry_scene(ptr,name); to provide one");
+    SceneManager::introduce_scene(entry.first,entry.second);
     sf::Clock n;
     float fps;
     while(running){
@@ -156,7 +158,6 @@ void Engine::RenderLoop(){
 
 void Engine::start(){
     running = true;
-    ASSERT_ERROR(SceneManager::get_current_scene(),"Engine:Create a scene and apply it via Engine::set_entry_scene(BaseScene* p_scene, const char* name)")
     update_thread = new std::thread(&Engine::UpdateLoop);
     RenderLoop();
 }
@@ -166,7 +167,7 @@ void Engine::stop(){
 }
 
 void Engine::set_entry_scene(BaseScene* p_scene, const char* name){
-    SceneManager::introduce_scene(name,p_scene,true);
+    entry = std::pair<std::string, BaseScene *>(name,p_scene);
 }
 
 float Engine::delta_time(){
