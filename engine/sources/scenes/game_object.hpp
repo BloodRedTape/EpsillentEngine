@@ -63,7 +63,7 @@ public:
     GameObject* child_add(GameObject*);
     void children_destroy();
 
-    void object_introduce(GameObject*, const sf::Vector2f& relative_pos = sf::Vector2f(0,0));
+    GameObject *object_introduce(GameObject*, const sf::Vector2f& relative_pos = sf::Vector2f(0,0));
 
     virtual void destroy();
     // detach node from parent
