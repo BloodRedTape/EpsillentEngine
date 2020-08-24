@@ -13,11 +13,9 @@ NetworkScene::~NetworkScene(){
 }
 
 void NetworkScene::update(const float dt){
-    scene_graph.update(dt);
-    scene_cluster.update(dt);
+    BaseScene::update(dt);
     if(is_connected())
         fetch();
-    clear_garbage();
 }
 
 void NetworkScene::event(const Event &e){
