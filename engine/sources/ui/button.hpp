@@ -21,6 +21,7 @@ public:
     void on_update(float dt)override;
     void on_render()override;
     Button& set_position(const sf::Vector2f &position);
+    Button& set_texture(sf::Texture *texture);
     Button& set_callback(const callback& func);
     Button& set_text(const sf::String &string,const sf::Font &font,const sf::Color &color = sf::Color::White,uint32 font_size = 30u);
 

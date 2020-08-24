@@ -29,6 +29,10 @@ Button &Button::set_position(const sf::Vector2f &position){
     center_text();
     return *this;
 }
+Button &Button::set_texture(sf::Texture *texture){
+    m_shape.setTexture(texture);
+    return *this;
+}
 
 void Button::on_update(float dt){
     if(Input::mouse_pressed(MouseButton::Left)){
