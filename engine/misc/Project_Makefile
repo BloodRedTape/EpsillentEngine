@@ -9,7 +9,7 @@ LINKER_FLAGS_LINUX_BUILD := $(LINKER_FLAGS_LINUX) -Wl,-R$(ENGINE_PATH)/thirdpart
 LINKER_FLAGS_LINUX_DISTRIBUTION := $(LINKER_FLAGS_LINUX) -Llibs -Wl,-R./libs -lengine -lsfml-window -lsfml-graphics -lsfml-system -lsfml-network -lsfml-audio
 
 CC_DARWIN := g++
-CFLAGS_DARWIN := -std=c++11 
+CFLAGS_DARWIN := -std=c++11 -headerpad_max_install_names
 LINKER_FLAGS_DARWIN_BUILD := $(ENGINE_PATH)/libengine.dylib $(ENGINE_PATH)/thirdparty/lib/Darwin/libsfml-graphics.dylib $(ENGINE_PATH)/thirdparty/lib/Darwin/libsfml-system.dylib $(ENGINE_PATH)/thirdparty/lib/Darwin/libsfml-window.dylib $(ENGINE_PATH)/thirdparty/lib/Darwin/libsfml-network.dylib
  
 
