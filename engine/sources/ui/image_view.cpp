@@ -1,8 +1,12 @@
 #include "ui/image_view.hpp"
-
+#include "render/draw_call.hpp"
 ImageView::ImageView(const sf::Vector2f &size):
     m_shape(size)
 {}
+
+void ImageView::on_render(){
+    DrawCallInterface::draw(m_shape);
+}
 
 ImageView &ImageView::set_size(const sf::Vector2f &size){
     m_shape.setSize(size);
