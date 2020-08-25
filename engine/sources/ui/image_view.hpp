@@ -5,6 +5,7 @@
 #include "SFML/System/Vector2.hpp"
 #include "SFML/Graphics/Texture.hpp"
 #include "SFML/Graphics/RectangleShape.hpp"
+#include "core/typedefs.hpp"
 
 class ImageView: public View{
 private:
@@ -14,6 +15,7 @@ public:
     void on_render()override;
     ImageView &set_size(const sf::Vector2f &size);
     ImageView &set_position(const sf::Vector2f &position);
+    _ALWAYS_INLINE_ const sf::Vector2f &position()const{return m_shape.getPosition();}
     ImageView &set_texture(sf::Texture *texture);
 };
 

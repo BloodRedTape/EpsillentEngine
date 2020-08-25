@@ -6,6 +6,7 @@
 #include "SFML/System/String.hpp"
 #include "SFML/Graphics/Font.hpp"
 #include "SFML/Graphics/Text.hpp"
+#include "core/typedefs.hpp"
 
 class TextView: public View{
 protected:
@@ -21,6 +22,7 @@ public:
     TextView &set_font(const sf::Font &font, uint32 font_size = 30u);
     TextView &set_color(const sf::Color &color);
     TextView &set_position(const sf::Vector2f &position);
+    _ALWAYS_INLINE_ const sf::Vector2f &position()const{return m_text.getPosition();}
 
     sf::Vector2f size();
 };
