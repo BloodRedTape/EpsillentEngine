@@ -17,7 +17,7 @@ private:
     bool pressed;
     void center_text();
 public:
-    Button(const sf::Vector2f &size, const sf::Color& color);
+    Button(const sf::Vector2f &size, const sf::Color& color = sf::Color::White);
     void on_update(float dt)override;
     void on_render()override;
     Button& set_position(const sf::Vector2f &position);

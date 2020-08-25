@@ -8,6 +8,7 @@ BaseScene::BaseScene():
 }
 
 BaseScene::~BaseScene(){
+    clear_garbage();
     on_destroy();
     clear();
     clear_garbage();

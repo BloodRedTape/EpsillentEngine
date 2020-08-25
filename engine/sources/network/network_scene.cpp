@@ -6,6 +6,7 @@ NetworkScene::NetworkScene(){
 
 }
 NetworkScene::~NetworkScene(){
+    clear_garbage();
     scene_graph.clear();
     clear_garbage();
     if(is_connected())
