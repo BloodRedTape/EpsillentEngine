@@ -67,8 +67,8 @@ void NetworkObject::network_event(const Event &e){
     static_cast<NetworkScene*>(scene())->event(e);
 }
 
-NetworkObject *NetworkObject::network_object_introduce(NetworkObject *object){
-    scene()->network_object_introduce(object);
+NetworkObject *NetworkObject::network_object_introduce(NetworkObject *object, const sf::Vector2f &offset){
+    scene()->network_object_introduce(object,offset+global_position());
     return object;
 }
 

@@ -17,7 +17,7 @@ public:
     virtual void update(const float dt)override;
 
     void event(const Event &e); // event to an object from the other scenes
-    NetworkObject *network_object_introduce(NetworkObject *object);
+    NetworkObject *network_object_introduce(NetworkObject *object, const sf::Vector2f &offset = sf::Vector2f(0,0));
     void network_object_substract(NetworkObject *object);
 
     void fetch();

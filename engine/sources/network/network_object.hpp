@@ -55,7 +55,7 @@ public:
     //anything you want to send into network
     void network_event(const Event &);
 
-    NetworkObject *network_object_introduce(NetworkObject *object);
+    NetworkObject *network_object_introduce(NetworkObject *object, const sf::Vector2f &offset = sf::Vector2f(0,0));
 
     void destroy()override;
 

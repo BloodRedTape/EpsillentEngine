@@ -24,8 +24,9 @@ void NetworkScene::event(const Event &e){
     send(const_cast<Event*>(&e),sizeof(e));
 }
 
-NetworkObject *NetworkScene::network_object_introduce(NetworkObject *object){
+NetworkObject *NetworkScene::network_object_introduce(NetworkObject *object, const sf::Vector2f &offset){
     std::string name = object->network_class();
+    object->translate(offset);
 
     if(object->m_type == NetworkObject::Type::Originator){
         EventObjectNew e;
