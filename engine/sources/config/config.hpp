@@ -2,7 +2,7 @@
 #define CONFIG
 
 #define DEBUG_MODE
-#define PROFILING_MODE
+//#define PROFILING_MODE
 
 #include "platform/platform.hpp"
 
