@@ -16,11 +16,12 @@
 #include <mutex>
 #include <atomic>
 #include "SFML/System.hpp"
+#include "SFML/System/Sleep.hpp"
 #include "SFML/Window/WindowStyle.hpp"
 #include "ui/ui_controller.hpp"
 #include "ui/ui_layer.hpp"
 
-
+using sf::sleep;
 
 struct EngineProperties{
     sf::String window_title;

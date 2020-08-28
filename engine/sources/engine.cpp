@@ -113,6 +113,7 @@ void Engine::UpdateLoop(){
 
         dt=n.getElapsedTime().asSeconds();
         fps = 1/dt;
+        sleep(sf::Time(sf::milliseconds(16))-n.getElapsedTime());
         n.restart();
 
         Profiling(std::string("UpdateLoop :")+std::to_string(dt)+" ms \t\t| fps:" + std::to_string(fps));
