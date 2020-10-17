@@ -49,7 +49,7 @@ void ParticleSystem::set_properties(const ParticleSystemProperties& props){
 
 void ParticleSystem::update(float dt){
     time +=dt;
-    if(time>=m_properties.spawn_rate){
+    while(time>=m_properties.spawn_rate){
         time-=m_properties.spawn_rate;
         mp_owner->scene()->object_introduce(new Particle(mp_owner->global_position()+m_properties.spawn_position,m_properties));
     }
